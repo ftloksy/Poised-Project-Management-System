@@ -9,9 +9,9 @@ public class MenuHandler extends JMenuBar {
     JButton searchItem = new JButton("Search book");
     JButton listAllItem = new JButton("ListAll book");
     JButton exitItem = new JButton("Exit");
-    JFrame mainFrame;
+    TabFrame mainFrame;
     
-    MenuHandler (JFrame motherFrame) {
+    MenuHandler (TabFrame motherFrame) {
         super();
         super.add( this.clearItem );
         super.add( this.enterItem );

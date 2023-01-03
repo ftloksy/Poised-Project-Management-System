@@ -8,9 +8,9 @@ public class TabDemo {
     TabChangeListener changeListener ;
     ButtonCard card1 = new ButtonCard();
     PersonInsert personInsert = new PersonInsert();
-    JFrame mainFrame;
+    TabFrame mainFrame;
     
-    TabDemo(JFrame motherFrame) {
+    TabDemo(TabFrame motherFrame) {
         this.mainFrame = motherFrame ;
         changeListener = new TabChangeListener(this.mainFrame);
     }
