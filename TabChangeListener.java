@@ -4,7 +4,7 @@ import javax.swing.event.*;
 
 public class TabChangeListener implements ChangeListener {
     TabFrame mainFrame;
-    MenuHandler dbMenu ;
+    //MenuHandler dbMenu ;
     
     TabChangeListener(TabFrame motherFrame) {
         super();
