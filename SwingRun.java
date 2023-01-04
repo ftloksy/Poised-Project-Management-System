@@ -1,5 +1,6 @@
 public class SwingRun implements Runnable {
     public void run() {
-            TabFrame tabframe = new TabFrame();
+            MysqlHandler dbHandler = new MysqlHandler();
+            TabFrame tabframe = new TabFrame(dbHandler);
     }
 }

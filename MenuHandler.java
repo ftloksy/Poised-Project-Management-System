@@ -12,8 +12,9 @@ public class MenuHandler extends JMenuBar {
     TabFrame mainFrame;
     ListenerExit exitProgram = new ListenerExit();
     ListenerLab labListener;
+    ListenerEnter enterListener;
     
-    MenuHandler (TabFrame motherFrame) {
+    MenuHandler (TabFrame motherFrame, MysqlHandler dbPosie) {
         super();
         this.mainFrame = motherFrame;
         super.add( this.clearItem );
@@ -24,7 +25,9 @@ public class MenuHandler extends JMenuBar {
         super.add( this.listAllItem );
         super.add( this.exitItem );
         labListener = new ListenerLab( this.mainFrame );
+        enterListener = new ListenerEnter( this.mainFrame, dbPosie );
         this.clearItem.addActionListener(labListener);
         this.exitItem.addActionListener(exitProgram);
+        this.enterItem.addActionListener(enterListener);
     }
 }

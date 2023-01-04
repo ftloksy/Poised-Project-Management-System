@@ -1,7 +1,10 @@
 import java.awt.*;
 import javax.swing.*;
+import javax.swing.table.*;
+import java.util.Vector ;
 
 public class PersonInsert extends JPanel {
+    TabFrame mainFrame;
     JTextField surNameText = new JTextField("SurName", 30);
     JLabel surNameLabel = new JLabel("SurName", SwingConstants.RIGHT);
 
@@ -16,24 +19,55 @@ public class PersonInsert extends JPanel {
 
     JLabel physicalAddressLabel = new JLabel("Address", SwingConstants.RIGHT);
     JTextField physicalAddressText = new JTextField("Address", 30);
+        
+    JPanel dbEditor;
+    JScrollPane dbScroll = new JScrollPane(dbEditor);
+    Vector<String> tableHeader ;
+    DefaultTableModel personModel;
+    JTable dbTable ;
+    
+    PersonInsert(TabFrame motherFrame, MysqlHandler dbPosie) { super();
+        this.dbEditor = new JPanel();
+        this.dbEditor.setLayout(new GridLayout(5, 2, 10, 5)); 
 
-    PersonInsert() {
-        super();
-        super.setLayout(new GridLayout(5, 2, 10, 5));
+        this.dbEditor.add(this.surNameLabel);
+        this.dbEditor.add(this.surNameText); 
 
-        super.add(this.surNameLabel);
-        super.add(this.surNameText); 
+        this.dbEditor.add(this.firstNameLabel);
+        this.dbEditor.add(this.firstNameText); 
 
-        super.add(this.firstNameLabel);
-        super.add(this.firstNameText); 
+        this.dbEditor.add(this.telephoneLabel);
+        this.dbEditor.add(this.telephoneText); 
 
-        super.add(this.telephoneLabel);
-        super.add(this.telephoneText); 
+        this.dbEditor.add(this.emailAddressLabel);
+        this.dbEditor.add(this.emalAddressText); 
 
-        super.add(this.emailAddressLabel);
-        super.add(this.emalAddressText); 
+        this.dbEditor.add(this.physicalAddressLabel);
+        this.dbEditor.add(this.physicalAddressText); 
+        
+        super.setLayout(new BorderLayout());
+        super.add( this.dbEditor, BorderLayout.NORTH ); 
+        
+        this.createTable( dbPosie );
+        
+        this.dbScroll = new JScrollPane( this.dbTable );
+        
+        super.add( this.dbScroll, BorderLayout.CENTER );
+        this.mainFrame = motherFrame;
+        
+    }
+    
+    void createTable(MysqlHandler dbHandler ) {
+        this.tableHeader = new Vector<String>();
+        this.tableHeader.add("id");
+        this.tableHeader.add("FirstName");
+        this.tableHeader.add("SurName");
+        this.tableHeader.add("Telephone");
+        this.tableHeader.add("EmailAddress");
+        this.tableHeader.add("PhysicalAddress");
 
-        super.add(this.physicalAddressLabel);
-        super.add(this.physicalAddressText); 
+        this.personModel = new DefaultTableModel( dbHandler.selectPersonRecord() ,this.tableHeader);
+        this.dbTable = new JTable(this.personModel);
+
     }
 }
