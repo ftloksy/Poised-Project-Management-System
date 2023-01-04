@@ -2,17 +2,20 @@ import java.awt.*;
 import javax.swing.*;
 
 public class MenuHandler extends JMenuBar {
-    JButton enterItem = new JButton("Enter book");
-    JButton clearItem = new JButton("Clear field");
-    JButton updateItem = new JButton("Update book");
-    JButton deleteItem = new JButton("Delete book");
-    JButton searchItem = new JButton("Search book");
-    JButton listAllItem = new JButton("ListAll book");
+    JButton enterItem = new JButton("Enter Person");
+    JButton clearItem = new JButton("Clear Person");
+    JButton updateItem = new JButton("Update Person");
+    JButton deleteItem = new JButton("Delete Person");
+    JButton searchItem = new JButton("Search Person");
+    JButton listAllItem = new JButton("ListAll Person");
     JButton exitItem = new JButton("Exit");
     TabFrame mainFrame;
+    ListenerExit exitProgram = new ListenerExit();
+    ListenerLab labListener;
     
     MenuHandler (TabFrame motherFrame) {
         super();
+        this.mainFrame = motherFrame;
         super.add( this.clearItem );
         super.add( this.enterItem );
         super.add( this.updateItem );
@@ -20,6 +23,8 @@ public class MenuHandler extends JMenuBar {
         super.add( this.searchItem );
         super.add( this.listAllItem );
         super.add( this.exitItem );
-        this.mainFrame = motherFrame;
+        labListener = new ListenerLab( this.mainFrame );
+        this.clearItem.addActionListener(labListener);
+        this.exitItem.addActionListener(exitProgram);
     }
 }
