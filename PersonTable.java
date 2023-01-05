@@ -5,13 +5,16 @@ import java.util.Vector ;
 
 public class PersonTable extends JTable {
     DefaultTableModel personModel;
-    TabFrame mainFrame;
+    //TabFrame mainFrame;
     MysqlHandler dbHandler;
     Vector<String> tableHeader ;
+    PersonTableSelect personTbSelect ;
     
     PersonTable(TabFrame motherFrame, MysqlHandler dbPosie) {
         super();
+        personTbSelect = new PersonTableSelect(motherFrame);
         this.dbHandler = dbPosie ;
+        //this.mainFrame = motherFrame ;
         createTableHeader();
         createTable();
     }
@@ -46,5 +49,6 @@ public class PersonTable extends JTable {
 
         this.personModel = new DefaultTableModel( this.dbHandler.selectPersonRecord() ,this.tableHeader);
         super.setModel(this.personModel);
+        super.getSelectionModel().addListSelectionListener(personTbSelect);
     }
 }
