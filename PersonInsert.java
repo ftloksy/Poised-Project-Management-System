@@ -21,10 +21,10 @@ public class PersonInsert extends JPanel {
     JTextField physicalAddressText = new JTextField("Address", 30);
         
     JPanel dbEditor;
-    JScrollPane dbScroll = new JScrollPane(dbEditor);
+    JScrollPane dbScroll ;
     Vector<String> tableHeader ;
     DefaultTableModel personModel;
-    JTable dbTable ;
+    PersonTable dbTable ;
     
     PersonInsert(TabFrame motherFrame, MysqlHandler dbPosie) { super();
         this.dbEditor = new JPanel();
@@ -48,8 +48,7 @@ public class PersonInsert extends JPanel {
         super.setLayout(new BorderLayout());
         super.add( this.dbEditor, BorderLayout.NORTH ); 
         
-        this.createTable( dbPosie );
-        
+        this.dbTable = new PersonTable ( motherFrame, dbPosie );
         this.dbScroll = new JScrollPane( this.dbTable );
         
         super.add( this.dbScroll, BorderLayout.CENTER );
@@ -57,17 +56,4 @@ public class PersonInsert extends JPanel {
         
     }
     
-    void createTable(MysqlHandler dbHandler ) {
-        this.tableHeader = new Vector<String>();
-        this.tableHeader.add("id");
-        this.tableHeader.add("FirstName");
-        this.tableHeader.add("SurName");
-        this.tableHeader.add("Telephone");
-        this.tableHeader.add("EmailAddress");
-        this.tableHeader.add("PhysicalAddress");
-
-        this.personModel = new DefaultTableModel( dbHandler.selectPersonRecord() ,this.tableHeader);
-        this.dbTable = new JTable(this.personModel);
-
-    }
 }

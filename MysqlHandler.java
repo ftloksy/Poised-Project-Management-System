@@ -53,6 +53,30 @@ public class MysqlHandler {
         + " END;"
         + " END IF;"
         + " END;" ;
+        
+    String createTriggerPersonSurNameInsertSQL = "CREATE TRIGGER IF NOT EXISTS insert_has_surname BEFORE INSERT ON Person"
+        + " FOR EACH ROW"
+        + " BEGIN"
+        + " IF EXISTS"
+        + " (SELECT 1 FROM Person WHERE"
+        + " new.SurName = '' ) THEN"
+        + " BEGIN"
+        + " SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'Person does not have SurName.';"
+        + " END;"
+        + " END IF;"
+        + " END;";
+
+    String createTriggerPersonSurNameUpdateSQL = "CREATE TRIGGER IF NOT EXISTS update_has_surname BEFORE UPDATE ON Person"
+        + " FOR EACH ROW"
+        + " BEGIN"
+        + " IF EXISTS"
+        + " (SELECT 1 FROM Person WHERE"
+        + " new.SurName = '' ) THEN"
+        + " BEGIN"
+        + " SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'Person does not have SurName.';"
+        + " END;"
+        + " END IF;"
+        + " END;" ;
 
     String createTriggerProjectName = "CREATE TRIGGER IF NOT EXISTS project_name BEFORE INSERT ON Poised"
         + " FOR EACH ROW"
@@ -103,6 +127,8 @@ public class MysqlHandler {
             this.statement.executeUpdate(this.createPoisedTableSQL);
             this.statement.executeUpdate(this.createTriggerSQL);
             this.statement.executeUpdate(this.createTriggerProjectName);
+            this.statement.executeUpdate(this.createTriggerPersonSurNameInsertSQL);
+            this.statement.executeUpdate(this.createTriggerPersonSurNameUpdateSQL);
         } catch (SQLException e) {
             // We only want to catch a SQLException - anything else is off-limits for now.
             e.printStackTrace();
@@ -120,26 +146,23 @@ public class MysqlHandler {
         }
     }
     
-    void insertPersonRecord(
+    void insertPersonRecord (
             String firstName,
             String surName,
             String telePhone,
             String emailAddress,
-            String physicalAddress ) {
-        try {
-            String sqlStr = "INSERT INTO Person ( FirstName, SurName, "
-                + "Telephone, EmailAddress, PhysicalAddress ) "
-                + "VALUES (" 
-                + "'" + firstName + "', "
-                + "'" + surName + "', "
-                + "'" + telePhone + "', "
-                + "'" + emailAddress + "', "
-                + "'" + physicalAddress + "' "
-                + ")";
-            this.statement.executeUpdate(sqlStr);
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
+            String physicalAddress ) throws SQLException {
+
+        String sqlStr = "INSERT INTO Person ( FirstName, SurName, "
+            + "Telephone, EmailAddress, PhysicalAddress ) "
+            + "VALUES (" 
+            + "'" + firstName + "', "
+            + "'" + surName + "', "
+            + "'" + telePhone + "', "
+            + "'" + emailAddress + "', "
+            + "'" + physicalAddress + "' "
+            + ")";
+        this.statement.executeUpdate(sqlStr);
     }
     
     Vector<Vector<String>> selectPersonRecord() {
