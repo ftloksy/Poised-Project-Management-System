@@ -43,4 +43,13 @@ public class PersonEditor extends JPanel {
         super.add(this.physicalAddressLabel);
         super.add(this.physicalAddressText); 
     }
+    
+    void resetField() {
+        this.idText.setText("Id");
+        this.firstNameText.setText("");
+        this.surNameText.setText("");
+        this.telephoneText.setText("");
+        this.emalAddressText.setText("");
+        this.physicalAddressText.setText("");
+    }
 }

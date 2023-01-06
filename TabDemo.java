@@ -3,7 +3,7 @@ import javax.swing.*;
 import javax.swing.event.*;
 
 public class TabDemo {
-    final static String PersonTabTilte = "Insert to Person";
+    final static String PersonTabTilte = "Person";
     final static String BUTTONPANEL = "Tab with JButtons";
     TabChangeListener changeListener ;
     ButtonCard card1 = new ButtonCard();

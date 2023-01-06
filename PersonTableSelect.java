@@ -11,7 +11,6 @@ public class PersonTableSelect implements ListSelectionListener {
         try {
             Integer selectIndex;
             selectIndex = this.mainFrame.demo.personInsert.dbTable.getSelectedRow();
-            //System.out.println( (String)sqlTableModel.getValueAt(i, 1));
             this.mainFrame.demo.personInsert.dbEditor.idText.setText( 
                 (String)this.mainFrame.demo.personInsert.dbTable.personModel.getValueAt(selectIndex, 0) );
             this.mainFrame.demo.personInsert.dbEditor.firstNameText.setText( 
@@ -25,12 +24,7 @@ public class PersonTableSelect implements ListSelectionListener {
             this.mainFrame.demo.personInsert.dbEditor.physicalAddressText.setText( 
                 (String)this.mainFrame.demo.personInsert.dbTable.personModel.getValueAt(selectIndex, 5) );
         } catch (ArrayIndexOutOfBoundsException g){
-            this.mainFrame.demo.personInsert.dbEditor.firstNameText.setText( "Id" );
-            this.mainFrame.demo.personInsert.dbEditor.firstNameText.setText( null );
-            this.mainFrame.demo.personInsert.dbEditor.surNameText.setText( null );
-            this.mainFrame.demo.personInsert.dbEditor.telephoneText.setText( null );
-            this.mainFrame.demo.personInsert.dbEditor.emalAddressText.setText( null );
-            this.mainFrame.demo.personInsert.dbEditor.physicalAddressText.setText( null );
+            this.mainFrame.demo.personInsert.dbEditor.resetField();
         }
     }
 }

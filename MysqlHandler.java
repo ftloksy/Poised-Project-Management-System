@@ -165,6 +165,47 @@ public class MysqlHandler {
         this.statement.executeUpdate(sqlStr);
     }
     
+    void deletePerson (String id) throws SQLException {
+        String sqlStr = "DELETE FROM Person"
+            + " WHERE id ="
+            + " '" + id + "'" ;
+        this.statement.executeUpdate(sqlStr); 
+    }
+    
+    void updatePersonRecord (
+            String id,
+            String firstName,
+            String surName,
+            String telePhone,
+            String emailAddress,
+            String physicalAddress    
+        ) throws SQLException {
+        String sqlStr = "UPDATE Person SET"
+            + " FirstName = '" + firstName + "',"
+            + " SurName = '" + surName + "',"
+            + " Telephone = '" + telePhone + "',"
+            + " EmailAddress = '" + emailAddress + "',"
+            + " PhysicalAddress = '" + physicalAddress + "'"
+            + " WHERE id = '" + id + "'";
+        this.statement.executeUpdate(sqlStr); 
+    }
+    
+    Vector<Vector<String>> searchPersonRecord(
+            String firstName,
+            String surName,
+            String telePhone,
+            String emailAddress,
+            String physicalAddress      
+        ) {
+        return makeRow( "SELECT * FROM Person WHERE"
+                    + " FirstName like '%" + firstName + "%'"
+                    + " AND SurName like '%" + surName + "%' "
+                    + " AND Telephone like '%" + telePhone + "%' "
+                    + " AND EmailAddress like '%" + emailAddress + "%' "
+                    + " AND PhysicalAddress like '%" + physicalAddress + "%' "
+            );
+    }
+    
     Vector<Vector<String>> selectPersonRecord() {
         return this.makeRow( this.selectPerson );
     }
@@ -174,6 +215,7 @@ public class MysqlHandler {
 
         try {
             ResultSet rs = this.statement.executeQuery( sqlString );
+            
             while( rs.next() ){
                 Vector<String> resultRow = new Vector<>();
                 resultRow.add( Integer.toString(rs.getInt("id")) );
@@ -184,6 +226,7 @@ public class MysqlHandler {
                 resultRow.add( rs.getString("PhysicalAddress") );
                 resultVector.add(resultRow);
             }
+            
         }catch ( SQLException e) {
             e.printStackTrace();
         }
