@@ -13,7 +13,7 @@ public class ListenerLab implements ActionListener {
     public void actionPerformed(ActionEvent e)
     {
         int tabIndex = this.mainFrame.demo.tabbedPane.getSelectedIndex();
-        String sText = this.mainFrame.demo.personInsert.surNameText.getText();
+        String sText = this.mainFrame.demo.personInsert.dbEditor.surNameText.getText();
         this.mainFrame.PosieDatabaseMenu.listAllItem.setText("Lab Test " + tabIndex + " " + sText );
         
     }

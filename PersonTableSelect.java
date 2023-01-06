@@ -12,22 +12,25 @@ public class PersonTableSelect implements ListSelectionListener {
             Integer selectIndex;
             selectIndex = this.mainFrame.demo.personInsert.dbTable.getSelectedRow();
             //System.out.println( (String)sqlTableModel.getValueAt(i, 1));
-            this.mainFrame.demo.personInsert.firstNameText.setText( 
+            this.mainFrame.demo.personInsert.dbEditor.idText.setText( 
+                (String)this.mainFrame.demo.personInsert.dbTable.personModel.getValueAt(selectIndex, 0) );
+            this.mainFrame.demo.personInsert.dbEditor.firstNameText.setText( 
                 (String)this.mainFrame.demo.personInsert.dbTable.personModel.getValueAt(selectIndex, 1) );
-            this.mainFrame.demo.personInsert.surNameText.setText( (
+            this.mainFrame.demo.personInsert.dbEditor.surNameText.setText( (
                 String)this.mainFrame.demo.personInsert.dbTable.personModel.getValueAt(selectIndex, 2) );
-            this.mainFrame.demo.personInsert.telephoneText.setText( 
+            this.mainFrame.demo.personInsert.dbEditor.telephoneText.setText( 
                 (String)this.mainFrame.demo.personInsert.dbTable.personModel.getValueAt(selectIndex, 3) );
-            this.mainFrame.demo.personInsert.emalAddressText.setText( 
+            this.mainFrame.demo.personInsert.dbEditor.emalAddressText.setText( 
                 (String)this.mainFrame.demo.personInsert.dbTable.personModel.getValueAt(selectIndex, 4) );
-            this.mainFrame.demo.personInsert.physicalAddressText.setText( 
+            this.mainFrame.demo.personInsert.dbEditor.physicalAddressText.setText( 
                 (String)this.mainFrame.demo.personInsert.dbTable.personModel.getValueAt(selectIndex, 5) );
         } catch (ArrayIndexOutOfBoundsException g){
-            this.mainFrame.demo.personInsert.firstNameText.setText( null );
-            this.mainFrame.demo.personInsert.surNameText.setText( null );
-            this.mainFrame.demo.personInsert.telephoneText.setText( null );
-            this.mainFrame.demo.personInsert.emalAddressText.setText( null );
-            this.mainFrame.demo.personInsert.physicalAddressText.setText( null );
+            this.mainFrame.demo.personInsert.dbEditor.firstNameText.setText( "Id" );
+            this.mainFrame.demo.personInsert.dbEditor.firstNameText.setText( null );
+            this.mainFrame.demo.personInsert.dbEditor.surNameText.setText( null );
+            this.mainFrame.demo.personInsert.dbEditor.telephoneText.setText( null );
+            this.mainFrame.demo.personInsert.dbEditor.emalAddressText.setText( null );
+            this.mainFrame.demo.personInsert.dbEditor.physicalAddressText.setText( null );
         }
     }
 }

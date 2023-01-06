@@ -47,7 +47,12 @@ public class PersonTable extends JTable {
         this.tableHeader.add("EmailAddress");
         this.tableHeader.add("PhysicalAddress");
 
-        this.personModel = new DefaultTableModel( this.dbHandler.selectPersonRecord() ,this.tableHeader);
+        this.personModel = new DefaultTableModel( this.dbHandler.selectPersonRecord() ,this.tableHeader) {
+            public boolean isCellEditable(int rowIndex, int mColIndex) {
+                return false;
+            };
+        };
+        
         super.setModel(this.personModel);
         super.getSelectionModel().addListSelectionListener(personTbSelect);
     }
