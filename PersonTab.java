@@ -3,14 +3,14 @@ import javax.swing.*;
 import javax.swing.table.*;
 import java.util.Vector ;
 
-public class PersonInsert extends JPanel {
+public class PersonTab extends JPanel {
     
-    TabFrame mainFrame;
+    PmsFrame mainFrame;
     JScrollPane dbScroll ;
     PersonTable dbTable ;
     PersonEditor dbEditor ;
     
-    PersonInsert(TabFrame motherFrame, MysqlHandler dbPosie) { super();
+    PersonTab(PmsFrame motherFrame, MysqlHandler dbPosie) { super();
         
         dbEditor = new PersonEditor();
         super.setLayout(new BorderLayout());
@@ -20,5 +20,4 @@ public class PersonInsert extends JPanel {
         super.add( this.dbScroll, BorderLayout.CENTER );
         this.mainFrame = motherFrame;
     }
-    
 }

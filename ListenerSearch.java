@@ -1,34 +1,42 @@
 import javax.swing.event.*;
+import javax.swing.*;
 import java.awt.event.*;
 import java.sql.* ;
 import java.util.Vector;
 
 public class ListenerSearch implements ActionListener {
-    TabFrame mainFrame;
+    PmsFrame mainFrame;
     MysqlHandler dbHandler;
+    JTabbedPane tabPane;
+    PersonEditor personDbEditor;
+    PersonTable personTable;
     
-    ListenerSearch (TabFrame motherFrame, MysqlHandler dbPosie){
+    ListenerSearch (PmsFrame motherFrame, MysqlHandler dbPosie){
         this.mainFrame = motherFrame ;
         this.dbHandler = dbPosie ;
     }
 
     public void actionPerformed(ActionEvent e)
     {
+        this.tabPane = this.mainFrame.pmsTab.tabbedPane ;
+        this.personDbEditor = this.mainFrame.pmsTab.personTab.dbEditor ;
+        this.personTable = this.mainFrame.pmsTab.personTab.dbTable ;
+        
         this.mainFrame.msgArea.setText("");
-        int index = this.mainFrame.demo.tabbedPane.getSelectedIndex();
+        int index = this.tabPane.getSelectedIndex();
         switch ( index ) {
             case 0:
 
                 Vector<Vector<String>> searchResult = this.dbHandler.searchPersonRecord(
-                    this.mainFrame.demo.personInsert.dbEditor.firstNameText.getText(),
-                    this.mainFrame.demo.personInsert.dbEditor.surNameText.getText(),
-                    this.mainFrame.demo.personInsert.dbEditor.telephoneText.getText(),
-                    this.mainFrame.demo.personInsert.dbEditor.emalAddressText.getText(),
-                    this.mainFrame.demo.personInsert.dbEditor.physicalAddressText.getText()
+                    this.personDbEditor.firstNameText.getText(),
+                    this.personDbEditor.surNameText.getText(),
+                    this.personDbEditor.telephoneText.getText(),
+                    this.personDbEditor.emalAddressText.getText(),
+                    this.personDbEditor.physicalAddressText.getText()
                 );
                 this.mainFrame.msgArea.setText("Search is Complete.");
-                this.mainFrame.demo.personInsert.dbEditor.resetField();
-                this.mainFrame.demo.personInsert.dbTable.reNewTable( searchResult );
+                this.personDbEditor.resetField();
+                this.personTable.reNewTable( searchResult );
 
                 break;
             case 1:

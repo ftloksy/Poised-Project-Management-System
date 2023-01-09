@@ -3,13 +3,14 @@ import javax.swing.*;
 import javax.swing.event.*;
 
 public class TabChangeListener implements ChangeListener {
-    TabFrame mainFrame;
-    //MenuHandler dbMenu ;
+    PmsFrame mainFrame;
+    MenuHandler dbMenu;
+
     
-    TabChangeListener(TabFrame motherFrame) {
+    TabChangeListener(PmsFrame motherFrame) {
         super();
         this.mainFrame = motherFrame;
-        //this.dbMenu = this.mainFrame.PosieDatabaseMenu ;
+	this.dbMenu = motherFrame.dbMenu;
     }
 
     public void stateChanged(ChangeEvent changeEvent) {
@@ -17,23 +18,21 @@ public class TabChangeListener implements ChangeListener {
         int index = sourceTabbedPane.getSelectedIndex();
         switch ( index ) {
             case 0:
-                this.mainFrame.PosieDatabaseMenu.clearItem.setText("Clear Person");
-                this.mainFrame.PosieDatabaseMenu.enterItem.setText("Enter Person");
-                this.mainFrame.PosieDatabaseMenu.updateItem.setText("Update Person");
-                this.mainFrame.PosieDatabaseMenu.deleteItem.setText("Delete Person");
-                this.mainFrame.PosieDatabaseMenu.searchItem.setText("Search Person");
-                this.mainFrame.PosieDatabaseMenu.listAllItem.setText("ListAll Person");
+                this.dbMenu.clearItem.setText("Clear Person");
+                this.dbMenu.enterItem.setText("Enter Person");
+                this.dbMenu.updateItem.setText("Update Person");
+                this.dbMenu.deleteItem.setText("Delete Person");
+                this.dbMenu.searchItem.setText("Search Person");
+                this.dbMenu.listAllItem.setText("ListAll Person");
                 break;
             case 1:
-                this.mainFrame.PosieDatabaseMenu.clearItem.setText("Clear Poised");
-                this.mainFrame.PosieDatabaseMenu.enterItem.setText("Enter Poised");
-                this.mainFrame.PosieDatabaseMenu.updateItem.setText("Update Poised");
-                this.mainFrame.PosieDatabaseMenu.deleteItem.setText("Delete Poised");
-                this.mainFrame.PosieDatabaseMenu.searchItem.setText("Search Poised");
-                this.mainFrame.PosieDatabaseMenu.listAllItem.setText("ListAll Poised");
+                this.dbMenu.clearItem.setText("Clear Poised");
+                this.dbMenu.enterItem.setText("Enter Poised");
+                this.dbMenu.updateItem.setText("Update Poised");
+                this.dbMenu.deleteItem.setText("Delete Poised");
+                this.dbMenu.searchItem.setText("Search Poised");
+                this.dbMenu.listAllItem.setText("ListAll Poised");
                 break;
         }
-        //System.out.println("Tab changed to: " + sourceTabbedPane.getTitleAt(index));
-        //System.out.println("Tab changed to [INDEX]: " + index);
     }
 }

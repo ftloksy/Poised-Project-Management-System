@@ -4,17 +4,20 @@ import javax.swing.event.*;
 import java.awt.event.*;
 
 public class ListenerClear implements ActionListener {
-    TabFrame mainFrame;
+    PmsFrame mainFrame;
+    JTabbedPane tabPane;
+    PersonEditor personDbEditor;
     
-    ListenerClear(TabFrame motherFrame){
+    ListenerClear(PmsFrame motherFrame){
         this.mainFrame = motherFrame ;
     }
 
     public void actionPerformed(ActionEvent e)
     {
-        int tabIndex = this.mainFrame.demo.tabbedPane.getSelectedIndex();
-        this.mainFrame.demo.personInsert.dbEditor.resetField();
+        this.tabPane = this.mainFrame.pmsTab.tabbedPane ;
+        int tabIndex = this.tabPane.getSelectedIndex();
+        this.personDbEditor = this.mainFrame.pmsTab.personTab.dbEditor ;
+        this.personDbEditor.resetField();
         this.mainFrame.msgArea.setText("");
-        
     }
 }

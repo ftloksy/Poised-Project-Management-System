@@ -18,7 +18,7 @@ public class MenuHandler extends JMenuBar {
     ListenerSearch searchListener;
     ListenerListAll listAllListener;
     
-    MenuHandler (TabFrame motherFrame, MysqlHandler dbPosie) {
+    MenuHandler (PmsFrame motherFrame, MysqlHandler dbPosie) {
         super();
         //this.mainFrame = motherFrame;
         super.add( this.clearItem );

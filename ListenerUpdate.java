@@ -1,35 +1,43 @@
 import javax.swing.event.*;
+import javax.swing.*;
 import java.awt.event.*;
 import java.sql.* ;
 
 public class ListenerUpdate implements ActionListener {
-    TabFrame mainFrame;
+    PmsFrame mainFrame;
     MysqlHandler dbHandler;
+    JTabbedPane tabPane;
+    PersonEditor personDbEditor;
+    PersonTable personTable;
     
-    ListenerUpdate(TabFrame motherFrame, MysqlHandler dbPosie){
+    ListenerUpdate(PmsFrame motherFrame, MysqlHandler dbPosie){
         this.mainFrame = motherFrame ;
         this.dbHandler = dbPosie ;
     }
 
     public void actionPerformed(ActionEvent e)
     {
+        this.tabPane = this.mainFrame.pmsTab.tabbedPane ;
+        this.personDbEditor = this.mainFrame.pmsTab.personTab.dbEditor ;
+        this.personTable = this.mainFrame.pmsTab.personTab.dbTable ;
+        
         this.mainFrame.msgArea.setText("");
-        int index = this.mainFrame.demo.tabbedPane.getSelectedIndex();
+        int index = this.tabPane.getSelectedIndex();
         switch ( index ) {
             case 0:
                 try {
                     this.dbHandler.updatePersonRecord(
-                        this.mainFrame.demo.personInsert.dbEditor.idText.getText(),
-                        this.mainFrame.demo.personInsert.dbEditor.firstNameText.getText(),
-                        this.mainFrame.demo.personInsert.dbEditor.surNameText.getText(),
-                        this.mainFrame.demo.personInsert.dbEditor.telephoneText.getText(),
-                        this.mainFrame.demo.personInsert.dbEditor.emalAddressText.getText(),
-                        this.mainFrame.demo.personInsert.dbEditor.physicalAddressText.getText()
+                        this.personDbEditor.idText.getText(),
+                        this.personDbEditor.firstNameText.getText(),
+                        this.personDbEditor.surNameText.getText(),
+                        this.personDbEditor.telephoneText.getText(),
+                        this.personDbEditor.emalAddressText.getText(),
+                        this.personDbEditor.physicalAddressText.getText()
                     );
 ;
                     this.mainFrame.msgArea.setText("Update is Success.");
-                    this.mainFrame.demo.personInsert.dbEditor.resetField();
-                    this.mainFrame.demo.personInsert.dbTable.flashTable();
+                    this.personDbEditor.resetField();
+                    this.personTable.flashTable();
                 } catch (SQLException pe) {
                     String sqlCode = pe.getSQLState();
                     if ( sqlCode.equals("22001") ) {
@@ -38,9 +46,6 @@ public class ListenerUpdate implements ActionListener {
                     } else {
                         this.mainFrame.msgArea.setText(pe.getMessage());
                     }
-                    
-                    //this.mainFrame.msgArea.setText(pe.getMessage());
-                    //this.mainFrame.msgArea.setText(pe.getSQLState());
                 }
                 break;
             case 1:

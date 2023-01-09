@@ -1,5 +1,6 @@
 import java.sql.*;
 import java.util.Vector;
+//import java.util.ArrayList;
 
 /*
  * This class is handle mysql require.
@@ -12,13 +13,29 @@ public class MysqlHandler {
     /* Create table */
     /* I think need first create a customer in Person then can create the Poised */
     String createProjectTableSQL = "CREATE TABLE IF NOT EXISTS Project ("
-        + " PersonRole ENUM('Architect',"
-        + " 'Contractor', 'Customer', 'ProjectManager',"
-        + " 'StructuralEngineer') NOT NULL,"
-        + " ProjectNumber int(6) ZEROFILL NOT NULL,"
-        + " PersonId int(6) UNSIGNED, "
-        + " FOREIGN KEY (PersonId) REFERENCES Person(id),"
-        + " PRIMARY KEY (ProjectNumber, PersonRole))";
+        + " ProjectNumber int(6) ZEROFILL NOT NULL AUTO_INCREMENT,"
+        + " ERFNumber int(6) UNSIGNED,"
+        + " ProjectName varchar(50),"  // Project name.
+        + " Deadline DATE,"          // The total amount paid to date
+        + " FeeCharged int(6)," // The total fee being charged for the project.
+        + " PaidToDate int(6),"        // The total amount paid to date.
+
+        + " BuildingType ENUM('House', 'Apartment',"
+        + " 'Block', 'Store') NOT NULL," // What type of building is being designed?
+                                       // E.g. House, apartment block or store, etc.
+
+        + " ArchitectPId int(6) UNSIGNED,"
+        + " ContractorPId int(6) UNSIGNED,"
+        + " CustomerPId int(6) UNSIGNED,"
+        + " ProjectManagerPId int(6) UNSIGNED,"
+        + " StructuralEngineerPId int(6) UNSIGNED,"
+
+        + " PRIMARY KEY (ProjectNumber),"
+        + " FOREIGN KEY (ArchitectPId) REFERENCES Person(id),"
+        + " FOREIGN KEY (ContractorPId) REFERENCES Person(id),"
+        + " FOREIGN KEY (CustomerPId) REFERENCES Person(id),"
+        + " FOREIGN KEY (ProjectManagerPId) REFERENCES Person(id),"
+        + " FOREIGN KEY (StructuralEngineerPId) REFERENCES Person(id))";
 
     String createPersonTableSQL = "CREATE TABLE IF NOT EXISTS Person ("
         + " id int(6) ZEROFILL NOT NULL AUTO_INCREMENT,"
@@ -29,30 +46,27 @@ public class MysqlHandler {
         + " PhysicalAddress varchar(50),"  // Architect Physical Address name.
         + " PRIMARY KEY (id))";
 
-    String createPoisedTableSQL = "CREATE TABLE IF NOT EXISTS Poised ("
-        + " ProjectNumber int(6) ZEROFILL NOT NULL,"  // Project number.
-        + " ProjectName varchar(50),"  // Project name.
-        + " TypeBuilding ENUM('House', 'Apartment',"
-        + " 'Block', 'Store') NOT NULL," // What type of building is being designed?
-                                       // E.g. House, apartment block or store, etc.
-        + " PhysicalAddress varchar(200),"   // The physical address for the project.
-        + " ERFNumber int(6),"         // ERF number.
-        + " FeeChargedProject int(6)," // The total fee being charged for the project.
-        + " PaidToDate int(6),"        // The total amount paid to date.
-        + " Deadline DATE,"          // The total amount paid to date.
-        + " PRIMARY KEY (ProjectNumber))";
+    //String createPoisedTableSQL = "CREATE TABLE IF NOT EXISTS Poised ("
+        //+ " ERFNumber int(6) ZEROFILL NOT NULL AUTO_INCREMENT,"         // ERF number.
+        //+ " ProjectNumber int(6) UNSIGNED,"  // Project number.
 
-    String createTriggerSQL = "CREATE TRIGGER IF NOT EXISTS has_customer BEFORE INSERT ON Poised"
-        + " FOR EACH ROW"
-        + " BEGIN"
-        + " IF NOT EXISTS"
-        + " (SELECT 1 FROM Project WHERE"
-        + " ProjectNumber = new.ProjectNumber and PersonRole = 'Customer' ) THEN"
-        + " BEGIN"
-        + " SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'Project does not have Customer.';"
-        + " END;"
-        + " END IF;"
-        + " END;" ;
+        //+ " PhysicalAddress varchar(200),"   // The physical address for the project.
+
+//.
+        //+ " FOREIGN KEY (ProjectNumber) REFERENCES Project(ProjectNumber),"
+        //+ " PRIMARY KEY (ERFNumber))";
+
+    //String createTriggerSQL = "CREATE TRIGGER IF NOT EXISTS has_customer BEFORE INSERT ON Poised"
+        //+ " FOR EACH ROW"
+        //+ " BEGIN"
+        //+ " IF NOT EXISTS"
+        //+ " (SELECT 1 FROM Project WHERE"
+        //+ " ProjectNumber = new.ProjectNumber and PersonRole = 'Customer' ) THEN"
+        //+ " BEGIN"
+        //+ " SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'Project does not have Customer.';"
+        //+ " END;"
+        //+ " END IF;"
+        //+ " END;" ;
         
     String createTriggerPersonSurNameInsertSQL = "CREATE TRIGGER IF NOT EXISTS insert_has_surname BEFORE INSERT ON Person"
         + " FOR EACH ROW"
@@ -61,7 +75,7 @@ public class MysqlHandler {
         + " (SELECT 1 FROM Person WHERE"
         + " new.SurName = '' ) THEN"
         + " BEGIN"
-        + " SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'Person does not have SurName.';"
+        + " SIGNAL SQLSTATE '45011' SET MESSAGE_TEXT = 'Person does not have SurName.';"
         + " END;"
         + " END IF;"
         + " END;";
@@ -73,39 +87,41 @@ public class MysqlHandler {
         + " (SELECT 1 FROM Person WHERE"
         + " new.SurName = '' ) THEN"
         + " BEGIN"
-        + " SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'Person does not have SurName.';"
+        + " SIGNAL SQLSTATE '45012' SET MESSAGE_TEXT = 'Person does not have SurName.';"
         + " END;"
         + " END IF;"
         + " END;" ;
+        
+    String selectPersonTag = "SELECT CONCAT( id, ': ', FirstName, ' ', SurName ) AS Result FROM Person" ;
 
-    String createTriggerProjectName = "CREATE TRIGGER IF NOT EXISTS project_name BEFORE INSERT ON Poised"
-        + " FOR EACH ROW"
-        + " BEGIN"
-        + " IF new.ProjectName IS NULL THEN"
-        + " BEGIN"
-        + " SET new.ProjectName = "
-        + " ( SELECT CONCAT ("
-        + " new.TypeBuilding"
-        + " , ' ', "
-        + " (SELECT SurName from Person where"
-        + " id = ( select PersonId from Project where ProjectNumber = new.ProjectNumber "
-        + " and PersonRole = 'Customer' )"
-        + " )));"
-        + " SET new.ProjectName ="
-        + " ( SELECT CONCAT (new.ProjectName,"
-        + "  ' ',"
-        + " ( SELECT count(ProjectName) FROM Poised"
-        + " WHERE ProjectName LIKE CONCAT ( new.ProjectName , '%') ) ));"
-        + " END;"
-        + " END IF;"
-        + " END;" ;
+    //String createTriggerProjectName = "CREATE TRIGGER IF NOT EXISTS project_name BEFORE INSERT ON Poised"
+        //+ " FOR EACH ROW"
+        //+ " BEGIN"
+        //+ " IF new.ProjectName IS NULL THEN"
+        //+ " BEGIN"
+        //+ " SET new.ProjectName = "
+        //+ " ( SELECT CONCAT ("
+        //+ " new.TypeBuilding"
+        //+ " , ' ', "
+        //+ " (SELECT SurName from Person where"
+        //+ " id = ( select PersonId from Project where ProjectNumber = new.ProjectNumber "
+        //+ " and PersonRole = 'Customer' )"
+        //+ " )));"
+        //+ " SET new.ProjectName ="
+        //+ " ( SELECT CONCAT (new.ProjectName,"
+        //+ "  ' ',"
+        //+ " ( SELECT count(ProjectName) FROM Poised"
+        //+ " WHERE ProjectName LIKE CONCAT ( new.ProjectName , '%') ) ));"
+        //+ " END;"
+        //+ " END IF;"
+        //+ " END;" ;
 
     String insertPersonSQL = "INSERT INTO Person ( SurName )"
         + " VALUES ( 'Chow' ), ( 'Chan' )";
-    String insertProjectSQL = "INSERT INTO Project (PersonRole, ProjectNumber, PersonId) "
-        + " VALUES ( 'Customer', 1, 1 ), ( 'Customer', 2, 2 )";
-    String insertSQL = "INSERT INTO Poised ( TypeBuilding, ProjectNumber ) VALUES "
-        + " ( 'House', 1 ), ( 'House', 2 )";
+    //String insertProjectSQL = "INSERT INTO Project (PersonRole, ProjectNumber, PersonId) "
+        //+ " VALUES ( 'Customer', 1, 1 ), ( 'Customer', 2, 2 )";
+    //String insertSQL = "INSERT INTO Poised ( TypeBuilding, ProjectNumber ) VALUES "
+        //+ " ( 'House', 1 ), ( 'House', 2 )";
         
     String selectPerson = "SELECT  id, FirstName, SurName, Telephone, EmailAddress, PhysicalAddress"
         + " FROM Person";
@@ -124,9 +140,9 @@ public class MysqlHandler {
 
             this.statement.executeUpdate(this.createPersonTableSQL);
             this.statement.executeUpdate(this.createProjectTableSQL);
-            this.statement.executeUpdate(this.createPoisedTableSQL);
-            this.statement.executeUpdate(this.createTriggerSQL);
-            this.statement.executeUpdate(this.createTriggerProjectName);
+            //this.statement.executeUpdate(this.createPoisedTableSQL);
+            //this.statement.executeUpdate(this.createTriggerSQL);
+            //this.statement.executeUpdate(this.createTriggerProjectName);
             this.statement.executeUpdate(this.createTriggerPersonSurNameInsertSQL);
             this.statement.executeUpdate(this.createTriggerPersonSurNameUpdateSQL);
         } catch (SQLException e) {
@@ -139,11 +155,28 @@ public class MysqlHandler {
     void insertIntRecord() {
         try {
             this.statement.executeUpdate(this.insertPersonSQL);
-            this.statement.executeUpdate(this.insertProjectSQL);
-            this.statement.executeUpdate(this.insertSQL);
+            //this.statement.executeUpdate(this.insertProjectSQL);
+            //this.statement.executeUpdate(this.insertSQL);
         } catch (SQLException e) {
             e.printStackTrace();
         }
+    }
+    
+    Vector<String> getPersonList() throws SQLException {
+        return this.getResultList( this.selectPersonTag );
+    }
+    
+    Vector<String> getResultList(String sqlString) throws SQLException {
+        
+        ResultSet rs = this.statement.executeQuery( sqlString );
+        Vector<String> personTagList = new Vector<>();
+        
+        while( rs.next() ){
+            personTagList.add( rs.getString("Result") );
+        }
+        
+        return personTagList;
+            
     }
     
     void insertPersonRecord (

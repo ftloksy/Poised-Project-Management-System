@@ -1,43 +1,44 @@
 import javax.swing.event.*;
 import java.awt.event.*;
+import javax.swing.* ;
 import java.sql.* ;
 
 public class ListenerEnter implements ActionListener {
-    TabFrame mainFrame;
+    PmsFrame mainFrame;
     MysqlHandler dbHandler;
+    JTabbedPane tabPane;
+    PersonEditor personDbEditor;
+    PersonTable personTable;
     
-    ListenerEnter(TabFrame motherFrame, MysqlHandler dbPosie){
+    ListenerEnter(PmsFrame motherFrame, MysqlHandler dbPosie){
         this.mainFrame = motherFrame ;
         this.dbHandler = dbPosie ;
     }
 
     public void actionPerformed(ActionEvent e)
     {
+        this.tabPane = this.mainFrame.pmsTab.tabbedPane ;
+        this.personDbEditor = this.mainFrame.pmsTab.personTab.dbEditor ;
+        this.personTable = this.mainFrame.pmsTab.personTab.dbTable ;
+        
         this.mainFrame.msgArea.setText("");
-        int index = this.mainFrame.demo.tabbedPane.getSelectedIndex();
+        int index = this.tabPane.getSelectedIndex();
         switch ( index ) {
             case 0:
                 try {
                     this.dbHandler.insertPersonRecord(
-                        this.mainFrame.demo.personInsert.dbEditor.firstNameText.getText(),
-                        this.mainFrame.demo.personInsert.dbEditor.surNameText.getText(),
-                        this.mainFrame.demo.personInsert.dbEditor.telephoneText.getText(),
-                        this.mainFrame.demo.personInsert.dbEditor.emalAddressText.getText(),
-                        this.mainFrame.demo.personInsert.dbEditor.physicalAddressText.getText()
+                        this.personDbEditor.firstNameText.getText(),
+                        this.personDbEditor.surNameText.getText(),
+                        this.personDbEditor.telephoneText.getText(),
+                        this.personDbEditor.emalAddressText.getText(),
+                        this.personDbEditor.physicalAddressText.getText()
                     );
                     this.mainFrame.msgArea.setText("INSERT is Success.");
-                    this.mainFrame.demo.personInsert.dbEditor.resetField();
-                    this.mainFrame.demo.personInsert.dbTable.flashTable();
+                    this.personDbEditor.resetField();
+                    this.personTable.flashTable();
                 } catch (SQLException pe) {
                     this.mainFrame.msgArea.setText(pe.getMessage());
                 }
-                //this.mainFrame.demo.personInsert.dbEditor.firstNameText.setText("FirstName");
-                //this.mainFrame.demo.personInsert.dbEditor.surNameText.setText("SurName");
-                //this.mainFrame.demo.personInsert.dbEditor.telephoneText.setText("Telephone");
-                //this.mainFrame.demo.personInsert.dbEditor.emalAddressText.setText("EmailAddress");
-                //this.mainFrame.demo.personInsert.dbEditor.physicalAddressText.setText("Address");
-                
-                //this.mainFrame.demo.personInsert.dbTable.flashTable();
                 break;
             case 1:
                 break;

@@ -1,19 +1,19 @@
 import java.awt.*;
 import javax.swing.*;
 
-public class TabFrame extends JFrame {
-    TabDemo demo;
-    MenuHandler PosieDatabaseMenu ;
+public class PmsFrame extends JFrame {
+    PmsTab pmsTab;
+    MenuHandler dbMenu ;
     JTextArea msgArea ;
     
-    TabFrame(MysqlHandler dbPosie) {
+    PmsFrame(MysqlHandler dbPosie) {
         super();
         super.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         super.setLayout(new BorderLayout());
-        this.demo = new TabDemo(this, dbPosie);
-        this.demo.addComponentToPane(super.getContentPane());
-        PosieDatabaseMenu = new MenuHandler(this, dbPosie);
-        super.setJMenuBar(PosieDatabaseMenu);
+        dbMenu = new MenuHandler(this, dbPosie);
+        this.pmsTab = new PmsTab(this, dbPosie);
+        this.pmsTab.addComponentToPane(super.getContentPane());
+        super.setJMenuBar(dbMenu);
         
         this.msgArea = new JTextArea(3, 40);
         this.msgArea.setEditable(false);
