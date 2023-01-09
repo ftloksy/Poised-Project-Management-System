@@ -3,14 +3,14 @@ import javax.swing.*;
 import javax.swing.table.*;
 import java.util.Vector ;
 
-public class PersonTable extends JTable {
+public class ProjectTable extends JTable {
     DefaultTableModel personModel;
     MysqlHandler dbHandler;
     Vector<String> tableHeader ;
-    PersonTableSelect personTbSelect ;
+    //PersonTableSelect personTbSelect ;
     PmsFrame mainFrame;
     
-    PersonTable(PmsFrame motherFrame, MysqlHandler dbPosie) {
+    ProjectTable(PmsFrame motherFrame, MysqlHandler dbPosie) {
         super();
         this.dbHandler = dbPosie ;
         this.mainFrame = motherFrame ;
@@ -20,17 +20,25 @@ public class PersonTable extends JTable {
     
     void createTableHeader() {
         Vector<String> headerTitle = new Vector<String>();
-        headerTitle.add("id");
-        headerTitle.add("FirstName");
-        headerTitle.add("SurName");
-        headerTitle.add("Telephone");
-        headerTitle.add("EmailAddress");
+        headerTitle.add("ProjectNumber");
+        headerTitle.add("ProjectName");
+        headerTitle.add("BuildingType");
         headerTitle.add("PhysicalAddress");
+        headerTitle.add("ERFNumber");
+        headerTitle.add("FeeCharged");
+        headerTitle.add("PaidToDate");
+        headerTitle.add("Deadline");
+        
+        headerTitle.add("ArchitectPId");
+        headerTitle.add("ContractorPId");
+        headerTitle.add("CustomerPId");
+        headerTitle.add("ProjectManagerPId");
+        headerTitle.add("StructuralEngineerPId");
         this.tableHeader = headerTitle ;
     }
     
     void flashTable () {
-        reNewTable ( this.dbHandler.selectPersonRecord() );
+        reNewTable ( this.dbHandler.selectProjectRecord() );
     }
     
     void reNewTable( Vector<Vector<String>>  dbRow ) {
@@ -39,24 +47,18 @@ public class PersonTable extends JTable {
     
     void createTable() {
         
-        this.personTbSelect = new PersonTableSelect(this.mainFrame);
+        //this.personTbSelect = new PersonTableSelect(this.mainFrame);
         
         this.tableHeader = new Vector<String>();
         this.createTableHeader();
-        //this.tableHeader.add("id");
-        //this.tableHeader.add("FirstName");
-        //this.tableHeader.add("SurName");
-        //this.tableHeader.add("Telephone");
-        //this.tableHeader.add("EmailAddress");
-        //this.tableHeader.add("PhysicalAddress");
 
-        this.personModel = new DefaultTableModel( this.dbHandler.selectPersonRecord() ,this.tableHeader) {
+        this.personModel = new DefaultTableModel( this.dbHandler.selectProjectRecord() ,this.tableHeader) {
             public boolean isCellEditable(int rowIndex, int mColIndex) {
                 return false;
             };
         };
         
         super.setModel(this.personModel);
-        super.getSelectionModel().addListSelectionListener(this.personTbSelect);
+        //super.getSelectionModel().addListSelectionListener(this.personTbSelect);
     }
 }

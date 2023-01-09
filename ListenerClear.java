@@ -15,9 +15,21 @@ public class ListenerClear implements ActionListener {
     public void actionPerformed(ActionEvent e)
     {
         this.tabPane = this.mainFrame.pmsTab.tabbedPane ;
-        int tabIndex = this.tabPane.getSelectedIndex();
-        this.personDbEditor = this.mainFrame.pmsTab.personTab.dbEditor ;
-        this.personDbEditor.resetField();
         this.mainFrame.msgArea.setText("");
+        int index = this.tabPane.getSelectedIndex();
+        switch ( index ) {
+            case 0:
+                this.tabPane = this.mainFrame.pmsTab.tabbedPane ;
+                int tabIndex = this.tabPane.getSelectedIndex();
+                this.personDbEditor = this.mainFrame.pmsTab.personTab.dbEditor ;
+                this.personDbEditor.resetField();
+                this.mainFrame.msgArea.setText("");
+                break;
+            case 1:
+                this.mainFrame.msgArea.setText("Clear Tab 1");
+                this.mainFrame.pmsTab.projectTab.dbEditor.resetField();
+                //this.mainFrame.pmsTab.projectTab.getPersonList();
+                break;
+        }
     }
 }

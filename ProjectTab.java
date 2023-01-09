@@ -4,11 +4,10 @@ import java.util.ArrayList ;
 import java.util.Vector ;
 import java.sql.* ;
 
+// http://www.java2s.com/Tutorial/Java/0240__Swing/StoringvalueinVectorandaddingthemintoJList.htm
+
 public class ProjectTab extends JPanel {
-    final static String week[] = { "Monday","Tuesday",
-        "Wednesday", "Thursday","Friday","Saturday","Sunday", "aa", "bb", "cc", "dd", "ee", "ff", "gg", "hh"} ;
-    Vector<String> weekList = new Vector<>();
-    final static String bdgType[] = { "House", "Apartment", "Block", "Store" };
+    final static String bdgTypeList[] = { "House", "Apartment", "Block", "Store" };
     final static int extraWindowWidth = 100;
     
     Vector<String> personList;
@@ -20,55 +19,49 @@ public class ProjectTab extends JPanel {
     JScrollPane dbScroll5 ;
     JScrollPane dbScroll6 ;
 
-    JList listLab;
-    JList listLab2;
-    JList listLab3;
-    JList listLab4;
-    JList listLab5;
-    JList listLab6;
+    JList bdgType;
+    JList setArchitect;
+    JList setContractor;
+    JList setCustomer;
+    JList setManager;
+    JList setEngineer;
     
-    void assignWeek() {
-        weekList.add("Monday");
-        weekList.add("Tuesday");
-        weekList.add("Webnesday");
-        weekList.add("Thursday");
-        weekList.add("Friday");
-        weekList.add("Saturday");
-        weekList.add("Sunday");
-        weekList.add("aa");
-        weekList.add("bb");
-        weekList.add("cc");
-        weekList.add("dd");
-    }
-
-    ProjectEditor projectEditor;
+    ProjectEditor dbEditor;
+    ProjectTable dbTable;
+    JScrollPane dbTableScroll;
     JPanel gChoice ;
+    
+    MysqlHandler dbHandler;
     
     ProjectTab(PmsFrame motherFrame, MysqlHandler dbPosie) {
         super();
         super.setLayout(new BorderLayout());
-        this.assignWeek();
-        try {
-            this.personList = dbPosie.getPersonList();
-        } catch ( SQLException e) {
-            e.printStackTrace();
-        };
-        String[] pList = this.personList.toArray(new String[this.personList.size()]);
-        
-        this.listLab = new JList<String>(pList);
-        //this.listLab = new JList<String>(this.weekList.toArray(new String[this.weekList.size()]));
-        this.listLab2 = new JList<String>(this.week);
-        this.listLab3 = new JList<String>(this.week);
-        this.listLab4 = new JList<String>(this.week);
-        this.listLab5 = new JList<String>(this.week);
-        this.listLab6 = new JList<String>(this.week);
+        //this.assignWeek();
+        this.dbHandler = dbPosie ;
 
-        this.dbScroll = new JScrollPane( this.listLab );
-        this.dbScroll2 = new JScrollPane( this.listLab2 );
-        this.dbScroll3 = new JScrollPane( this.listLab3 );
-        this.dbScroll4 = new JScrollPane( this.listLab4 );
-        this.dbScroll5 = new JScrollPane( this.listLab5 );
-        this.dbScroll6 = new JScrollPane( this.listLab6 );
+        this.createPersonList();
+        //try {
+            //this.personList = this.dbHandler.getPersonList();
+        //} catch ( SQLException e) {
+            //e.printStackTrace();
+        //};
+        //String[] pList = this.personList.toArray(new String[this.personList.size()]);
+        
+        //this.bdgType = new JList(bdgTypeList);
+        //this.setArchitect = new JList(pList);
+        //this.setContractor = new JList(pList);
+        //this.setCustomer = new JList(pList);
+        //this.setManager = new JList(pList);
+        //this.setEngineer = new JList(pList);
+        
+        ///////
+
+        this.dbScroll = new JScrollPane( this.bdgType);
+        this.dbScroll2 = new JScrollPane( this.setArchitect);
+        this.dbScroll3 = new JScrollPane( this.setContractor);
+        this.dbScroll4 = new JScrollPane( this.setCustomer);
+        this.dbScroll5 = new JScrollPane( this.setManager);
+        this.dbScroll6 = new JScrollPane( this.setEngineer);
 
         this.dbScroll.setRowHeaderView(new JLabel("Bdg Type"));
         this.dbScroll2.setRowHeaderView(new JLabel("Architect"));
@@ -77,7 +70,7 @@ public class ProjectTab extends JPanel {
         this.dbScroll5.setRowHeaderView(new JLabel("Manager"));
         this.dbScroll6.setRowHeaderView(new JLabel("Engineer"));
         
-        this.projectEditor = new ProjectEditor();
+        this.dbEditor = new ProjectEditor();
         
         this.gChoice = new JPanel();
         this.gChoice.setLayout(new GridLayout(3, 2, 10, 5)); 
@@ -89,14 +82,44 @@ public class ProjectTab extends JPanel {
         this.gChoice.add( this.dbScroll5 );
         this.gChoice.add( this.dbScroll6 );
         
-        super.add( this.gChoice, BorderLayout.CENTER);
-        super.add( this.projectEditor, BorderLayout.NORTH);
+        this.dbTable = new ProjectTable ( motherFrame, dbPosie );
+        this.dbTableScroll = new JScrollPane( this.dbTable );
+        
+        super.add( this.gChoice, BorderLayout.CENTER );
+        super.add( this.dbEditor, BorderLayout.NORTH );
+        super.add( this.dbTableScroll, BorderLayout.SOUTH );
     }
     
-    public Dimension getPreferredSize() {
-        Dimension size = super.getPreferredSize();
-        size.width += this.extraWindowWidth;
-        return size;
+    void createPersonList() {
+        try {
+            this.personList = this.dbHandler.getPersonList();
+        } catch ( SQLException e) {
+            e.printStackTrace();
+        };
+        String[] pList = this.personList.toArray(new String[this.personList.size()]);
+        
+        this.bdgType = new JList<String>(bdgTypeList);
+        //this.setArchitect = new JList<String>(pList);
+        this.setArchitect = new JList<String>(pList);
+        this.setContractor = new JList<String>(pList);
+        this.setCustomer = new JList<String>(pList);
+        this.setManager = new JList<String>(pList);
+        this.setEngineer = new JList<String>(pList); 
     }
     
+    //void getPersonList() {
+        //try {
+            //this.personList = this.dbHandler.getPersonList();
+        //} catch ( SQLException e) {
+            //e.printStackTrace();
+        //};
+        //String[] pList = this.personList.toArray(new String[this.personList.size()]);
+        
+        //this.bdgType.setListData(bdgTypeList);
+        //this.setArchitect.setListData(pList);
+        //this.setContractor.setListData(pList);
+        //this.setCustomer.setListData(pList);
+        //this.setManager.setListData(pList);
+        //this.setEngineer.setListData(pList); 
+    //}
 }

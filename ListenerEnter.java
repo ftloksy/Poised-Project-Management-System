@@ -8,7 +8,9 @@ public class ListenerEnter implements ActionListener {
     MysqlHandler dbHandler;
     JTabbedPane tabPane;
     PersonEditor personDbEditor;
+    ProjectEditor projectEditor;
     PersonTable personTable;
+    ProjectTab projectTab ;
     
     ListenerEnter(PmsFrame motherFrame, MysqlHandler dbPosie){
         this.mainFrame = motherFrame ;
@@ -20,6 +22,8 @@ public class ListenerEnter implements ActionListener {
         this.tabPane = this.mainFrame.pmsTab.tabbedPane ;
         this.personDbEditor = this.mainFrame.pmsTab.personTab.dbEditor ;
         this.personTable = this.mainFrame.pmsTab.personTab.dbTable ;
+        this.projectTab = this.mainFrame.pmsTab.projectTab ;
+        this.projectEditor = this.mainFrame.pmsTab.projectTab.dbEditor ;
         
         this.mainFrame.msgArea.setText("");
         int index = this.tabPane.getSelectedIndex();
@@ -41,6 +45,42 @@ public class ListenerEnter implements ActionListener {
                 }
                 break;
             case 1:
+            
+                String projectNameVal = this.projectEditor.projectNameText.getText() ;
+                String physicalAddressVal = this.projectEditor.physicalAddressText.getText();
+                String erfNumberVal = this.projectEditor.erfNoText.getText() ;
+                String feeChargedVal = this.projectEditor.feeChargedText.getText() ;
+                String paidTodateVal = this.projectEditor.paidTodateText.getText() ;
+                String deadlineVal = this.projectEditor.deadlineText.getText() ;
+                
+                String buildingTypeVal = this.projectTab.bdgType.getSelectedValue().toString() ;
+                
+                String architectVal = this.projectTab.setArchitect.getSelectedValue().toString().split(":")[0] ;
+                String contractorVal = this.projectTab.setContractor.getSelectedValue().toString().split(":")[0] ;
+                String customerVal = this.projectTab.setCustomer.getSelectedValue().toString().split(":")[0] ;
+                String managerVal = this.projectTab.setManager.getSelectedValue().toString().split(":")[0] ;
+                String engineerVal = this.projectTab.setEngineer.getSelectedValue().toString().split(":")[0] ;
+                
+                //this.mainFrame.msgArea.setText(msg);
+                
+                try {
+                    this.dbHandler.insertProjectRecord(
+                        projectNameVal,
+                        buildingTypeVal,
+                        physicalAddressVal,
+                        erfNumberVal,
+                        feeChargedVal,
+                        paidTodateVal,
+                        deadlineVal,
+                        architectVal,
+                        contractorVal,
+                        customerVal,
+                        managerVal,
+                        engineerVal
+                    );
+                } catch ( SQLException pje)  {
+                    this.mainFrame.msgArea.setText(pje.getMessage());
+                }
                 break;
         }
     }

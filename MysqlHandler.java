@@ -14,15 +14,16 @@ public class MysqlHandler {
     /* I think need first create a customer in Person then can create the Poised */
     String createProjectTableSQL = "CREATE TABLE IF NOT EXISTS Project ("
         + " ProjectNumber int(6) ZEROFILL NOT NULL AUTO_INCREMENT,"
-        + " ERFNumber int(6) UNSIGNED,"
         + " ProjectName varchar(50),"  // Project name.
-        + " Deadline DATE,"          // The total amount paid to date
-        + " FeeCharged int(6)," // The total fee being charged for the project.
-        + " PaidToDate int(6),"        // The total amount paid to date.
-
         + " BuildingType ENUM('House', 'Apartment',"
         + " 'Block', 'Store') NOT NULL," // What type of building is being designed?
                                        // E.g. House, apartment block or store, etc.
+        + " PhysicalAddress varchar(200),"
+        + " ERFNumber int(6) UNSIGNED,"
+
+        + " FeeCharged int(6)," // The total fee being charged for the project.
+        + " PaidToDate int(6),"        // The total amount paid to date.
+        + " Deadline DATE,"          // The total amount paid to date
 
         + " ArchitectPId int(6) UNSIGNED,"
         + " ContractorPId int(6) UNSIGNED,"
@@ -126,6 +127,11 @@ public class MysqlHandler {
     String selectPerson = "SELECT  id, FirstName, SurName, Telephone, EmailAddress, PhysicalAddress"
         + " FROM Person";
 
+    String selectProject = "SELECT "
+        + " ProjectNumber, ProjectName, BuildingType, PhysicalAddress, ERFNumber, FeeCharged, PaidToDate, Deadline,"
+        + " ArchitectPId, ContractorPId, CustomerPId, ProjectManagerPId, StructuralEngineerPId"
+        + " FROM Project";
+
     MysqlHandler () {
         try {
             // Connect to the library_db database, via the jdbc:mysql: channel on localhost (this PC)
@@ -198,6 +204,45 @@ public class MysqlHandler {
         this.statement.executeUpdate(sqlStr);
     }
     
+        void insertProjectRecord (
+            String ProjectName,
+            String BuildingType,
+            String PhysicalAddress,
+            String ERFNumber,
+            String FeeCharged,
+            String PaidToDate,
+            String Deadline,
+            String ArchitectPId,
+            String ContractorPId,
+            String CustomerPId,
+            String ProjectManagerPId,
+            String StructuralEngineerPId
+            ) throws SQLException {
+
+        String sqlStr = "INSERT INTO Project ( "
+
+       	+ " ProjectName, BuildingType, PhysicalAddress, ERFNumber, FeeCharged, PaidToDate, Deadline,"
+        + " ArchitectPId, ContractorPId, CustomerPId, ProjectManagerPId, StructuralEngineerPId"
+
+            + " )"
+            + "VALUES (" 
+            + "'" + ProjectName + "', "
+            + "'" + BuildingType + "', "
+            + "'" + PhysicalAddress + "', "
+            + "'" + ERFNumber + "', "
+            + "'" + FeeCharged + "', "
+            + "'" + PaidToDate + "', "
+            + "'" + Deadline + "', "
+            + "'" + ArchitectPId + "', "
+            + "'" + ContractorPId + "', "
+            + "'" + CustomerPId + "', "
+            + "'" + ProjectManagerPId + "', "
+            + "'" + StructuralEngineerPId + "' "
+            + ")";
+        System.out.println(sqlStr);
+        this.statement.executeUpdate(sqlStr);
+    }
+    
     void deletePerson (String id) throws SQLException {
         String sqlStr = "DELETE FROM Person"
             + " WHERE id ="
@@ -230,7 +275,7 @@ public class MysqlHandler {
             String emailAddress,
             String physicalAddress      
         ) {
-        return makeRow( "SELECT * FROM Person WHERE"
+        return makePersonRow( "SELECT * FROM Person WHERE"
                     + " FirstName like '%" + firstName + "%'"
                     + " AND SurName like '%" + surName + "%' "
                     + " AND Telephone like '%" + telePhone + "%' "
@@ -240,10 +285,14 @@ public class MysqlHandler {
     }
     
     Vector<Vector<String>> selectPersonRecord() {
-        return this.makeRow( this.selectPerson );
+        return this.makePersonRow( this.selectPerson );
     }
     
-    Vector<Vector<String>> makeRow(String sqlString) {
+    Vector<Vector<String>> selectProjectRecord() {
+        return this.makeProjectRow( this.selectProject );
+    }
+    
+    Vector<Vector<String>> makePersonRow(String sqlString) {
         Vector<Vector<String>> resultVector = new Vector<Vector<String>>();
 
         try {
@@ -260,6 +309,34 @@ public class MysqlHandler {
                 resultVector.add(resultRow);
             }
             
+        }catch ( SQLException e) {
+            e.printStackTrace();
+        }
+        return resultVector;
+    }
+    
+    Vector<Vector<String>> makeProjectRow(String sqlString) {
+        Vector<Vector<String>> resultVector = new Vector<Vector<String>>();
+
+        try {
+            ResultSet rs = this.statement.executeQuery( sqlString );
+            while( rs.next() ){
+                Vector<String> resultRow = new Vector<>();
+                resultRow.add( Integer.toString( rs.getInt("ProjectNumber")) );
+                resultRow.add( rs.getString("ProjectName") );
+                resultRow.add( rs.getString("BuildingType") );
+                resultRow.add( rs.getString("PhysicalAddress") );
+                resultRow.add( Integer.toString( rs.getInt("ERFNumber")) );
+                resultRow.add( Integer.toString( rs.getInt("FeeCharged")) );
+                resultRow.add( Integer.toString( rs.getInt("PaidToDate")) );
+                resultRow.add( rs.getDate("Deadline").toString() );
+                resultRow.add( Integer.toString( rs.getInt("ArchitectPId")) );
+                resultRow.add( Integer.toString( rs.getInt("ContractorPId")) );
+                resultRow.add( Integer.toString( rs.getInt("CustomerPId")) );
+                resultRow.add( Integer.toString( rs.getInt("ProjectManagerPId")) );
+                resultRow.add( Integer.toString( rs.getInt("StructuralEngineerPId")) );
+                resultVector.add(resultRow);
+            }
         }catch ( SQLException e) {
             e.printStackTrace();
         }
