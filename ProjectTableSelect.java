@@ -17,14 +17,17 @@ public class ProjectTableSelect implements ListSelectionListener {
     Integer findBdgType() {
         return findIndex( 
             (String)this.dbModel.getValueAt(this.selectIndex, 2) ,
-            this.mainFrame.pmsTab.projectTab.bdgTypeList
+            this.pTab.bdgTypeList
             );
+    }
+    
+    Integer findPerson(String targetTxt) {
+        return findIndex(targetTxt, this.pTab.pList );
     }
     
     Integer findIndex(String targetTxt, DefaultListModel<String> checkModel) {
         for (int i = 0 ; i < checkModel.size() ; i ++ ) {
-            //System.out.println( targetTxt + " : " + checkModel.get(i) );
-            if ( checkModel.get(i).indexOf(targetTxt) > -1 ) {
+            if ( checkModel.getElementAt(i).indexOf(targetTxt) > -1 ) {
                 return i;
             }
         }
@@ -56,6 +59,32 @@ public class ProjectTableSelect implements ListSelectionListener {
                 (String)this.dbModel.getValueAt(this.selectIndex, 7) );
             
             this.pTab.bdgType.setSelectedIndex( this.findBdgType() );
+            
+            this.pTab.setArchitect.setSelectedIndex(
+                this.findPerson (
+                    (String)this.dbModel.getValueAt(this.selectIndex, 8) )
+            );
+
+            this.pTab.setContractor.setSelectedIndex(
+                this.findPerson (
+                    (String)this.dbModel.getValueAt(this.selectIndex, 9) )
+            );
+
+            this.pTab.setCustomer.setSelectedIndex(
+                this.findPerson (
+                    (String)this.dbModel.getValueAt(this.selectIndex, 10) )
+            );
+            
+            this.pTab.setManager.setSelectedIndex(
+                this.findPerson (
+                    (String)this.dbModel.getValueAt(this.selectIndex, 11) )
+            );
+
+            this.pTab.setEngineer.setSelectedIndex(
+                this.findPerson (
+                    (String)this.dbModel.getValueAt(this.selectIndex, 12) )
+            );
+             
         } catch (ArrayIndexOutOfBoundsException g){
             this.dbEditor.resetField();
         }

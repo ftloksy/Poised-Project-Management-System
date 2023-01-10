@@ -20,7 +20,7 @@ public class ProjectTab extends JPanel {
     JScrollPane dbScroll5 ;
     JScrollPane dbScroll6 ;
 
-    JList bdgType;
+    JList<String> bdgType;
     JList setArchitect;
     JList setContractor;
     JList setCustomer;
