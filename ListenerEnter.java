@@ -8,10 +8,10 @@ public class ListenerEnter implements ActionListener {
     MysqlHandler dbHandler;
     JTabbedPane tabPane;
     PersonEditor personDbEditor;
-    ProjectEditor projectEditor;
     PersonTable personTable;
     ProjectTab projectTab ;
     ProjectTable projectTable;
+    ProjectEditor projectEditor;
     
     ListenerEnter(PmsFrame motherFrame, MysqlHandler dbPosie){
         this.mainFrame = motherFrame ;

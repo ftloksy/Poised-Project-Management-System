@@ -223,19 +223,19 @@ public class MysqlHandler {
         this.statement.executeUpdate(sqlStr);
     }
     
-        void insertProjectRecord (
-            String ProjectName,
-            String BuildingType,
-            String PhysicalAddress,
-            String ERFNumber,
-            String FeeCharged,
-            String PaidToDate,
-            String Deadline,
-            String ArchitectPId,
-            String ContractorPId,
-            String CustomerPId,
-            String ProjectManagerPId,
-            String StructuralEngineerPId
+    void insertProjectRecord (
+            String projectName,
+            String buildingType,
+            String physicalAddress,
+            String eRFNumber,
+            String feeCharged,
+            String paidToDate,
+            String deadline,
+            String architectPId,
+            String contractorPId,
+            String customerPId,
+            String projectManagerPId,
+            String structuralEngineerPId
             ) throws SQLException {
 
         String sqlStr = "INSERT INTO Project ( "
@@ -245,25 +245,66 @@ public class MysqlHandler {
 
             + " )"
             + "VALUES (" 
-            + "'" + ProjectName + "', "
-            + "'" + BuildingType + "', "
-            + "'" + PhysicalAddress + "', "
-            + "'" + ERFNumber + "', "
-            + "'" + FeeCharged + "', "
-            + "'" + PaidToDate + "', "
-            + "'" + Deadline + "', "
-            + "'" + ArchitectPId + "', "
-            + "'" + ContractorPId + "', "
-            + "'" + CustomerPId + "', "
-            + "'" + ProjectManagerPId + "', "
-            + "'" + StructuralEngineerPId + "' "
+            + "'" + projectName + "', "
+            + "'" + buildingType + "', "
+            + "'" + physicalAddress + "', "
+            + "'" + eRFNumber + "', "
+            + "'" + feeCharged + "', "
+            + "'" + paidToDate + "', "
+            + "'" + deadline + "', "
+            + "'" + architectPId + "', "
+            + "'" + contractorPId + "', "
+            + "'" + customerPId + "', "
+            + "'" + projectManagerPId + "', "
+            + "'" + structuralEngineerPId + "' "
             + ")";
+        this.statement.executeUpdate(sqlStr);
+    }
+    
+    void updateProjectRecord (
+            String projectNo,
+            String projectName,
+            String buildingType,
+            String physicalAddress,
+            String eRFNumber,
+            String feeCharged,
+            String paidToDate,
+            String deadline,
+            String architectPId,
+            String contractorPId,
+            String customerPId,
+            String projectManagerPId,
+            String structuralEngineerPId
+            ) throws SQLException {
+
+        String sqlStr = "UPDATE Project SET "
+            + " ProjectName = '" + projectName + "', "
+            + " BuildingType = '" + buildingType + "',"
+            + " PhysicalAddress = '" + physicalAddress + "',"
+            + " ERFNumber = '" + eRFNumber + "',"
+            + " FeeCharged = '" + feeCharged + "',"
+            + " PaidToDate = '" + paidToDate + "',"
+            + " Deadline = '" + deadline + "',"
+            + " ArchitectPId = '" + architectPId  + "', "
+            + " ContractorPId = '" + contractorPId + "', "
+            + " CustomerPId = '" + customerPId + "', "
+            + " ProjectManagerPId = '" + projectManagerPId + "', " 
+            + " StructuralEngineerPId = '" +  structuralEngineerPId + "'"
+            + " WHERE ProjectNumber = '" + projectNo + "'";
+        
         this.statement.executeUpdate(sqlStr);
     }
     
     void deletePerson (String id) throws SQLException {
         String sqlStr = "DELETE FROM Person"
             + " WHERE id ="
+            + " '" + id + "'" ;
+        this.statement.executeUpdate(sqlStr); 
+    }
+    
+    void deleteProject (String id) throws SQLException {
+        String sqlStr = "DELETE FROM Project"
+            + " WHERE ProjectNumber ="
             + " '" + id + "'" ;
         this.statement.executeUpdate(sqlStr); 
     }

@@ -9,6 +9,9 @@ public class ListenerDelete implements ActionListener {
     JTabbedPane tabPane;
     PersonEditor personDbEditor;
     PersonTable personTable;
+    ProjectTab projectTab ;
+    ProjectTable projectTable;
+    ProjectEditor projectEditor;
     
     ListenerDelete(PmsFrame motherFrame, MysqlHandler dbPosie){
         this.mainFrame = motherFrame ;
@@ -21,6 +24,9 @@ public class ListenerDelete implements ActionListener {
         this.tabPane = this.mainFrame.pmsTab.tabbedPane ;
         this.personDbEditor = this.mainFrame.pmsTab.personTab.dbEditor ;
         this.personTable = this.mainFrame.pmsTab.personTab.dbTable ;
+        this.projectTab = this.mainFrame.pmsTab.projectTab ;
+        this.projectEditor = this.projectTab.dbEditor ;
+        this.projectTable = this.projectTab.dbTable ;
         
         this.mainFrame.msgArea.setText("");
         int index = this.tabPane.getSelectedIndex();
@@ -47,6 +53,18 @@ public class ListenerDelete implements ActionListener {
                 }
                 break;
             case 1:
+                
+                String projectNoVal = this.projectEditor.projectNoText.getText();
+                
+                try {
+                    this.dbHandler.deleteProject( projectNoVal );
+                    this.projectTable.flashTable();
+                    this.projectTab.updatePersonList();
+                    this.projectTab.bdgType.clearSelection();
+                    this.mainFrame.msgArea.setText("Delete Project Record Complete.");
+                } catch ( SQLException pje)  {
+                    this.mainFrame.msgArea.setText(pje.getMessage());
+                }
                 break;
         }
     }
