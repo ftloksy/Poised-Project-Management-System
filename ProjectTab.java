@@ -4,13 +4,14 @@ import java.util.ArrayList ;
 import java.util.Vector ;
 import java.sql.* ;
 
-// http://www.java2s.com/Tutorial/Java/0240__Swing/StoringvalueinVectorandaddingthemintoJList.htm
-
 public class ProjectTab extends JPanel {
-    final static String bdgTypeList[] = { "House", "Apartment", "Block", "Store" };
+
     final static int extraWindowWidth = 100;
     
     Vector<String> personList;
+    
+    DefaultListModel<String> bdgTypeList;
+    DefaultListModel<String> pList;
     
     JScrollPane dbScroll ;
     JScrollPane dbScroll2 ;
@@ -38,23 +39,9 @@ public class ProjectTab extends JPanel {
         super.setLayout(new BorderLayout());
         //this.assignWeek();
         this.dbHandler = dbPosie ;
-
+        
+        this.createBdgList();
         this.createPersonList();
-        //try {
-            //this.personList = this.dbHandler.getPersonList();
-        //} catch ( SQLException e) {
-            //e.printStackTrace();
-        //};
-        //String[] pList = this.personList.toArray(new String[this.personList.size()]);
-        
-        //this.bdgType = new JList(bdgTypeList);
-        //this.setArchitect = new JList(pList);
-        //this.setContractor = new JList(pList);
-        //this.setCustomer = new JList(pList);
-        //this.setManager = new JList(pList);
-        //this.setEngineer = new JList(pList);
-        
-        ///////
 
         this.dbScroll = new JScrollPane( this.bdgType);
         this.dbScroll2 = new JScrollPane( this.setArchitect);
@@ -90,36 +77,39 @@ public class ProjectTab extends JPanel {
         super.add( this.dbTableScroll, BorderLayout.SOUTH );
     }
     
+    void createBdgList() {
+        this.bdgTypeList = new DefaultListModel<>();
+        this.bdgTypeList.addElement("House");
+        this.bdgTypeList.addElement("Apartment");
+        this.bdgTypeList.addElement("Block");
+        this.bdgTypeList.addElement("Store");
+        
+        this.bdgType = new JList<>(bdgTypeList);
+    }
+    
     void createPersonList() {
+        
+        this.pList = new DefaultListModel<>();
+        this.updatePersonList();
+        
+        //this.bdgType = new JList<String>(bdgTypeList);
+        this.setArchitect = new JList<>(this.pList);
+        this.setContractor = new JList<>(this.pList);
+        this.setCustomer = new JList<>(this.pList);
+        this.setManager = new JList<>(this.pList);
+        this.setEngineer = new JList<>(this.pList); 
+    }
+    
+    void updatePersonList() {
         try {
             this.personList = this.dbHandler.getPersonList();
         } catch ( SQLException e) {
             e.printStackTrace();
         };
-        String[] pList = this.personList.toArray(new String[this.personList.size()]);
         
-        this.bdgType = new JList<String>(bdgTypeList);
-        //this.setArchitect = new JList<String>(pList);
-        this.setArchitect = new JList<String>(pList);
-        this.setContractor = new JList<String>(pList);
-        this.setCustomer = new JList<String>(pList);
-        this.setManager = new JList<String>(pList);
-        this.setEngineer = new JList<String>(pList); 
+        this.pList.removeAllElements();
+        for (int i = 0; i < personList.size() ; i ++ ) {
+            this.pList.addElement( personList.get(i) );
+        }
     }
-    
-    //void getPersonList() {
-        //try {
-            //this.personList = this.dbHandler.getPersonList();
-        //} catch ( SQLException e) {
-            //e.printStackTrace();
-        //};
-        //String[] pList = this.personList.toArray(new String[this.personList.size()]);
-        
-        //this.bdgType.setListData(bdgTypeList);
-        //this.setArchitect.setListData(pList);
-        //this.setContractor.setListData(pList);
-        //this.setCustomer.setListData(pList);
-        //this.setManager.setListData(pList);
-        //this.setEngineer.setListData(pList); 
-    //}
 }

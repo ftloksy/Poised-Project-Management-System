@@ -19,6 +19,7 @@ public class PmsFrame extends JFrame {
         this.msgArea.setEditable(false);
         
         super.add( this.msgArea, BorderLayout.SOUTH );
+        super.setPreferredSize(new Dimension(1800, 900));
         super.pack();
         super.setVisible(true);
     }

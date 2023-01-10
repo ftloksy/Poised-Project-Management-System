@@ -11,6 +11,7 @@ public class ListenerEnter implements ActionListener {
     ProjectEditor projectEditor;
     PersonTable personTable;
     ProjectTab projectTab ;
+    ProjectTable projectTable;
     
     ListenerEnter(PmsFrame motherFrame, MysqlHandler dbPosie){
         this.mainFrame = motherFrame ;
@@ -24,6 +25,7 @@ public class ListenerEnter implements ActionListener {
         this.personTable = this.mainFrame.pmsTab.personTab.dbTable ;
         this.projectTab = this.mainFrame.pmsTab.projectTab ;
         this.projectEditor = this.mainFrame.pmsTab.projectTab.dbEditor ;
+        this.projectTable = this.mainFrame.pmsTab.projectTab.dbTable ;
         
         this.mainFrame.msgArea.setText("");
         int index = this.tabPane.getSelectedIndex();
@@ -53,34 +55,43 @@ public class ListenerEnter implements ActionListener {
                 String paidTodateVal = this.projectEditor.paidTodateText.getText() ;
                 String deadlineVal = this.projectEditor.deadlineText.getText() ;
                 
-                String buildingTypeVal = this.projectTab.bdgType.getSelectedValue().toString() ;
-                
-                String architectVal = this.projectTab.setArchitect.getSelectedValue().toString().split(":")[0] ;
-                String contractorVal = this.projectTab.setContractor.getSelectedValue().toString().split(":")[0] ;
-                String customerVal = this.projectTab.setCustomer.getSelectedValue().toString().split(":")[0] ;
-                String managerVal = this.projectTab.setManager.getSelectedValue().toString().split(":")[0] ;
-                String engineerVal = this.projectTab.setEngineer.getSelectedValue().toString().split(":")[0] ;
-                
-                //this.mainFrame.msgArea.setText(msg);
-                
                 try {
-                    this.dbHandler.insertProjectRecord(
-                        projectNameVal,
-                        buildingTypeVal,
-                        physicalAddressVal,
-                        erfNumberVal,
-                        feeChargedVal,
-                        paidTodateVal,
-                        deadlineVal,
-                        architectVal,
-                        contractorVal,
-                        customerVal,
-                        managerVal,
-                        engineerVal
-                    );
-                } catch ( SQLException pje)  {
-                    this.mainFrame.msgArea.setText(pje.getMessage());
+                        
+                        String buildingTypeVal = this.projectTab.bdgType.getSelectedValue().toString() ;
+                        
+                        String architectVal = this.projectTab.setArchitect.getSelectedValue().toString().split(":")[0] ;
+                        String contractorVal = this.projectTab.setContractor.getSelectedValue().toString().split(":")[0] ;
+                        String customerVal = this.projectTab.setCustomer.getSelectedValue().toString().split(":")[0] ;
+                        String managerVal = this.projectTab.setManager.getSelectedValue().toString().split(":")[0] ;
+                        String engineerVal = this.projectTab.setEngineer.getSelectedValue().toString().split(":")[0] ;
+                        
+                        try {
+                            this.dbHandler.insertProjectRecord(
+                                projectNameVal,
+                                buildingTypeVal,
+                                physicalAddressVal,
+                                erfNumberVal,
+                                feeChargedVal,
+                                paidTodateVal,
+                                deadlineVal,
+                                architectVal,
+                                contractorVal,
+                                customerVal,
+                                managerVal,
+                                engineerVal
+                            );
+                            this.projectTable.flashTable();
+                            this.mainFrame.msgArea.setText("INSERT Project Record Complete.");
+                        } catch ( SQLException pje)  {
+                            this.mainFrame.msgArea.setText(pje.getMessage());
+                        }
+                        
+                } catch ( NullPointerException Ne ) {
+                    this.mainFrame.msgArea.setText("Please complete input field");
                 }
+                
+                
+                
                 break;
         }
     }

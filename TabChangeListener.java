@@ -32,6 +32,7 @@ public class TabChangeListener implements ChangeListener {
                 this.dbMenu.deleteItem.setText("Delete Poised");
                 this.dbMenu.searchItem.setText("Search Poised");
                 this.dbMenu.listAllItem.setText("ListAll Poised");
+                this.mainFrame.pmsTab.projectTab.updatePersonList();
                 break;
         }
     }

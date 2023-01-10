@@ -28,7 +28,8 @@ public class ListenerClear implements ActionListener {
             case 1:
                 this.mainFrame.msgArea.setText("Clear Tab 1");
                 this.mainFrame.pmsTab.projectTab.dbEditor.resetField();
-                //this.mainFrame.pmsTab.projectTab.getPersonList();
+                this.mainFrame.pmsTab.projectTab.updatePersonList();
+                this.mainFrame.pmsTab.projectTab.bdgType.clearSelection();
                 break;
         }
     }

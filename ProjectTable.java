@@ -4,10 +4,10 @@ import javax.swing.table.*;
 import java.util.Vector ;
 
 public class ProjectTable extends JTable {
-    DefaultTableModel personModel;
+    DefaultTableModel dbModel;
     MysqlHandler dbHandler;
     Vector<String> tableHeader ;
-    //PersonTableSelect personTbSelect ;
+    ProjectTableSelect projectTbSelect ;
     PmsFrame mainFrame;
     
     ProjectTable(PmsFrame motherFrame, MysqlHandler dbPosie) {
@@ -42,23 +42,23 @@ public class ProjectTable extends JTable {
     }
     
     void reNewTable( Vector<Vector<String>>  dbRow ) {
-        this.personModel.setDataVector( dbRow , this.tableHeader );
+        this.dbModel.setDataVector( dbRow , this.tableHeader );
     }
     
     void createTable() {
         
-        //this.personTbSelect = new PersonTableSelect(this.mainFrame);
+        this.projectTbSelect = new ProjectTableSelect(this.mainFrame);
         
         this.tableHeader = new Vector<String>();
         this.createTableHeader();
 
-        this.personModel = new DefaultTableModel( this.dbHandler.selectProjectRecord() ,this.tableHeader) {
+        this.dbModel = new DefaultTableModel( this.dbHandler.selectProjectRecord() ,this.tableHeader) {
             public boolean isCellEditable(int rowIndex, int mColIndex) {
                 return false;
             };
         };
         
-        super.setModel(this.personModel);
-        //super.getSelectionModel().addListSelectionListener(this.personTbSelect);
+        super.setModel(this.dbModel);
+        super.getSelectionModel().addListSelectionListener(this.projectTbSelect);
     }
 }

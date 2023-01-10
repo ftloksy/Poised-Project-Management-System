@@ -1,5 +1,6 @@
 import java.sql.*;
 import java.util.Vector;
+//import javax.swing.* ;
 //import java.util.ArrayList;
 
 /*
@@ -46,6 +47,23 @@ public class MysqlHandler {
         + " EmailAddress varchar(50),"     // Architect Email Address name.
         + " PhysicalAddress varchar(50),"  // Architect Physical Address name.
         + " PRIMARY KEY (id))";
+        
+    String createProjectViewSQL = ""
+        + " create or replace view ProjectView as"
+        + " SELECT ProjectNumber, ProjectName, BuildingType," 
+        + " PhysicalAddress, ERFNumber, FeeCharged, PaidToDate, Deadline," 
+        + " ( select concat(FirstName, ' ', SurName) FROM Person Where id = ArchitectPId )"
+        + " as Architect, "
+        + "( select concat(FirstName, ' ', SurName) FROM Person Where id = ContractorPId )"
+        + " as Contractor,"
+        + " ( select concat(FirstName, ' ', SurName) FROM Person Where id = CustomerPId )"
+        + " as Customer,"
+        + " ( select concat(FirstName, ' ', SurName) FROM Person Where id = ProjectManagerPId )"
+        + " as ProjectManager, "
+        + " ( select concat(FirstName, ' ', SurName) FROM Person Where id = StructuralEngineerPId )"
+        + " as StructuralEngineer"
+        + " FROM Project";
+
 
     //String createPoisedTableSQL = "CREATE TABLE IF NOT EXISTS Poised ("
         //+ " ERFNumber int(6) ZEROFILL NOT NULL AUTO_INCREMENT,"         // ERF number.
@@ -129,8 +147,8 @@ public class MysqlHandler {
 
     String selectProject = "SELECT "
         + " ProjectNumber, ProjectName, BuildingType, PhysicalAddress, ERFNumber, FeeCharged, PaidToDate, Deadline,"
-        + " ArchitectPId, ContractorPId, CustomerPId, ProjectManagerPId, StructuralEngineerPId"
-        + " FROM Project";
+        + " Architect, Contractor, Customer, ProjectManager, StructuralEngineer"
+        + " FROM ProjectView";
 
     MysqlHandler () {
         try {
@@ -146,6 +164,7 @@ public class MysqlHandler {
 
             this.statement.executeUpdate(this.createPersonTableSQL);
             this.statement.executeUpdate(this.createProjectTableSQL);
+            this.statement.executeUpdate(this.createProjectViewSQL);
             //this.statement.executeUpdate(this.createPoisedTableSQL);
             //this.statement.executeUpdate(this.createTriggerSQL);
             //this.statement.executeUpdate(this.createTriggerProjectName);
@@ -178,7 +197,7 @@ public class MysqlHandler {
         Vector<String> personTagList = new Vector<>();
         
         while( rs.next() ){
-            personTagList.add( rs.getString("Result") );
+            personTagList.addElement( rs.getString("Result") );
         }
         
         return personTagList;
@@ -239,7 +258,6 @@ public class MysqlHandler {
             + "'" + ProjectManagerPId + "', "
             + "'" + StructuralEngineerPId + "' "
             + ")";
-        System.out.println(sqlStr);
         this.statement.executeUpdate(sqlStr);
     }
     
@@ -330,11 +348,11 @@ public class MysqlHandler {
                 resultRow.add( Integer.toString( rs.getInt("FeeCharged")) );
                 resultRow.add( Integer.toString( rs.getInt("PaidToDate")) );
                 resultRow.add( rs.getDate("Deadline").toString() );
-                resultRow.add( Integer.toString( rs.getInt("ArchitectPId")) );
-                resultRow.add( Integer.toString( rs.getInt("ContractorPId")) );
-                resultRow.add( Integer.toString( rs.getInt("CustomerPId")) );
-                resultRow.add( Integer.toString( rs.getInt("ProjectManagerPId")) );
-                resultRow.add( Integer.toString( rs.getInt("StructuralEngineerPId")) );
+                resultRow.add( rs.getString("Architect") );
+                resultRow.add( rs.getString("Contractor") );
+                resultRow.add( rs.getString("Customer") );
+                resultRow.add( rs.getString("ProjectManager") );
+                resultRow.add( rs.getString("StructuralEngineer") );
                 resultVector.add(resultRow);
             }
         }catch ( SQLException e) {
