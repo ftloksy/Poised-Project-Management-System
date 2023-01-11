@@ -17,7 +17,7 @@ public class ProjectTableSelect implements ListSelectionListener {
     Integer findBdgType() {
         return findIndex( 
             (String)this.dbModel.getValueAt(this.selectIndex, 2) ,
-            this.pTab.bdgTypeList
+            this.dbEditor.bdgTypeList
             );
     }
     
@@ -63,36 +63,36 @@ public class ProjectTableSelect implements ListSelectionListener {
             this.dbEditor.deadlineText.setText(
                 (String)this.dbModel.getValueAt(this.selectIndex, 7) );
             
-            this.pTab.bdgType.setSelectedIndex( this.findBdgType() );
+            this.dbEditor.bdgType.setSelectedIndex( this.findBdgType() );
             
-            this.pTab.setArchitect.setSelectedIndex(
+            this.dbEditor.setArchitect.setSelectedIndex(
                 this.findIndex (
                     (String)this.dbModel.getValueAt(this.selectIndex, 8),
-                    this.pTab.architectBoxModel )
+                    this.dbEditor.architectBoxModel )
             );
 
-            this.pTab.setContractor.setSelectedIndex(
+            this.dbEditor.setContractor.setSelectedIndex(
                 this.findIndex (
                     (String)this.dbModel.getValueAt(this.selectIndex, 9),
-                    this.pTab.contractorBoxModel )
+                    this.dbEditor.contractorBoxModel )
             );
 
-            this.pTab.setCustomer.setSelectedIndex(
+            this.dbEditor.setCustomer.setSelectedIndex(
                 this.findIndex (
                     (String)this.dbModel.getValueAt(this.selectIndex, 10),
-                    this.pTab.customerBoxModel )
+                    this.dbEditor.customerBoxModel )
             );
             
-            this.pTab.setManager.setSelectedIndex(
+            this.dbEditor.setManager.setSelectedIndex(
                 this.findIndex (
                     (String)this.dbModel.getValueAt(this.selectIndex, 11),
-                    this.pTab.managerBoxModel )
+                    this.dbEditor.managerBoxModel )
             );
 
-            this.pTab.setEngineer.setSelectedIndex(
+            this.dbEditor.setEngineer.setSelectedIndex(
                 this.findIndex (
                     (String)this.dbModel.getValueAt(this.selectIndex, 12),
-                    this.pTab.engineerBoxModel )
+                    this.dbEditor.engineerBoxModel )
             );
              
         } catch (ArrayIndexOutOfBoundsException g){

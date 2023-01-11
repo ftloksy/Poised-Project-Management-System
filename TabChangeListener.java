@@ -9,7 +9,7 @@ public class TabChangeListener implements ChangeListener {
     TabChangeListener(PmsFrame motherFrame) {
         super();
         this.mainFrame = motherFrame;
-	this.dbMenu = motherFrame.dbMenu;
+	    this.dbMenu = motherFrame.dbMenu;
     }
 
     public void stateChanged(ChangeEvent changeEvent) {
@@ -31,7 +31,7 @@ public class TabChangeListener implements ChangeListener {
                 this.dbMenu.deleteItem.setText("Delete Poised");
                 this.dbMenu.searchItem.setText("Search Poised");
                 this.dbMenu.listAllItem.setText("ListAll Poised");
-                this.mainFrame.pmsTab.projectTab.updatePersonList();
+                this.mainFrame.pmsTab.projectTab.dbEditor.updatePersonList();
                 break;
         }
     }

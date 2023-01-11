@@ -6,6 +6,7 @@ public class ListenerEnter implements ActionListener {
     PmsFrame mainFrame;
     MysqlHandler dbHandler;
     JTabbedPane tabPane;
+    PersonTab personTab ;
     PersonEditor personDbEditor;
     PersonTable personTable;
     ProjectTab projectTab ;
@@ -20,11 +21,13 @@ public class ListenerEnter implements ActionListener {
     public void actionPerformed(ActionEvent e)
     {
         this.tabPane = this.mainFrame.pmsTab.tabbedPane ;
-        this.personDbEditor = this.mainFrame.pmsTab.personTab.dbEditor ;
-        this.personTable = this.mainFrame.pmsTab.personTab.dbTable ;
+        this.personTab = this.mainFrame.pmsTab.personTab ;
+        this.personDbEditor = this.personTab.dbEditor ;
+        this.personTable = this.personTab.dbTable ;
+
         this.projectTab = this.mainFrame.pmsTab.projectTab ;
-        this.projectEditor = this.mainFrame.pmsTab.projectTab.dbEditor ;
-        this.projectTable = this.mainFrame.pmsTab.projectTab.dbTable ;
+        this.projectEditor = this.projectTab.dbEditor ;
+        this.projectTable = this.projectTab.dbTable ;
         
         this.mainFrame.msgArea.setText("");
         int index = this.tabPane.getSelectedIndex();
@@ -56,13 +59,13 @@ public class ListenerEnter implements ActionListener {
                 
                 try {
                         
-                        String buildingTypeVal = this.projectTab.bdgType.getSelectedItem().toString() ;
+                        String buildingTypeVal = this.projectEditor.bdgType.getSelectedItem().toString() ;
                         
-                        String architectVal = this.projectTab.setArchitect.getSelectedItem().toString().split(":")[0] ;
-                        String contractorVal = this.projectTab.setContractor.getSelectedItem().toString().split(":")[0] ;
-                        String customerVal = this.projectTab.setCustomer.getSelectedItem().toString().split(":")[0] ;
-                        String managerVal = this.projectTab.setManager.getSelectedItem().toString().split(":")[0] ;
-                        String engineerVal = this.projectTab.setEngineer.getSelectedItem().toString().split(":")[0] ;
+                        String architectVal = this.projectEditor.setArchitect.getSelectedItem().toString().split(":")[0] ;
+                        String contractorVal = this.projectEditor.setContractor.getSelectedItem().toString().split(":")[0] ;
+                        String customerVal = this.projectEditor.setCustomer.getSelectedItem().toString().split(":")[0] ;
+                        String managerVal = this.projectEditor.setManager.getSelectedItem().toString().split(":")[0] ;
+                        String engineerVal = this.projectEditor.setEngineer.getSelectedItem().toString().split(":")[0] ;
                         
                         try {
                             this.dbHandler.insertProjectRecord(
@@ -88,9 +91,6 @@ public class ListenerEnter implements ActionListener {
                 } catch ( NullPointerException Ne ) {
                     this.mainFrame.msgArea.setText("Please complete input field");
                 }
-                
-                
-                
                 break;
         }
     }

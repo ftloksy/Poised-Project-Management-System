@@ -59,28 +59,28 @@ public class ListenerSearch implements ActionListener {
 		    //  sqlTail += "AND BuildingType = '" + buildingTypeVal + "' " ;
             //     };
 
-                if ( this.projectTab.setArchitect.getSelectedItem()  != "" ) {
-                     String architectVal = this.projectTab.setArchitect.getSelectedItem().toString() ;
+                if ( this.projectDbEditor.setArchitect.getSelectedItem()  != "" ) {
+                     String architectVal = this.projectDbEditor.setArchitect.getSelectedItem().toString() ;
 		     sqlTail += "AND Architect = '" + architectVal + "' " ;
                 };
 
-                if ( this.projectTab.setContractor.getSelectedItem() != "" ) {
-                     String contractorVal = this.projectTab.setContractor.getSelectedItem().toString() ;
+                if ( this.projectDbEditor.setContractor.getSelectedItem() != "" ) {
+                     String contractorVal = this.projectDbEditor.setContractor.getSelectedItem().toString() ;
 		     sqlTail += "AND Contractor = '" + contractorVal + "' " ;
                 };
 
-                if ( this.projectTab.setCustomer.getSelectedItem() != "") {
-                     String customerVal = this.projectTab.setCustomer.getSelectedItem().toString() ;
+                if ( this.projectDbEditor.setCustomer.getSelectedItem() != "") {
+                     String customerVal = this.projectDbEditor.setCustomer.getSelectedItem().toString() ;
 		     sqlTail += "AND Customer = '" + customerVal + "' " ;
                 };
 
-                if ( this.projectTab.setManager.getSelectedItem() != "" ) {
-                     String managerVal = this.projectTab.setManager.getSelectedItem().toString() ; 
+                if ( this.projectDbEditor.setManager.getSelectedItem() != "" ) {
+                     String managerVal = this.projectDbEditor.setManager.getSelectedItem().toString() ; 
 		     sqlTail += "AND ProjectManager = '" + managerVal + "' " ; 
                 };
 
-                if ( this.projectTab.setEngineer.getSelectedItem() != "" ) {
-                     String engineerVal = this.projectTab.setEngineer.getSelectedItem().toString() ;
+                if ( this.projectDbEditor.setEngineer.getSelectedItem() != "" ) {
+                     String engineerVal = this.projectDbEditor.setEngineer.getSelectedItem().toString() ;
 		     sqlTail += "AND StructuralEngineer = '" + engineerVal + "' " ; 
                 };
 

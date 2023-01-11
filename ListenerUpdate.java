@@ -64,13 +64,13 @@ public class ListenerUpdate implements ActionListener {
                 String deadlineVal = this.projectDbEditor.deadlineText.getText() ;
                 
                 try {
-                        String buildingTypeVal = this.projectTab.bdgType.getSelectedItem().toString() ;
+                        String buildingTypeVal = this.projectDbEditor.bdgType.getSelectedItem().toString() ;
                         
-                        String architectVal = this.projectTab.setArchitect.getSelectedItem().toString().split(":")[0] ;
-                        String contractorVal = this.projectTab.setContractor.getSelectedItem().toString().split(":")[0] ;
-                        String customerVal = this.projectTab.setCustomer.getSelectedItem().toString().split(":")[0] ;
-                        String managerVal = this.projectTab.setManager.getSelectedItem().toString().split(":")[0] ;
-                        String engineerVal = this.projectTab.setEngineer.getSelectedItem().toString().split(":")[0] ;
+                        String architectVal = this.projectDbEditor.setArchitect.getSelectedItem().toString().split(":")[0] ;
+                        String contractorVal = this.projectDbEditor.setContractor.getSelectedItem().toString().split(":")[0] ;
+                        String customerVal = this.projectDbEditor.setCustomer.getSelectedItem().toString().split(":")[0] ;
+                        String managerVal = this.projectDbEditor.setManager.getSelectedItem().toString().split(":")[0] ;
+                        String engineerVal = this.projectDbEditor.setEngineer.getSelectedItem().toString().split(":")[0] ;
                         
                         try {
                             this.dbHandler.updateProjectRecord(
@@ -89,8 +89,8 @@ public class ListenerUpdate implements ActionListener {
                                 engineerVal
                             );
                             this.projectTable.flashTable();
-                            this.projectTab.updatePersonList();
-                            this.projectTab.bdgType.setSelectedItem("");
+                            this.projectDbEditor.updatePersonList();
+                            this.projectDbEditor.bdgType.setSelectedItem("");
                             this.mainFrame.msgArea.setText("UPDATE Project Record Complete.");
                             
                         } catch ( SQLException pje)  {
