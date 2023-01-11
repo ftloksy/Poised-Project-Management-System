@@ -1,7 +1,5 @@
 import java.awt.*;
 import javax.swing.*;
-import javax.swing.table.*;
-import java.util.Vector ;
 
 public class PersonTab extends JPanel {
     

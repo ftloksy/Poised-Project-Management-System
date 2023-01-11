@@ -21,10 +21,6 @@ public class ProjectTableSelect implements ListSelectionListener {
             );
     }
     
-    Integer findPerson(String targetTxt) {
-        return findIndex(targetTxt, this.pTab.pList );
-    }
-
     Integer findIndex(String targetTxt, DefaultComboBoxModel<String> checkModel) {
         for (int i = 0 ; i < checkModel.getSize() ; i ++ ) {
             if ( checkModel.getElementAt(i).indexOf(targetTxt) > -1 ) {
@@ -70,28 +66,33 @@ public class ProjectTableSelect implements ListSelectionListener {
             this.pTab.bdgType.setSelectedIndex( this.findBdgType() );
             
             this.pTab.setArchitect.setSelectedIndex(
-                this.findPerson (
-                    (String)this.dbModel.getValueAt(this.selectIndex, 8) )
+                this.findIndex (
+                    (String)this.dbModel.getValueAt(this.selectIndex, 8),
+                    this.pTab.architectBoxModel )
             );
 
             this.pTab.setContractor.setSelectedIndex(
-                this.findPerson (
-                    (String)this.dbModel.getValueAt(this.selectIndex, 9) )
+                this.findIndex (
+                    (String)this.dbModel.getValueAt(this.selectIndex, 9),
+                    this.pTab.contractorBoxModel )
             );
 
             this.pTab.setCustomer.setSelectedIndex(
-                this.findPerson (
-                    (String)this.dbModel.getValueAt(this.selectIndex, 10) )
+                this.findIndex (
+                    (String)this.dbModel.getValueAt(this.selectIndex, 10),
+                    this.pTab.customerBoxModel )
             );
             
             this.pTab.setManager.setSelectedIndex(
-                this.findPerson (
-                    (String)this.dbModel.getValueAt(this.selectIndex, 11) )
+                this.findIndex (
+                    (String)this.dbModel.getValueAt(this.selectIndex, 11),
+                    this.pTab.managerBoxModel )
             );
 
             this.pTab.setEngineer.setSelectedIndex(
-                this.findPerson (
-                    (String)this.dbModel.getValueAt(this.selectIndex, 12) )
+                this.findIndex (
+                    (String)this.dbModel.getValueAt(this.selectIndex, 12),
+                    this.pTab.engineerBoxModel )
             );
              
         } catch (ArrayIndexOutOfBoundsException g){

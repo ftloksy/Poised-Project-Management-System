@@ -1,8 +1,5 @@
-import javax.swing.event.*;
 import javax.swing.*;
 import java.awt.event.*;
-import java.sql.* ;
-import java.util.Vector;
 
 public class ListenerListAll implements ActionListener {
     PmsFrame mainFrame;

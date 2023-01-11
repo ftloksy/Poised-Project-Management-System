@@ -1,6 +1,5 @@
 import java.awt.*;
 import javax.swing.*;
-import javax.swing.event.*;
 
 public class PmsTab {
     final static String PersonTabTilte = "Person";

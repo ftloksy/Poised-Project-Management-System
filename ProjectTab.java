@@ -10,7 +10,12 @@ public class ProjectTab extends JPanel {
     Vector<String> personList;
     
     DefaultComboBoxModel<String> bdgTypeList;
-    DefaultListModel<String> pList;
+
+    DefaultComboBoxModel<String> architectBoxModel;
+    DefaultComboBoxModel<String> contractorBoxModel;
+    DefaultComboBoxModel<String> customerBoxModel;
+    DefaultComboBoxModel<String> managerBoxModel;
+    DefaultComboBoxModel<String> engineerBoxModel;
     
     JScrollPane dbScroll ;
     JScrollPane dbScroll2 ;
@@ -20,11 +25,11 @@ public class ProjectTab extends JPanel {
     JScrollPane dbScroll6 ;
 
     JComboBox<String> bdgType;
-    JList<String> setArchitect;
-    JList<String> setContractor;
-    JList<String> setCustomer;
-    JList<String> setManager;
-    JList<String> setEngineer;
+    JComboBox<String> setArchitect;
+    JComboBox<String> setContractor;
+    JComboBox<String> setCustomer;
+    JComboBox<String> setManager;
+    JComboBox<String> setEngineer;
     
     ProjectEditor dbEditor;
     ProjectTable dbTable;
@@ -36,7 +41,6 @@ public class ProjectTab extends JPanel {
     ProjectTab(PmsFrame motherFrame, MysqlHandler dbPosie) {
         super();
         super.setLayout(new BorderLayout());
-        //this.assignWeek();
         this.dbHandler = dbPosie ;
         
         this.createBdgList();
@@ -90,15 +94,24 @@ public class ProjectTab extends JPanel {
     
     void createPersonList() {
         
-        this.pList = new DefaultListModel<>();
+        this.architectBoxModel = new DefaultComboBoxModel<>();
+        this.contractorBoxModel = new DefaultComboBoxModel<>();
+        this.customerBoxModel = new DefaultComboBoxModel<>();
+        this.managerBoxModel = new DefaultComboBoxModel<>();
+        this.engineerBoxModel = new DefaultComboBoxModel<>();
+
         this.updatePersonList();
         
-        //this.bdgType = new JList<String>(bdgTypeList);
-        this.setArchitect = new JList<>(this.pList);
-        this.setContractor = new JList<>(this.pList);
-        this.setCustomer = new JList<>(this.pList);
-        this.setManager = new JList<>(this.pList);
-        this.setEngineer = new JList<>(this.pList); 
+        this.setArchitect = new JComboBox<>(this.architectBoxModel);
+        this.setArchitect.setSelectedItem("");
+        this.setContractor = new JComboBox<>(this.contractorBoxModel);
+        this.setContractor.setSelectedItem("");
+        this.setCustomer = new JComboBox<>(this.customerBoxModel);
+        this.setCustomer.setSelectedItem("");
+        this.setManager = new JComboBox<>(this.managerBoxModel);
+        this.setManager.setSelectedItem("");
+        this.setEngineer = new JComboBox<>(this.engineerBoxModel); 
+        this.setEngineer.setSelectedItem("");
     }
     
     void updatePersonList() {
@@ -107,10 +120,25 @@ public class ProjectTab extends JPanel {
         } catch ( SQLException e) {
             e.printStackTrace();
         };
-        
-        this.pList.removeAllElements();
+
+        this.architectBoxModel.removeAllElements();
+        this.contractorBoxModel.removeAllElements();
+        this.customerBoxModel.removeAllElements();
+        this.managerBoxModel.removeAllElements();
+        this.engineerBoxModel.removeAllElements();
+
         for (int i = 0; i < personList.size() ; i ++ ) {
-            this.pList.addElement( personList.get(i) );
+            this.architectBoxModel.addElement( personList.get(i) );
+            this.contractorBoxModel.addElement( personList.get(i) );
+            this.customerBoxModel.addElement( personList.get(i) );
+            this.managerBoxModel.addElement( personList.get(i) );
+            this.engineerBoxModel.addElement( personList.get(i) );
         }
+
+        this.architectBoxModel.addElement("");
+        this.contractorBoxModel.addElement("");
+        this.customerBoxModel.addElement("");
+        this.managerBoxModel.addElement("");
+        this.engineerBoxModel.addElement("");
     }
 }

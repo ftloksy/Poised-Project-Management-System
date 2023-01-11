@@ -1,7 +1,5 @@
 import java.sql.*;
 import java.util.Vector;
-//import javax.swing.* ;
-//import java.util.ArrayList;
 
 /*
  * This class is handle mysql require.

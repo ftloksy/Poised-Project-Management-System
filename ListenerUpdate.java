@@ -66,11 +66,11 @@ public class ListenerUpdate implements ActionListener {
                 try {
                         String buildingTypeVal = this.projectTab.bdgType.getSelectedItem().toString() ;
                         
-                        String architectVal = this.projectTab.setArchitect.getSelectedValue().toString().split(":")[0] ;
-                        String contractorVal = this.projectTab.setContractor.getSelectedValue().toString().split(":")[0] ;
-                        String customerVal = this.projectTab.setCustomer.getSelectedValue().toString().split(":")[0] ;
-                        String managerVal = this.projectTab.setManager.getSelectedValue().toString().split(":")[0] ;
-                        String engineerVal = this.projectTab.setEngineer.getSelectedValue().toString().split(":")[0] ;
+                        String architectVal = this.projectTab.setArchitect.getSelectedItem().toString().split(":")[0] ;
+                        String contractorVal = this.projectTab.setContractor.getSelectedItem().toString().split(":")[0] ;
+                        String customerVal = this.projectTab.setCustomer.getSelectedItem().toString().split(":")[0] ;
+                        String managerVal = this.projectTab.setManager.getSelectedItem().toString().split(":")[0] ;
+                        String engineerVal = this.projectTab.setEngineer.getSelectedItem().toString().split(":")[0] ;
                         
                         try {
                             this.dbHandler.updateProjectRecord(

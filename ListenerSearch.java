@@ -1,7 +1,5 @@
-import javax.swing.event.*;
 import javax.swing.*;
 import java.awt.event.*;
-import java.sql.* ;
 import java.util.Vector;
 
 public class ListenerSearch implements ActionListener {
@@ -61,28 +59,28 @@ public class ListenerSearch implements ActionListener {
 		    //  sqlTail += "AND BuildingType = '" + buildingTypeVal + "' " ;
             //     };
 
-                if ( !this.projectTab.setArchitect.isSelectionEmpty() ) {
-                     String architectVal = this.projectTab.setArchitect.getSelectedValue().toString() ;
+                if ( this.projectTab.setArchitect.getSelectedItem()  != "" ) {
+                     String architectVal = this.projectTab.setArchitect.getSelectedItem().toString() ;
 		     sqlTail += "AND Architect = '" + architectVal + "' " ;
                 };
 
-                if ( !this.projectTab.setContractor.isSelectionEmpty() ) {
-                     String contractorVal = this.projectTab.setContractor.getSelectedValue().toString() ;
+                if ( this.projectTab.setContractor.getSelectedItem() != "" ) {
+                     String contractorVal = this.projectTab.setContractor.getSelectedItem().toString() ;
 		     sqlTail += "AND Contractor = '" + contractorVal + "' " ;
                 };
 
-                if ( !this.projectTab.setCustomer.isSelectionEmpty() ) {
-                     String customerVal = this.projectTab.setCustomer.getSelectedValue().toString() ;
+                if ( this.projectTab.setCustomer.getSelectedItem() != "") {
+                     String customerVal = this.projectTab.setCustomer.getSelectedItem().toString() ;
 		     sqlTail += "AND Customer = '" + customerVal + "' " ;
                 };
 
-                if ( !this.projectTab.setManager.isSelectionEmpty() ) {
-                     String managerVal = this.projectTab.setManager.getSelectedValue().toString() ; 
+                if ( this.projectTab.setManager.getSelectedItem() != "" ) {
+                     String managerVal = this.projectTab.setManager.getSelectedItem().toString() ; 
 		     sqlTail += "AND ProjectManager = '" + managerVal + "' " ; 
                 };
 
-                if ( !this.projectTab.setEngineer.isSelectionEmpty() ) {
-                     String engineerVal = this.projectTab.setEngineer.getSelectedValue().toString() ;
+                if ( this.projectTab.setEngineer.getSelectedItem() != "" ) {
+                     String engineerVal = this.projectTab.setEngineer.getSelectedItem().toString() ;
 		     sqlTail += "AND StructuralEngineer = '" + engineerVal + "' " ; 
                 };
 
