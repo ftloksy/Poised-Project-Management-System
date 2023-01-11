@@ -158,8 +158,8 @@ public class MysqlHandler {
             // Connect to the library_db database, via the jdbc:mysql: channel on localhost (this PC)
             // Use username "otheruser", password "swordfish".
             this.connection = DriverManager.getConnection(
-                    // "jdbc:mysql://localhost:3306/PoisePMS?useSSL=false",
-                    "jdbc:mysql://192.168.0.18:3306/PoisePMS?useSSL=false",
+                    "jdbc:mysql://localhost:3306/PoisePMS?useSSL=false",
+                    //"jdbc:mysql://127.0.0.1:3306/PoisePMS?allowPublicKeyRetrieval=true&useSSL=false",
                     "otheruser",
                     "swordfish"
                     );

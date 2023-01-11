@@ -45,46 +45,56 @@ public class ListenerSearch implements ActionListener {
                 break;
             case 1:
             
+		        String sqlTail = "SELECT "
+                + " ProjectNumber, ProjectName, BuildingType, PhysicalAddress, ERFNumber, FeeCharged, PaidToDate, Deadline,"
+                + " Architect, Contractor, Customer, ProjectManager, StructuralEngineer"
+                + " FROM ProjectView WHERE ProjectName like '%" ;
+
+
+
                 // String projectNoVal = this.projectDbEditor.projectNoText.getText();
-                // String projectNameVal = this.projectDbEditor.projectNameText.getText() ;
-                // String physicalAddressVal = this.projectDbEditor.physicalAddressText.getText();
+                String projectNameVal = this.projectDbEditor.projectNameText.getText() ;
+                String physicalAddressVal = this.projectDbEditor.physicalAddressText.getText();
+
+                sqlTail += projectNameVal + "%' AND PhysicalAddress LIKE '%" + physicalAddressVal + "%'";
+
+                // String deadlineVal = this.projectDbEditor.deadlineText.getText() ;
+                
+
                 // String erfNumberVal = this.projectDbEditor.erfNoText.getText() ;
                 // String feeChargedVal = this.projectDbEditor.feeChargedText.getText() ;
                 // String paidTodateVal = this.projectDbEditor.paidTodateText.getText() ;
-                // String deadlineVal = this.projectDbEditor.deadlineText.getText() ;
-                
-		String sqlTail = "";
-            //     if ( !this.projectTab.bdgType.isSelectionEmpty() ) {
-            //          String buildingTypeVal = this.projectTab.bdgType.getSelectedValue().toString() ;
-		    //  sqlTail += "AND BuildingType = '" + buildingTypeVal + "' " ;
-            //     };
 
-                if ( this.projectDbEditor.setArchitect.getSelectedItem()  != "" ) {
-                     String architectVal = this.projectDbEditor.setArchitect.getSelectedItem().toString() ;
-		     sqlTail += "AND Architect = '" + architectVal + "' " ;
-                };
+                String erfNoVal = this.projectDbEditor.erfNoText.getText() ;
+		        sqlTail += " AND ERFNumber LIKE '%" + erfNoVal + "%'" ;
 
-                if ( this.projectDbEditor.setContractor.getSelectedItem() != "" ) {
-                     String contractorVal = this.projectDbEditor.setContractor.getSelectedItem().toString() ;
-		     sqlTail += "AND Contractor = '" + contractorVal + "' " ;
-                };
+            
+                String feeChargedVal = this.projectDbEditor.feeChargedText.getText() ;
+		        sqlTail += " AND FeeCharged LIKE '%" + feeChargedVal + "%' " ;
+ 
+                String paidTodateVal = this.projectDbEditor.paidTodateText.getText() ;
+		        sqlTail += "AND PaidToDate LIKE '%" + paidTodateVal + "%' " ;
 
-                if ( this.projectDbEditor.setCustomer.getSelectedItem() != "") {
-                     String customerVal = this.projectDbEditor.setCustomer.getSelectedItem().toString() ;
-		     sqlTail += "AND Customer = '" + customerVal + "' " ;
-                };
+                String buildingTypeVal = this.projectDbEditor.bdgType.getSelectedItem().toString() ;
+		        sqlTail += "AND BuildingType LIKE '%" + buildingTypeVal + "%' " ;
 
-                if ( this.projectDbEditor.setManager.getSelectedItem() != "" ) {
-                     String managerVal = this.projectDbEditor.setManager.getSelectedItem().toString() ; 
-		     sqlTail += "AND ProjectManager = '" + managerVal + "' " ; 
-                };
+                String architectVal = this.projectDbEditor.setArchitect.getSelectedItem().toString() ;
+		        sqlTail += "AND Architect LIKE '%" + architectVal + "%' " ;
 
-                if ( this.projectDbEditor.setEngineer.getSelectedItem() != "" ) {
-                     String engineerVal = this.projectDbEditor.setEngineer.getSelectedItem().toString() ;
-		     sqlTail += "AND StructuralEngineer = '" + engineerVal + "' " ; 
-                };
+                String contractorVal = this.projectDbEditor.setContractor.getSelectedItem().toString() ;
+		        sqlTail += "AND Contractor LIKE '%" + contractorVal + "%' " ;
+
+                String customerVal = this.projectDbEditor.setCustomer.getSelectedItem().toString() ;
+		        sqlTail += "AND Customer LIKE '%" + customerVal + "%' " ;
+
+                String managerVal = this.projectDbEditor.setManager.getSelectedItem().toString() ; 
+		        sqlTail += "AND ProjectManager LIKE '%" + managerVal + "%' " ; 
+
+                String engineerVal = this.projectDbEditor.setEngineer.getSelectedItem().toString() ;
+		        sqlTail += "AND StructuralEngineer LIKE '%" + engineerVal + "%' " ; 
 
                 this.mainFrame.msgArea.setText("This sql Tail : " + sqlTail);
+                System.out.println(sqlTail);
                 
                 // try {
                 //     this.dbHandler.searchProjectRecord(
