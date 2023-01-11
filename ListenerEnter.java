@@ -1,4 +1,3 @@
-import javax.swing.event.*;
 import java.awt.event.*;
 import javax.swing.* ;
 import java.sql.* ;
@@ -57,7 +56,7 @@ public class ListenerEnter implements ActionListener {
                 
                 try {
                         
-                        String buildingTypeVal = this.projectTab.bdgType.getSelectedValue().toString() ;
+                        String buildingTypeVal = this.projectTab.bdgType.getSelectedItem().toString() ;
                         
                         String architectVal = this.projectTab.setArchitect.getSelectedValue().toString().split(":")[0] ;
                         String contractorVal = this.projectTab.setContractor.getSelectedValue().toString().split(":")[0] ;

@@ -24,6 +24,15 @@ public class ProjectTableSelect implements ListSelectionListener {
     Integer findPerson(String targetTxt) {
         return findIndex(targetTxt, this.pTab.pList );
     }
+
+    Integer findIndex(String targetTxt, DefaultComboBoxModel<String> checkModel) {
+        for (int i = 0 ; i < checkModel.getSize() ; i ++ ) {
+            if ( checkModel.getElementAt(i).indexOf(targetTxt) > -1 ) {
+                return i;
+            }
+        }
+        return -1;
+    }
     
     Integer findIndex(String targetTxt, DefaultListModel<String> checkModel) {
         for (int i = 0 ; i < checkModel.size() ; i ++ ) {

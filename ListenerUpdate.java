@@ -1,4 +1,3 @@
-import javax.swing.event.*;
 import javax.swing.*;
 import java.awt.event.*;
 import java.sql.* ;
@@ -65,7 +64,7 @@ public class ListenerUpdate implements ActionListener {
                 String deadlineVal = this.projectDbEditor.deadlineText.getText() ;
                 
                 try {
-                        String buildingTypeVal = this.projectTab.bdgType.getSelectedValue().toString() ;
+                        String buildingTypeVal = this.projectTab.bdgType.getSelectedItem().toString() ;
                         
                         String architectVal = this.projectTab.setArchitect.getSelectedValue().toString().split(":")[0] ;
                         String contractorVal = this.projectTab.setContractor.getSelectedValue().toString().split(":")[0] ;
@@ -91,7 +90,7 @@ public class ListenerUpdate implements ActionListener {
                             );
                             this.projectTable.flashTable();
                             this.projectTab.updatePersonList();
-                            this.projectTab.bdgType.clearSelection();
+                            this.projectTab.bdgType.setSelectedItem("");
                             this.mainFrame.msgArea.setText("UPDATE Project Record Complete.");
                             
                         } catch ( SQLException pje)  {

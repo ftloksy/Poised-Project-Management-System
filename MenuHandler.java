@@ -1,4 +1,3 @@
-import java.awt.*;
 import javax.swing.*;
 
 public class MenuHandler extends JMenuBar {

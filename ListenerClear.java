@@ -1,6 +1,6 @@
-import java.awt.*;
+//import java.awt.*;
 import javax.swing.*;
-import javax.swing.event.*;
+//import javax.swing.event.*;
 import java.awt.event.*;
 
 public class ListenerClear implements ActionListener {
@@ -20,7 +20,7 @@ public class ListenerClear implements ActionListener {
         switch ( index ) {
             case 0:
                 this.tabPane = this.mainFrame.pmsTab.tabbedPane ;
-                int tabIndex = this.tabPane.getSelectedIndex();
+                //int tabIndex = this.tabPane.getSelectedIndex();
                 this.personDbEditor = this.mainFrame.pmsTab.personTab.dbEditor ;
                 this.personDbEditor.resetField();
                 this.mainFrame.msgArea.setText("");
@@ -29,7 +29,7 @@ public class ListenerClear implements ActionListener {
                 this.mainFrame.msgArea.setText("Clear Tab 1");
                 this.mainFrame.pmsTab.projectTab.dbEditor.resetField();
                 this.mainFrame.pmsTab.projectTab.updatePersonList();
-                this.mainFrame.pmsTab.projectTab.bdgType.clearSelection();
+                this.mainFrame.pmsTab.projectTab.bdgType.setSelectedItem("");
                 break;
         }
     }

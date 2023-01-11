@@ -1,4 +1,4 @@
-import javax.swing.event.*;
+//import javax.swing.event.*;
 import javax.swing.*;
 import java.awt.event.*;
 import java.sql.* ;
@@ -60,7 +60,7 @@ public class ListenerDelete implements ActionListener {
                     this.dbHandler.deleteProject( projectNoVal );
                     this.projectTable.flashTable();
                     this.projectTab.updatePersonList();
-                    this.projectTab.bdgType.clearSelection();
+                    this.projectTab.bdgType.setSelectedItem("");
                     this.mainFrame.msgArea.setText("Delete Project Record Complete.");
                 } catch ( SQLException pje)  {
                     this.mainFrame.msgArea.setText(pje.getMessage());

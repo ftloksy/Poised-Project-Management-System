@@ -1,6 +1,5 @@
 import java.awt.*;
 import javax.swing.*;
-import java.util.ArrayList ;
 import java.util.Vector ;
 import java.sql.* ;
 
@@ -10,7 +9,7 @@ public class ProjectTab extends JPanel {
     
     Vector<String> personList;
     
-    DefaultListModel<String> bdgTypeList;
+    DefaultComboBoxModel<String> bdgTypeList;
     DefaultListModel<String> pList;
     
     JScrollPane dbScroll ;
@@ -20,12 +19,12 @@ public class ProjectTab extends JPanel {
     JScrollPane dbScroll5 ;
     JScrollPane dbScroll6 ;
 
-    JList<String> bdgType;
-    JList setArchitect;
-    JList setContractor;
-    JList setCustomer;
-    JList setManager;
-    JList setEngineer;
+    JComboBox<String> bdgType;
+    JList<String> setArchitect;
+    JList<String> setContractor;
+    JList<String> setCustomer;
+    JList<String> setManager;
+    JList<String> setEngineer;
     
     ProjectEditor dbEditor;
     ProjectTable dbTable;
@@ -78,13 +77,15 @@ public class ProjectTab extends JPanel {
     }
     
     void createBdgList() {
-        this.bdgTypeList = new DefaultListModel<>();
+        this.bdgTypeList = new DefaultComboBoxModel<>();
         this.bdgTypeList.addElement("House");
         this.bdgTypeList.addElement("Apartment");
         this.bdgTypeList.addElement("Block");
         this.bdgTypeList.addElement("Store");
+        this.bdgTypeList.addElement("");
         
-        this.bdgType = new JList<>(bdgTypeList);
+        this.bdgType = new JComboBox<>(bdgTypeList);
+        this.bdgType.setSelectedItem("");;
     }
     
     void createPersonList() {
