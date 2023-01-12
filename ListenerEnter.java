@@ -11,7 +11,7 @@ public class ListenerEnter implements ActionListener {
     PersonTable personTable;
     ProjectTab projectTab ;
     ProjectTable projectTable;
-    ProjectEditor projectEditor;
+    ProjectEditor projectDbEditor;
     
     ListenerEnter(PmsFrame motherFrame, MysqlHandler dbPosie){
         this.mainFrame = motherFrame ;
@@ -26,7 +26,7 @@ public class ListenerEnter implements ActionListener {
         this.personTable = this.personTab.dbTable ;
 
         this.projectTab = this.mainFrame.pmsTab.projectTab ;
-        this.projectEditor = this.projectTab.dbEditor ;
+        this.projectDbEditor = this.projectTab.dbEditor ;
         this.projectTable = this.projectTab.dbTable ;
         
         this.mainFrame.msgArea.setText("");
@@ -50,22 +50,22 @@ public class ListenerEnter implements ActionListener {
                 break;
             case 1:
             
-                String projectNameVal = this.projectEditor.projectNameText.getText() ;
-                String physicalAddressVal = this.projectEditor.physicalAddressText.getText();
-                String erfNumberVal = this.projectEditor.erfNoText.getText() ;
-                String feeChargedVal = this.projectEditor.feeChargedText.getText() ;
-                String paidTodateVal = this.projectEditor.paidTodateText.getText() ;
-                String deadlineVal = this.projectEditor.deadlineText.getText() ;
+                String projectNameVal = this.projectDbEditor.projectNameText.getText() ;
+                String physicalAddressVal = this.projectDbEditor.physicalAddressText.getText();
+                String erfNumberVal = this.projectDbEditor.erfNoText.getText() ;
+                String feeChargedVal = this.projectDbEditor.feeChargedText.getText() ;
+                String paidTodateVal = this.projectDbEditor.paidTodateText.getText() ;
+                String deadlineVal = this.projectDbEditor.deadlineText.getText() ;
                 
                 try {
                         
-                        String buildingTypeVal = this.projectEditor.bdgType.getSelectedItem().toString() ;
+                        String buildingTypeVal = this.projectDbEditor.bdgType.getSelectedItem().toString() ;
                         
-                        String architectVal = this.projectEditor.setArchitect.getSelectedItem().toString().split(":")[0] ;
-                        String contractorVal = this.projectEditor.setContractor.getSelectedItem().toString().split(":")[0] ;
-                        String customerVal = this.projectEditor.setCustomer.getSelectedItem().toString().split(":")[0] ;
-                        String managerVal = this.projectEditor.setManager.getSelectedItem().toString().split(":")[0] ;
-                        String engineerVal = this.projectEditor.setEngineer.getSelectedItem().toString().split(":")[0] ;
+                        String architectVal = this.projectDbEditor.setArchitect.getSelectedItem().toString().split(":")[0] ;
+                        String contractorVal = this.projectDbEditor.setContractor.getSelectedItem().toString().split(":")[0] ;
+                        String customerVal = this.projectDbEditor.setCustomer.getSelectedItem().toString().split(":")[0] ;
+                        String managerVal = this.projectDbEditor.setManager.getSelectedItem().toString().split(":")[0] ;
+                        String engineerVal = this.projectDbEditor.setEngineer.getSelectedItem().toString().split(":")[0] ;
                         
                         try {
                             this.dbHandler.insertProjectRecord(
@@ -83,6 +83,8 @@ public class ListenerEnter implements ActionListener {
                                 engineerVal
                             );
                             this.projectTable.flashTable();
+                            this.projectDbEditor.resetField();
+                            this.projectDbEditor.updatePersonList();
                             this.mainFrame.msgArea.setText("INSERT Project Record Complete.");
                         } catch ( SQLException pje)  {
                             this.mainFrame.msgArea.setText(pje.getMessage());

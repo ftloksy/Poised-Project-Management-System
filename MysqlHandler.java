@@ -346,6 +346,37 @@ public class MysqlHandler {
                     + " AND PhysicalAddress like '%" + physicalAddress + "%' "
             );
     }
+
+    Vector<Vector<String>> searchProjectRecord(
+        String projectNameVal,
+        String physicalAddressVal, 
+        String erfNoVal,
+        String feeChargedVal,
+        String paidTodateVal,
+        String buildingTypeVal,
+        String architectVal,
+        String contractorVal,
+        String customerVal,
+        String managerVal,
+        String engineerVal
+    ) {
+        return makeProjectRow(  "SELECT "
+            + " ProjectNumber, ProjectName, BuildingType, PhysicalAddress, ERFNumber, FeeCharged, PaidToDate, Deadline,"
+            + " Architect, Contractor, Customer, ProjectManager, StructuralEngineer"
+            + " FROM ProjectView WHERE "
+            +     " ProjectName like '%"       + projectNameVal + "%'"
+            + " AND PhysicalAddress LIKE '%"   + physicalAddressVal + "%'"
+            + " AND ERFNumber LIKE '%"         + erfNoVal + "%'" 
+            + " AND FeeCharged LIKE '%"        + feeChargedVal + "%'"
+            + " AND PaidToDate LIKE '%"        + paidTodateVal + "%'"
+            + " AND BuildingType LIKE '%"      + buildingTypeVal + "%'"
+            + " AND Architect LIKE '%"         + architectVal + "%'" 
+            + " AND Contractor LIKE '%"        + contractorVal + "%'"
+            + " AND Customer LIKE '%"          + customerVal + "%' "
+            + "AND ProjectManager LIKE '%"     + managerVal + "%' "
+            + "AND StructuralEngineer LIKE '%" + engineerVal + "%' " );
+    };
+
     
     Vector<Vector<String>> selectPersonRecord() {
         return this.makePersonRow( this.selectPerson );
