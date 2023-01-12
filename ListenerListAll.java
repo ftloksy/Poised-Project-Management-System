@@ -7,6 +7,9 @@ public class ListenerListAll implements ActionListener {
     JTabbedPane tabPane;
     PersonEditor personDbEditor;
     PersonTable personTable;
+
+    ProjectEditor projectDbEditor;
+    ProjectTable projectTable;
     
     ListenerListAll(PmsFrame motherFrame, MysqlHandler dbPosie){
         this.mainFrame = motherFrame ;
@@ -18,6 +21,10 @@ public class ListenerListAll implements ActionListener {
         this.tabPane = this.mainFrame.pmsTab.tabbedPane ;
         this.personDbEditor = this.mainFrame.pmsTab.personTab.dbEditor ;
         this.personTable = this.mainFrame.pmsTab.personTab.dbTable ;
+
+        this.projectDbEditor = this.mainFrame.pmsTab.projectTab.dbEditor ;
+        this.projectTable = this.mainFrame.pmsTab.projectTab.dbTable ;
+        
         
         this.mainFrame.msgArea.setText("");
         int index = this.tabPane.getSelectedIndex();
@@ -30,6 +37,11 @@ public class ListenerListAll implements ActionListener {
 
                 break;
             case 1:
+
+                this.mainFrame.msgArea.setText("List all Project's Record.");
+                this.projectDbEditor.resetField();
+                this.projectDbEditor.updatePersonList();
+                this.projectTable.flashTable();
                 break;
         }
     }

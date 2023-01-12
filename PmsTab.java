@@ -20,7 +20,7 @@ public class PmsTab {
 
         tabbedPane.addTab(PersonTabTilte, personTab);
         tabbedPane.addTab(ProjectTabTitle, projectTab);
-        tabbedPane.setSelectedIndex(1);
+        tabbedPane.setSelectedIndex(0);
         
         tabbedPane.addChangeListener(changeListener);
 
