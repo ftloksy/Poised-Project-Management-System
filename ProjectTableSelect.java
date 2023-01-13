@@ -94,6 +94,14 @@ public class ProjectTableSelect implements ListSelectionListener {
                     (String)this.dbModel.getValueAt(this.selectIndex, 12),
                     this.dbEditor.engineerBoxModel )
             );
+
+            this.dbEditor.setFinalised.setSelectedItem(
+                (String)this.dbModel.getValueAt(this.selectIndex, 13)
+            );
+
+            this.dbEditor.completedDateText.setText(
+                (String)this.dbModel.getValueAt(this.selectIndex, 14)
+            );
              
         } catch (ArrayIndexOutOfBoundsException g){
             this.dbEditor.resetField();

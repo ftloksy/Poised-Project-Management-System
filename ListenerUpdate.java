@@ -62,9 +62,16 @@ public class ListenerUpdate implements ActionListener {
                 String feeChargedVal = this.projectDbEditor.feeChargedText.getText() ;
                 String paidTodateVal = this.projectDbEditor.paidTodateText.getText() ;
                 String deadlineVal = this.projectDbEditor.deadlineText.getText() ;
+                String completedDate = this.projectDbEditor.completedDateText.getText() ;
                 
                 try {
                         String buildingTypeVal = this.projectDbEditor.bdgType.getSelectedItem().toString() ;
+                        String isFinalised = this.projectDbEditor.setFinalised.getSelectedItem().toString();
+                        if ( isFinalised.equals("Yes")) {
+                            isFinalised = "1";
+                        } else {
+                            isFinalised = "0";
+                        };
                         
                         String architectVal = this.projectDbEditor.setArchitect.getSelectedItem().toString().split(":")[0] ;
                         String contractorVal = this.projectDbEditor.setContractor.getSelectedItem().toString().split(":")[0] ;
@@ -86,7 +93,9 @@ public class ListenerUpdate implements ActionListener {
                                 contractorVal,
                                 customerVal,
                                 managerVal,
-                                engineerVal
+                                engineerVal,
+                                completedDate,
+                                isFinalised
                             );
                             this.projectTable.flashTable();
                             this.projectDbEditor.updatePersonList();

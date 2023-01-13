@@ -36,6 +36,10 @@ public class ProjectEditor extends JPanel {
     JLabel customerLabel = new JLabel("Customer", SwingConstants.RIGHT);
     JLabel managerLabel = new JLabel("Manager", SwingConstants.RIGHT);
     JLabel engineerLabel = new JLabel("Engineer", SwingConstants.RIGHT);
+    JLabel finalisedLabel = new JLabel("Finalised", SwingConstants.RIGHT);
+
+    JLabel completedDateLabel = new JLabel("Completed Date", SwingConstants.RIGHT);
+    JTextField completedDateText = new JTextField("Completed Date", 30);
 
     DefaultComboBoxModel<String> bdgTypeList;
 
@@ -45,6 +49,8 @@ public class ProjectEditor extends JPanel {
     DefaultComboBoxModel<String> managerBoxModel;
     DefaultComboBoxModel<String> engineerBoxModel;
 
+    DefaultComboBoxModel<String> yesNoBoxModel;
+
     JComboBox<String> bdgType;
     JComboBox<String> setArchitect;
     JComboBox<String> setContractor;
@@ -52,15 +58,18 @@ public class ProjectEditor extends JPanel {
     JComboBox<String> setManager;
     JComboBox<String> setEngineer;
 
+    JComboBox<String> setFinalised;
+
     MysqlHandler dbHandler;
 
     ProjectEditor(PmsFrame motherFrame, MysqlHandler dbPosie) {
         super();
-        super.setLayout(new GridLayout(13, 2, 10, 5)); 
+        super.setLayout(new GridLayout(15, 2, 10, 5)); 
 
         this.projectNoText.setEditable(false);
         this.dbHandler = dbPosie ;
         this.createBdgList();
+        this.createFinalisedList();
         this.createPersonList();
 
         super.add(this.projectNoLabel);
@@ -104,6 +113,12 @@ public class ProjectEditor extends JPanel {
         super.add(this.engineerLabel);
         super.add(this.setEngineer);
 
+        super.add(this.finalisedLabel);
+        super.add(this.setFinalised);
+
+        super.add(this.completedDateLabel);
+        super.add(this.completedDateText);
+
     }
     
     void resetField() {
@@ -114,6 +129,7 @@ public class ProjectEditor extends JPanel {
         this.feeChargedText.setText("");
         this.paidTodateText.setText("");
         this.deadlineText.setText("");
+        this.completedDateText.setText("");
     }
 
     void createBdgList() {
@@ -126,6 +142,16 @@ public class ProjectEditor extends JPanel {
         
         this.bdgType = new JComboBox<>(bdgTypeList);
         this.bdgType.setSelectedItem("");;
+    }
+
+    void createFinalisedList() {
+        this.yesNoBoxModel = new DefaultComboBoxModel<>();
+        this.yesNoBoxModel.addElement("Yes");
+        this.yesNoBoxModel.addElement("No");
+        this.yesNoBoxModel.addElement("");
+
+        this.setFinalised = new JComboBox<>(this.yesNoBoxModel);
+        this.setFinalised.setSelectedItem("");;
     }
     
     void createPersonList() {
@@ -179,6 +205,8 @@ public class ProjectEditor extends JPanel {
         this.engineerBoxModel.addElement("");
 
         this.bdgType.setSelectedItem("");
+        this.setFinalised.setSelectedItem("");
+
         this.setArchitect.setSelectedItem("");
         this.setContractor.setSelectedItem("");
         this.setCustomer.setSelectedItem("");

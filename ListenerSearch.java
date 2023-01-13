@@ -50,12 +50,21 @@ public class ListenerSearch implements ActionListener {
                 String erfNoVal = this.projectDbEditor.erfNoText.getText() ;
                 String feeChargedVal = this.projectDbEditor.feeChargedText.getText() ;
                 String paidTodateVal = this.projectDbEditor.paidTodateText.getText() ;
+                String deadLine = this.projectDbEditor.deadlineText.getText() ;
+                String completedDate = this.projectDbEditor.completedDateText.getText();
                 String buildingTypeVal = this.projectDbEditor.bdgType.getSelectedItem().toString() ;
                 String architectVal = this.projectDbEditor.setArchitect.getSelectedItem().toString() ;
                 String contractorVal = this.projectDbEditor.setContractor.getSelectedItem().toString() ;
                 String customerVal = this.projectDbEditor.setCustomer.getSelectedItem().toString() ;
                 String managerVal = this.projectDbEditor.setManager.getSelectedItem().toString() ; 
                 String engineerVal = this.projectDbEditor.setEngineer.getSelectedItem().toString() ;
+                
+                String isFinalised = this.projectDbEditor.setFinalised.getSelectedItem().toString();
+                if ( isFinalised.equals("Yes")) {
+                    isFinalised = "1";
+                } else {
+                    isFinalised = "0";
+                };
 
                 Vector<Vector<String>> searchProjectResult = this.dbHandler.searchProjectRecord(
                     projectNameVal,
@@ -64,11 +73,14 @@ public class ListenerSearch implements ActionListener {
                     feeChargedVal,
                     paidTodateVal,
                     buildingTypeVal,
+                    deadLine,
                     architectVal,
                     contractorVal,
                     customerVal,
                     managerVal,
-                    engineerVal 
+                    engineerVal,
+                    completedDate,
+                    isFinalised
                 );
 
                 this.mainFrame.msgArea.setText("Search is Complete.");

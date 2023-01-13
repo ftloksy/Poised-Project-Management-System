@@ -30,6 +30,9 @@ public class MysqlHandler {
         + " ProjectManagerPId int(6) UNSIGNED,"
         + " StructuralEngineerPId int(6) UNSIGNED,"
 
+        + " Finalised BOOLEAN,"
+        + " CompletedDate DATE,"
+
         + " PRIMARY KEY (ProjectNumber),"
         + " FOREIGN KEY (ArchitectPId) REFERENCES Person(id),"
         + " FOREIGN KEY (ContractorPId) REFERENCES Person(id),"
@@ -45,27 +48,41 @@ public class MysqlHandler {
         + " EmailAddress varchar(50),"     // Architect Email Address name.
         + " PhysicalAddress varchar(50),"  // Architect Physical Address name.
         + " PRIMARY KEY (id))";
+
+    
+    // String createJobTableSQL = ""
+    //     + "CREATE TABLE IF NOT EXISTS Job ("
+    //     + " id int(6) ZEROFIL NOT NULL AUTO_INCREMENT,"
+    //     + " ProjectNumber int(6) UNSIGNED,"
+    //     + " PRIMARY KEY (id),"
+    //     + " FOREIGN KEY (ProjectNumber) REFERENCES Project(ProjectNumber),"
+    //     + " UNIQUE (ProjectNumber),"
+    //     + " ) "     ;
+        
         
     String createProjectViewSQL = ""
         + " create or replace view ProjectView as"
         + " SELECT ProjectNumber, ProjectName, BuildingType," 
         + " PhysicalAddress, ERFNumber, FeeCharged, PaidToDate, Deadline," 
+        + " Finalised,"
+        + " CompletedDate,"
         + " ( select CONCAT( id, ': ', FirstName, ' ', SurName ) "
         + " FROM Person Where id = ArchitectPId )"
         + " as Architect, "
         + " ( select CONCAT( id, ': ', FirstName, ' ', SurName ) "
-	+ " FROM Person Where id = ContractorPId )"
+	    + " FROM Person Where id = ContractorPId )"
         + " as Contractor,"
         + " ( select CONCAT( id, ': ', FirstName, ' ', SurName ) "
-	+ " FROM Person Where id = CustomerPId )"
+	    + " FROM Person Where id = CustomerPId )"
         + " as Customer,"
         + " ( select CONCAT( id, ': ', FirstName, ' ', SurName ) "
-	+ " FROM Person Where id = ProjectManagerPId )"
+	    + " FROM Person Where id = ProjectManagerPId )"
         + " as ProjectManager, "
         + " ( select CONCAT( id, ': ', FirstName, ' ', SurName ) "
-	+ " FROM Person Where id = StructuralEngineerPId )"
+	    + " FROM Person Where id = StructuralEngineerPId )"
         + " as StructuralEngineer"
         + " FROM Project";
+
 
 
     //String createPoisedTableSQL = "CREATE TABLE IF NOT EXISTS Poised ("
@@ -73,7 +90,6 @@ public class MysqlHandler {
         //+ " ProjectNumber int(6) UNSIGNED,"  // Project number.
 
         //+ " PhysicalAddress varchar(200),"   // The physical address for the project.
-
 //.
         //+ " FOREIGN KEY (ProjectNumber) REFERENCES Project(ProjectNumber),"
         //+ " PRIMARY KEY (ERFNumber))";
@@ -150,7 +166,7 @@ public class MysqlHandler {
 
     String selectProject = "SELECT "
         + " ProjectNumber, ProjectName, BuildingType, PhysicalAddress, ERFNumber, FeeCharged, PaidToDate, Deadline,"
-        + " Architect, Contractor, Customer, ProjectManager, StructuralEngineer"
+        + " Architect, Contractor, Customer, ProjectManager, StructuralEngineer, Finalised, CompletedDate "
         + " FROM ProjectView";
 
     MysqlHandler () {
@@ -234,18 +250,22 @@ public class MysqlHandler {
             String eRFNumber,
             String feeCharged,
             String paidToDate,
-            String deadline,
+            String deadLine,
             String architectPId,
             String contractorPId,
             String customerPId,
             String projectManagerPId,
-            String structuralEngineerPId
+            String structuralEngineerPId,
+            String isFinalised,
+            String completedDate
+
             ) throws SQLException {
 
         String sqlStr = "INSERT INTO Project ( "
 
        	+ " ProjectName, BuildingType, PhysicalAddress, ERFNumber, FeeCharged, PaidToDate, Deadline,"
-        + " ArchitectPId, ContractorPId, CustomerPId, ProjectManagerPId, StructuralEngineerPId"
+        + " ArchitectPId, ContractorPId, CustomerPId, ProjectManagerPId, StructuralEngineerPId,"
+        + " Finalised, CompletedDate"
 
             + " )"
             + "VALUES (" 
@@ -255,12 +275,14 @@ public class MysqlHandler {
             + "'" + eRFNumber + "', "
             + "'" + feeCharged + "', "
             + "'" + paidToDate + "', "
-            + "'" + deadline + "', "
+            + "'" + deadLine + "', "
             + "'" + architectPId + "', "
             + "'" + contractorPId + "', "
             + "'" + customerPId + "', "
             + "'" + projectManagerPId + "', "
-            + "'" + structuralEngineerPId + "' "
+            + "'" + structuralEngineerPId + "', "
+            + "'" + isFinalised + "', "
+            + "'" + completedDate + "' "
             + ")";
         this.statement.executeUpdate(sqlStr);
     }
@@ -278,7 +300,9 @@ public class MysqlHandler {
             String contractorPId,
             String customerPId,
             String projectManagerPId,
-            String structuralEngineerPId
+            String structuralEngineerPId,
+            String completedDate,
+            String isFinalised
             ) throws SQLException {
 
         String sqlStr = "UPDATE Project SET "
@@ -293,7 +317,9 @@ public class MysqlHandler {
             + " ContractorPId = '" + contractorPId + "', "
             + " CustomerPId = '" + customerPId + "', "
             + " ProjectManagerPId = '" + projectManagerPId + "', " 
-            + " StructuralEngineerPId = '" +  structuralEngineerPId + "'"
+            + " StructuralEngineerPId = '" +  structuralEngineerPId + "', "
+            + " CompletedDate = '" + completedDate + "',"
+            + " Finalised = '" + isFinalised + "'"
             + " WHERE ProjectNumber = '" + projectNo + "'";
         
         this.statement.executeUpdate(sqlStr);
@@ -354,27 +380,40 @@ public class MysqlHandler {
         String feeChargedVal,
         String paidTodateVal,
         String buildingTypeVal,
+        String deadLine,
         String architectVal,
         String contractorVal,
         String customerVal,
         String managerVal,
-        String engineerVal
+        String engineerVal,
+        String completedDate,
+        String isFinalised
     ) {
         return makeProjectRow(  "SELECT "
-            + " ProjectNumber, ProjectName, BuildingType, PhysicalAddress, ERFNumber, FeeCharged, PaidToDate, Deadline,"
-            + " Architect, Contractor, Customer, ProjectManager, StructuralEngineer"
+            + " ProjectNumber, ProjectName, BuildingType, PhysicalAddress, ERFNumber, FeeCharged,"
+            + " PaidToDate, Deadline,"
+            + " Architect, Contractor, Customer, ProjectManager, StructuralEngineer,"
+            + " Finalised, CompletedDate"
             + " FROM ProjectView WHERE "
             +     " ProjectName like '%"       + projectNameVal + "%'"
+            + " AND BuildingType LIKE '%"      + buildingTypeVal + "%'"
             + " AND PhysicalAddress LIKE '%"   + physicalAddressVal + "%'"
             + " AND ERFNumber LIKE '%"         + erfNoVal + "%'" 
             + " AND FeeCharged LIKE '%"        + feeChargedVal + "%'"
             + " AND PaidToDate LIKE '%"        + paidTodateVal + "%'"
-            + " AND BuildingType LIKE '%"      + buildingTypeVal + "%'"
+            + " AND Deadline LIKE '%"          + deadLine + "%'"
             + " AND Architect LIKE '%"         + architectVal + "%'" 
             + " AND Contractor LIKE '%"        + contractorVal + "%'"
-            + " AND Customer LIKE '%"          + customerVal + "%' "
-            + "AND ProjectManager LIKE '%"     + managerVal + "%' "
-            + "AND StructuralEngineer LIKE '%" + engineerVal + "%' " );
+            + " AND Customer LIKE '%"          + customerVal + "%'"
+            + " AND ProjectManager LIKE '%"     + managerVal + "%'"
+            + " AND StructuralEngineer LIKE '%" + engineerVal + "%'"
+            + " AND CompletedDate LIKE '%"      + completedDate + "%'"
+            + " AND Finalised LIKE '%"          + isFinalised + "%'"
+
+        //+ " Finalised BOOLEAN,"
+        //+ " CompletedDate DATE,"
+
+             );
     };
 
     
@@ -429,6 +468,14 @@ public class MysqlHandler {
                 resultRow.add( rs.getString("Customer") );
                 resultRow.add( rs.getString("ProjectManager") );
                 resultRow.add( rs.getString("StructuralEngineer") );
+                String isFinalisedTxt;
+                if ( rs.getBoolean("Finalised") ) {
+                    isFinalisedTxt = "Yes";
+                } else {
+                    isFinalisedTxt = "No";
+                }
+                resultRow.add( isFinalisedTxt );
+                resultRow.add( rs.getDate("CompletedDate").toString() );
                 resultVector.add(resultRow);
             }
         }catch ( SQLException e) {

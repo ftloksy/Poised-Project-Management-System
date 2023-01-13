@@ -33,7 +33,9 @@ public class ProjectTable extends JTable {
         headerTitle.add("CustomerPId");
         headerTitle.add("ProjectManagerPId");
         headerTitle.add("StructuralEngineerPId");
-        this.tableHeader = headerTitle ;
+        headerTitle.add("Finalised");
+        headerTitle.add("CompletedDate");
+        this.tableHeader =  headerTitle;
     }
     
     void flashTable () {
