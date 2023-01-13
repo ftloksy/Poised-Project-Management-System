@@ -8,6 +8,7 @@ public class MenuHandler extends JMenuBar {
     JButton searchItem = new JButton("Search Person");
     JButton listAllItem = new JButton("ListAll Person");
     JButton exitItem = new JButton("Exit");
+    JButton finalisedProject = new JButton("Finalised Project");
     //TabFrame mainFrame;
     ListenerExit exitProgram = new ListenerExit();
     ListenerClear clearListener;
@@ -16,23 +17,18 @@ public class MenuHandler extends JMenuBar {
     ListenerUpdate updateListener;
     ListenerSearch searchListener;
     ListenerListAll listAllListener;
+    ListenerFinalised finalisedListener;
     
     MenuHandler (PmsFrame motherFrame, MysqlHandler dbPosie) {
         super();
         //this.mainFrame = motherFrame;
-        super.add( this.clearItem );
-        super.add( this.enterItem );
-        super.add( this.updateItem );
-        super.add( this.deleteItem );
-        super.add( this.searchItem );
-        super.add( this.listAllItem );
-        super.add( this.exitItem );
         this.clearListener = new ListenerClear( motherFrame );
         this.enterListener = new ListenerEnter( motherFrame, dbPosie );
         this.deleteListener = new ListenerDelete( motherFrame, dbPosie );
         this.updateListener = new ListenerUpdate( motherFrame, dbPosie );
         this.searchListener = new ListenerSearch( motherFrame, dbPosie );
         this.listAllListener = new ListenerListAll( motherFrame, dbPosie );
+        this.finalisedListener = new ListenerFinalised(motherFrame, dbPosie);
         this.clearItem.addActionListener(this.clearListener);
         this.exitItem.addActionListener(this.exitProgram);
         this.enterItem.addActionListener(this.enterListener);
@@ -40,5 +36,22 @@ public class MenuHandler extends JMenuBar {
         this.updateItem.addActionListener(this.updateListener);
         this.searchItem.addActionListener(this.searchListener);
         this.listAllItem.addActionListener(this.listAllListener);
+        this.finalisedProject.addActionListener(this.finalisedListener);
+    }
+
+    void reNewMenu(){
+        this.removeAll();
+        this.add( this.clearItem );
+        this.add( this.enterItem );
+        this.add( this.updateItem );
+        this.add( this.deleteItem );
+        this.add( this.searchItem );
+        this.add( this.listAllItem );
+        this.add( this.exitItem );
+    }
+
+    void finalisedMenu() {
+        this.add( this.finalisedProject );
+        this.add( this.exitItem );
     }
 }

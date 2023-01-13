@@ -10,10 +10,13 @@ public class PmsFrame extends JFrame {
         super();
         super.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         super.setLayout(new BorderLayout());
-        dbMenu = new MenuHandler(this, dbPosie);
+        this.dbMenu = new MenuHandler(this, dbPosie);
         this.pmsTab = new PmsTab(this, dbPosie);
         this.pmsTab.addComponentToPane(super.getContentPane());
-        super.setJMenuBar(dbMenu);
+        super.setJMenuBar(this.dbMenu);
+        this.dbMenu.reNewMenu();
+
+    
         
         this.msgArea = new JTextArea(3, 40);
         this.msgArea.setEditable(false);

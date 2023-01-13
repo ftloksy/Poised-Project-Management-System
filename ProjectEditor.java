@@ -70,6 +70,8 @@ public class ProjectEditor extends JPanel {
         this.dbHandler = dbPosie ;
         this.createBdgList();
         this.createFinalisedList();
+        this.setFinalised.setEnabled(false);
+        this.completedDateText.setEditable(false);
         this.createPersonList();
 
         super.add(this.projectNoLabel);

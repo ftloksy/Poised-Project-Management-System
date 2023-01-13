@@ -23,6 +23,7 @@ public class TabChangeListener implements ChangeListener {
                 this.dbMenu.deleteItem.setText("Delete Person");
                 this.dbMenu.searchItem.setText("Search Person");
                 this.dbMenu.listAllItem.setText("ListAll Person");
+                this.dbMenu.reNewMenu();
                 break;
             case 1:
                 this.dbMenu.clearItem.setText("Clear Poised");
@@ -31,7 +32,12 @@ public class TabChangeListener implements ChangeListener {
                 this.dbMenu.deleteItem.setText("Delete Poised");
                 this.dbMenu.searchItem.setText("Search Poised");
                 this.dbMenu.listAllItem.setText("ListAll Poised");
+                this.dbMenu.reNewMenu();
                 this.mainFrame.pmsTab.projectTab.dbEditor.updatePersonList();
+                break;
+            case 2:
+                this.dbMenu.removeAll();
+                this.dbMenu.finalisedMenu();
                 break;
         }
     }
