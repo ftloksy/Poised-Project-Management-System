@@ -265,9 +265,13 @@ public class MysqlHandler {
 
        	+ " ProjectName, BuildingType, PhysicalAddress, ERFNumber, FeeCharged, PaidToDate, Deadline,"
         + " ArchitectPId, ContractorPId, CustomerPId, ProjectManagerPId, StructuralEngineerPId,"
-        + " Finalised, CompletedDate"
+        + " Finalised";
 
-            + " )"
+        if ( !completedDate.equals("")) {
+            sqlStr += ", CompletedDate";
+        };
+
+        sqlStr += " )"
             + "VALUES (" 
             + "'" + projectName + "', "
             + "'" + buildingType + "', "
@@ -281,9 +285,13 @@ public class MysqlHandler {
             + "'" + customerPId + "', "
             + "'" + projectManagerPId + "', "
             + "'" + structuralEngineerPId + "', "
-            + "'" + isFinalised + "', "
-            + "'" + completedDate + "' "
-            + ")";
+            + "'" + isFinalised + "' " ;
+
+            if ( !completedDate.equals("") ) {
+                sqlStr += ", '" + completedDate + "' ";
+            }
+
+            sqlStr += ")";
         this.statement.executeUpdate(sqlStr);
     }
     
@@ -318,9 +326,13 @@ public class MysqlHandler {
             + " CustomerPId = '" + customerPId + "', "
             + " ProjectManagerPId = '" + projectManagerPId + "', " 
             + " StructuralEngineerPId = '" +  structuralEngineerPId + "', "
-            + " CompletedDate = '" + completedDate + "',"
-            + " Finalised = '" + isFinalised + "'"
-            + " WHERE ProjectNumber = '" + projectNo + "'";
+            + " Finalised = '" + isFinalised + "'";
+
+            if ( !completedDate.equals("") ) {
+                sqlStr += ", CompletedDate = '" + completedDate + "',";
+            };
+
+            sqlStr += " WHERE ProjectNumber = '" + projectNo + "'";
         
         this.statement.executeUpdate(sqlStr);
     }
@@ -475,7 +487,9 @@ public class MysqlHandler {
                     isFinalisedTxt = "No";
                 }
                 resultRow.add( isFinalisedTxt );
-                resultRow.add( rs.getDate("CompletedDate").toString() );
+                if ( rs.getDate("CompletedDate") != null ) { 
+                    resultRow.add( rs.getDate("CompletedDate").toString() );
+                }
                 resultVector.add(resultRow);
             }
         }catch ( SQLException e) {
