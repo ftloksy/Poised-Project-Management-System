@@ -49,17 +49,6 @@ public class MysqlHandler {
         + " PhysicalAddress varchar(50),"  // Architect Physical Address name.
         + " PRIMARY KEY (id))";
 
-    
-    // String createJobTableSQL = ""
-    //     + "CREATE TABLE IF NOT EXISTS Job ("
-    //     + " id int(6) ZEROFIL NOT NULL AUTO_INCREMENT,"
-    //     + " ProjectNumber int(6) UNSIGNED,"
-    //     + " PRIMARY KEY (id),"
-    //     + " FOREIGN KEY (ProjectNumber) REFERENCES Project(ProjectNumber),"
-    //     + " UNIQUE (ProjectNumber),"
-    //     + " ) "     ;
-        
-        
     String createProjectViewSQL = ""
         + " create or replace view ProjectView as"
         + " SELECT ProjectNumber, ProjectName, BuildingType," 
@@ -85,26 +74,19 @@ public class MysqlHandler {
 
 
 
-    //String createPoisedTableSQL = "CREATE TABLE IF NOT EXISTS Poised ("
-        //+ " ERFNumber int(6) ZEROFILL NOT NULL AUTO_INCREMENT,"         // ERF number.
-        //+ " ProjectNumber int(6) UNSIGNED,"  // Project number.
 
-        //+ " PhysicalAddress varchar(200),"   // The physical address for the project.
-//.
-        //+ " FOREIGN KEY (ProjectNumber) REFERENCES Project(ProjectNumber),"
-        //+ " PRIMARY KEY (ERFNumber))";
 
-    //String createTriggerSQL = "CREATE TRIGGER IF NOT EXISTS has_customer BEFORE INSERT ON Poised"
-        //+ " FOR EACH ROW"
-        //+ " BEGIN"
-        //+ " IF NOT EXISTS"
-        //+ " (SELECT 1 FROM Project WHERE"
-        //+ " ProjectNumber = new.ProjectNumber and PersonRole = 'Customer' ) THEN"
-        //+ " BEGIN"
-        //+ " SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'Project does not have Customer.';"
-        //+ " END;"
-        //+ " END IF;"
-        //+ " END;" ;
+    // String createTriggerSQL = "CREATE TRIGGER IF NOT EXISTS has_customer BEFORE INSERT ON Project"
+    //     + " FOR EACH ROW"
+    //         + " BEGIN"
+    //         + " IF NOT EXISTS"
+    //             + " (SELECT 1 FROM Project WHERE"
+    //             + " ProjectNumber = new.ProjectNumber and PersonRole = 'Customer' ) THEN"
+    //             + " BEGIN"
+    //                 + " SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'Project does not have Customer.';"
+    //             + " END;"
+    //         + " END IF;"
+    //     + " END;" ;
         
     String createTriggerPersonSurNameInsertSQL = "CREATE TRIGGER IF NOT EXISTS insert_has_surname BEFORE INSERT ON Person"
         + " FOR EACH ROW"
@@ -132,27 +114,34 @@ public class MysqlHandler {
         
     String selectPersonTag = "SELECT CONCAT( id, ': ', FirstName, ' ', SurName ) AS Result FROM Person" ;
 
-    //String createTriggerProjectName = "CREATE TRIGGER IF NOT EXISTS project_name BEFORE INSERT ON Poised"
-        //+ " FOR EACH ROW"
-        //+ " BEGIN"
-        //+ " IF new.ProjectName IS NULL THEN"
-        //+ " BEGIN"
-        //+ " SET new.ProjectName = "
-        //+ " ( SELECT CONCAT ("
-        //+ " new.TypeBuilding"
-        //+ " , ' ', "
-        //+ " (SELECT SurName from Person where"
-        //+ " id = ( select PersonId from Project where ProjectNumber = new.ProjectNumber "
-        //+ " and PersonRole = 'Customer' )"
-        //+ " )));"
-        //+ " SET new.ProjectName ="
-        //+ " ( SELECT CONCAT (new.ProjectName,"
-        //+ "  ' ',"
-        //+ " ( SELECT count(ProjectName) FROM Poised"
-        //+ " WHERE ProjectName LIKE CONCAT ( new.ProjectName , '%') ) ));"
-        //+ " END;"
-        //+ " END IF;"
-        //+ " END;" ;
+    String createTriggerProjectName = "CREATE TRIGGER IF NOT EXISTS project_name BEFORE INSERT ON Project"
+        + " FOR EACH ROW"
+        + " BEGIN"
+        + " IF new.ProjectName IS NULL THEN"
+        + " BEGIN"
+        + " SET new.ProjectName = "
+        + " ( SELECT CONCAT ("
+        + " new.BuildingType "
+        + " , ' ', "
+        + " (SELECT SurName from Person where"
+        // + " id = ( select CustomerPId from Project where ProjectNumber = ( "
+	    // + " SELECT AUTO_INCREMENT"
+        // + " FROM information_schema.tables"
+        // + " WHERE table_name = 'Project'"
+        // + " and table_schema = 'PoisePMS'"
+        // + " )"
+        // + " )"
+        + " id = new.CustomerPId "
+        + " )));"
+        + " SET new.ProjectName ="
+        + " ( SELECT CONCAT (new.ProjectName,"
+        + "  ' ',"
+        + " ( SELECT count(ProjectName) FROM Project"
+        + " WHERE ProjectName LIKE CONCAT ( new.ProjectName , '%') ) ));"
+        + " END;"
+        + " END IF;"
+        + " END;" ;
+
 
     String insertPersonSQL = "INSERT INTO Person ( SurName )"
         + " VALUES ( 'Chow' ), ( 'Chan' )";
@@ -185,9 +174,10 @@ public class MysqlHandler {
             this.statement.executeUpdate(this.createPersonTableSQL);
             this.statement.executeUpdate(this.createProjectTableSQL);
             this.statement.executeUpdate(this.createProjectViewSQL);
+
             //this.statement.executeUpdate(this.createPoisedTableSQL);
             //this.statement.executeUpdate(this.createTriggerSQL);
-            //this.statement.executeUpdate(this.createTriggerProjectName);
+            this.statement.executeUpdate(this.createTriggerProjectName);
             this.statement.executeUpdate(this.createTriggerPersonSurNameInsertSQL);
             this.statement.executeUpdate(this.createTriggerPersonSurNameUpdateSQL);
         } catch (SQLException e) {
@@ -263,7 +253,7 @@ public class MysqlHandler {
 
         String sqlStr = "INSERT INTO Project ( "
 
-       	+ " ProjectName, BuildingType, PhysicalAddress, ERFNumber, FeeCharged, PaidToDate, Deadline,"
+       	+ " BuildingType, PhysicalAddress, ERFNumber, FeeCharged, PaidToDate, Deadline,"
         + " ArchitectPId, ContractorPId, CustomerPId, ProjectManagerPId, StructuralEngineerPId,"
         + " Finalised";
 
@@ -271,9 +261,12 @@ public class MysqlHandler {
             sqlStr += ", CompletedDate";
         };
 
+        if ( !projectName.equals("")) {
+            sqlStr += ", ProjectName";
+        }
+
         sqlStr += " )"
             + "VALUES (" 
-            + "'" + projectName + "', "
             + "'" + buildingType + "', "
             + "'" + physicalAddress + "', "
             + "'" + eRFNumber + "', "
@@ -291,7 +284,12 @@ public class MysqlHandler {
                 sqlStr += ", '" + completedDate + "' ";
             }
 
+            if ( !projectName.equals("")) {
+                sqlStr += ", '" +  projectName + "' ";
+            }
+
             sqlStr += ")";
+        System.out.println(sqlStr);
         this.statement.executeUpdate(sqlStr);
     }
     
