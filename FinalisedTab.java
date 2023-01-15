@@ -4,7 +4,7 @@ import javax.swing.*;
 public class FinalisedTab extends JPanel {
 
     FinalisedEditor dbEditor;
-    ProjectTable dbTable;
+    FinalisedTable dbTable;
     JScrollPane dbTableScroll;
     
     MysqlHandler dbHandler;
@@ -14,7 +14,7 @@ public class FinalisedTab extends JPanel {
         super.setLayout(new BorderLayout());
         this.dbHandler = dbPosie ;
         
-        this.dbTable = new ProjectTable ( motherFrame, dbPosie );
+        this.dbTable = new FinalisedTable ( motherFrame, dbPosie );
         this.dbTableScroll = new JScrollPane( this.dbTable );
         
         this.dbEditor = new FinalisedEditor();
