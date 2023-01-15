@@ -37,6 +37,7 @@ public class FinalisedTableSelect implements ListSelectionListener {
     // }
 
     public void valueChanged(ListSelectionEvent e) {
+        //this.mainFrame.msgArea.setText("");
         this.tabPane = this.mainFrame.pmsTab.tabbedPane ;
         //int index = this.tabPane.getSelectedIndex();
         this.fTab = this.mainFrame.pmsTab.finalisedTab ;
@@ -60,8 +61,12 @@ public class FinalisedTableSelect implements ListSelectionListener {
 
 			reportError += (String)this.dbModel.getValueAt(this.selectIndex, 14);
 
-			this.finalisedEditor.completedDateText.setText(
-					(String)this.dbModel.getValueAt(this.selectIndex, 14));
+            String completedDate = (String)this.dbModel.getValueAt(this.selectIndex, 14);
+            if ( completedDate == null ) {
+		    	this.finalisedEditor.completedDateText.setText(java.time.LocalDate.now().toString());
+            } else {
+		    	this.finalisedEditor.completedDateText.setText(completedDate);
+            }
 
 		} catch (ArrayIndexOutOfBoundsException g){
 			this.dbEditor.resetField();

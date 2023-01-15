@@ -50,9 +50,9 @@ public class FinalisedTable extends JTable  {
     //     this.tableHeader = headerTitle ;
     // }
     
-    // void flashTable () {
-    //     reNewTable ( this.dbHandler.selectPersonRecord() );
-    // }
+    void flashTable () {
+        reNewTable ( this.dbHandler.selectProjectRecord() );
+    }
     
     void reNewTable( Vector<Vector<String>>  dbRow ) {
         this.dbModel.setDataVector( dbRow , this.tableHeader );

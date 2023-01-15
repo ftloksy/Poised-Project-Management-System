@@ -497,6 +497,14 @@ public class MysqlHandler {
         }
         return resultVector;
     }
+
+    void finalisedProject(String completedDate, String projectNo) throws SQLException {
+        String sqlStr = "UPDATE Project SET Finalised = 1, "
+        + " CompletedDate = '" + completedDate + "'"
+        + " Where ProjectNumber = '" + projectNo + "'" ;
+        // System.out.println(sqlStr);
+        this.statement.executeUpdate(sqlStr);
+    }
     
     public static void main(String[] args) {
         MysqlHandler sqlHandler = new MysqlHandler();

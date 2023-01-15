@@ -8,7 +8,7 @@ public class MenuHandler extends JMenuBar {
     JButton searchItem = new JButton("Search Person");
     JButton listAllItem = new JButton("ListAll Person");
     JButton exitItem = new JButton("Exit");
-    JButton finalisedProject = new JButton("Finalised Project");
+    JButton finalisedItem = new JButton("Finalised Project");
     //TabFrame mainFrame;
     ListenerExit exitProgram = new ListenerExit();
     ListenerClear clearListener;
@@ -36,7 +36,7 @@ public class MenuHandler extends JMenuBar {
         this.updateItem.addActionListener(this.updateListener);
         this.searchItem.addActionListener(this.searchListener);
         this.listAllItem.addActionListener(this.listAllListener);
-        this.finalisedProject.addActionListener(this.finalisedListener);
+        this.finalisedItem.addActionListener(this.finalisedListener);
     }
 
     void reNewMenu(){
@@ -51,7 +51,7 @@ public class MenuHandler extends JMenuBar {
     }
 
     void finalisedMenu() {
-        this.add( this.finalisedProject );
+        this.add( this.finalisedItem );
         this.add( this.exitItem );
     }
 }
