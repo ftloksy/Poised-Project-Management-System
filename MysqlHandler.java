@@ -72,22 +72,6 @@ public class MysqlHandler {
         + " as StructuralEngineer"
         + " FROM Project";
 
-
-
-
-
-    // String createTriggerSQL = "CREATE TRIGGER IF NOT EXISTS has_customer BEFORE INSERT ON Project"
-    //     + " FOR EACH ROW"
-    //         + " BEGIN"
-    //         + " IF NOT EXISTS"
-    //             + " (SELECT 1 FROM Project WHERE"
-    //             + " ProjectNumber = new.ProjectNumber and PersonRole = 'Customer' ) THEN"
-    //             + " BEGIN"
-    //                 + " SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'Project does not have Customer.';"
-    //             + " END;"
-    //         + " END IF;"
-    //     + " END;" ;
-        
     String createTriggerPersonSurNameInsertSQL = "CREATE TRIGGER IF NOT EXISTS insert_has_surname BEFORE INSERT ON Person"
         + " FOR EACH ROW"
         + " BEGIN"
@@ -123,14 +107,8 @@ public class MysqlHandler {
         + " ( SELECT CONCAT ("
         + " new.BuildingType "
         + " , ' ', "
-        + " (SELECT SurName from Person where"
-        // + " id = ( select CustomerPId from Project where ProjectNumber = ( "
-	    // + " SELECT AUTO_INCREMENT"
-        // + " FROM information_schema.tables"
-        // + " WHERE table_name = 'Project'"
-        // + " and table_schema = 'PoisePMS'"
-        // + " )"
-        // + " )"
+        + " (SELECT SurName from Person "
+        + " where"
         + " id = new.CustomerPId "
         + " )));"
         + " SET new.ProjectName ="
@@ -157,6 +135,12 @@ public class MysqlHandler {
         + " ProjectNumber, ProjectName, BuildingType, PhysicalAddress, ERFNumber, FeeCharged, PaidToDate, Deadline,"
         + " Architect, Contractor, Customer, ProjectManager, StructuralEngineer, Finalised, CompletedDate "
         + " FROM ProjectView";
+
+    String selectNeedCompletedProject = "SELECT "
+        + " ProjectNumber, ProjectName, BuildingType, PhysicalAddress, ERFNumber, FeeCharged, PaidToDate, Deadline,"
+        + " Architect, Contractor, Customer, ProjectManager, StructuralEngineer, Finalised, CompletedDate "
+        + " FROM ProjectView"
+        + " WHERE Finalised = 0";
 
     MysqlHandler () {
         try {
@@ -420,9 +404,6 @@ public class MysqlHandler {
             + " AND CompletedDate LIKE '%"      + completedDate + "%'"
             + " AND Finalised LIKE '%"          + isFinalised + "%'"
 
-        //+ " Finalised BOOLEAN,"
-        //+ " CompletedDate DATE,"
-
              );
     };
 
@@ -433,6 +414,10 @@ public class MysqlHandler {
     
     Vector<Vector<String>> selectProjectRecord() {
         return this.makeProjectRow( this.selectProject );
+    }
+
+    Vector<Vector<String>> selectNeedCompletedProjectRecord() {
+        return this.makeProjectRow( this.selectNeedCompletedProject );
     }
     
     Vector<Vector<String>> makePersonRow(String sqlString) {

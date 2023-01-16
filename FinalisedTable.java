@@ -53,6 +53,10 @@ public class FinalisedTable extends JTable  {
     void flashTable () {
         reNewTable ( this.dbHandler.selectProjectRecord() );
     }
+
+    void needCompleted() {
+        reNewTable ( this.dbHandler.selectNeedCompletedProjectRecord() );
+    }
     
     void reNewTable( Vector<Vector<String>>  dbRow ) {
         this.dbModel.setDataVector( dbRow , this.tableHeader );

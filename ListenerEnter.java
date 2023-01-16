@@ -2,6 +2,13 @@ import java.awt.event.*;
 import javax.swing.* ;
 import java.sql.* ;
 
+
+
+// ○ Find all projects that still need to be completed from the database.
+
+// ○ Find all projects that are past the due date from the database.
+
+
 public class ListenerEnter implements ActionListener {
     PmsFrame mainFrame;
     MysqlHandler dbHandler;

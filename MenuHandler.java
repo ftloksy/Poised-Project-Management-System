@@ -9,6 +9,8 @@ public class MenuHandler extends JMenuBar {
     JButton listAllItem = new JButton("ListAll Person");
     JButton exitItem = new JButton("Exit");
     JButton finalisedItem = new JButton("Finalised Project");
+    JButton needCompletedItem = new JButton("unCompleted Project");
+
     //TabFrame mainFrame;
     ListenerExit exitProgram = new ListenerExit();
     ListenerClear clearListener;
@@ -18,6 +20,7 @@ public class MenuHandler extends JMenuBar {
     ListenerSearch searchListener;
     ListenerListAll listAllListener;
     ListenerFinalised finalisedListener;
+    ListenerNeedCompleted needCompletedListener;
     
     MenuHandler (PmsFrame motherFrame, MysqlHandler dbPosie) {
         super();
@@ -29,6 +32,7 @@ public class MenuHandler extends JMenuBar {
         this.searchListener = new ListenerSearch( motherFrame, dbPosie );
         this.listAllListener = new ListenerListAll( motherFrame, dbPosie );
         this.finalisedListener = new ListenerFinalised(motherFrame, dbPosie);
+        this.needCompletedListener = new ListenerNeedCompleted(motherFrame, dbPosie);
         this.clearItem.addActionListener(this.clearListener);
         this.exitItem.addActionListener(this.exitProgram);
         this.enterItem.addActionListener(this.enterListener);
@@ -37,6 +41,7 @@ public class MenuHandler extends JMenuBar {
         this.searchItem.addActionListener(this.searchListener);
         this.listAllItem.addActionListener(this.listAllListener);
         this.finalisedItem.addActionListener(this.finalisedListener);
+        this.needCompletedItem.addActionListener(this.needCompletedListener);
     }
 
     void reNewMenu(){
@@ -52,6 +57,8 @@ public class MenuHandler extends JMenuBar {
 
     void finalisedMenu() {
         this.add( this.finalisedItem );
+        this.add( this.needCompletedItem );
+        this.add( this.listAllItem );
         this.add( this.exitItem );
     }
 }
