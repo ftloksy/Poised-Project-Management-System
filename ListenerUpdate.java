@@ -23,7 +23,7 @@ public class ListenerUpdate implements ActionListener {
         this.personDbEditor = this.mainFrame.pmsTab.personTab.dbEditor ;
         this.personTable = this.mainFrame.pmsTab.personTab.dbTable ;
         this.projectTab = this.mainFrame.pmsTab.projectTab ;
-        this.projectDbEditor = this.projectTab.dbEditor ;
+        this.projectDbEditor = this.projectTab.projectEditor ;
         this.projectTable = this.projectTab.dbTable ;
         
         this.mainFrame.msgArea.setText("");

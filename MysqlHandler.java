@@ -142,6 +142,11 @@ public class MysqlHandler {
         + " FROM ProjectView"
         + " WHERE Finalised = 0";
 
+    String selectPastDueDateProject = "SELECT "
+        + " ProjectNumber, ProjectName, BuildingType, PhysicalAddress, ERFNumber, FeeCharged, PaidToDate, Deadline,"
+        + " Architect, Contractor, Customer, ProjectManager, StructuralEngineer, Finalised, CompletedDate "
+        + " FROM ProjectView" ;
+
     MysqlHandler () {
         try {
             // Connect to the library_db database, via the jdbc:mysql: channel on localhost (this PC)
@@ -418,6 +423,12 @@ public class MysqlHandler {
 
     Vector<Vector<String>> selectNeedCompletedProjectRecord() {
         return this.makeProjectRow( this.selectNeedCompletedProject );
+    }
+
+    Vector<Vector<String>> selectPastDueDate(String completedDate) {
+        String sqlStr = this.selectPastDueDateProject 
+                + " WHERE CompletedDate < '" + completedDate + "'";
+        return this.makeProjectRow( sqlStr );  
     }
     
     Vector<Vector<String>> makePersonRow(String sqlString) {

@@ -45,6 +45,14 @@ public class ProjectTable extends JTable {
     void reNewTable( Vector<Vector<String>>  dbRow ) {
         this.dbModel.setDataVector( dbRow , this.tableHeader );
     }
+
+    void needCompleted() {
+        reNewTable ( this.dbHandler.selectNeedCompletedProjectRecord() );
+    }
+
+    void pastDueDate(String completedDate) {
+        reNewTable ( this.dbHandler.selectPastDueDate(completedDate) );
+    }
     
     void createTable() {
         

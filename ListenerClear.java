@@ -9,7 +9,6 @@ public class ListenerClear implements ActionListener {
     
     ListenerClear(PmsFrame motherFrame){
         this.mainFrame = motherFrame ;
-
     }
 
     public void actionPerformed(ActionEvent e)
@@ -27,7 +26,7 @@ public class ListenerClear implements ActionListener {
                 this.mainFrame.msgArea.setText("");
                 break;
             case 1:
-                this.projectDbEditor = this.mainFrame.pmsTab.projectTab.dbEditor ;
+                this.projectDbEditor = this.mainFrame.pmsTab.projectTab.projectEditor ;
                 this.mainFrame.msgArea.setText("Clear Tab 1");
                 this.projectDbEditor.resetField();
                 this.projectDbEditor.updatePersonList();

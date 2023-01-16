@@ -10,6 +10,7 @@ public class MenuHandler extends JMenuBar {
     JButton exitItem = new JButton("Exit");
     JButton finalisedItem = new JButton("Finalised Project");
     JButton needCompletedItem = new JButton("unCompleted Project");
+    JButton pastDueDateItem = new JButton("Past Due Date");
 
     //TabFrame mainFrame;
     ListenerExit exitProgram = new ListenerExit();
@@ -21,6 +22,7 @@ public class MenuHandler extends JMenuBar {
     ListenerListAll listAllListener;
     ListenerFinalised finalisedListener;
     ListenerNeedCompleted needCompletedListener;
+    ListenerPastDueDate pastDueDateListener;
     
     MenuHandler (PmsFrame motherFrame, MysqlHandler dbPosie) {
         super();
@@ -33,6 +35,7 @@ public class MenuHandler extends JMenuBar {
         this.listAllListener = new ListenerListAll( motherFrame, dbPosie );
         this.finalisedListener = new ListenerFinalised(motherFrame, dbPosie);
         this.needCompletedListener = new ListenerNeedCompleted(motherFrame, dbPosie);
+        this.pastDueDateListener = new ListenerPastDueDate(motherFrame, dbPosie);
         this.clearItem.addActionListener(this.clearListener);
         this.exitItem.addActionListener(this.exitProgram);
         this.enterItem.addActionListener(this.enterListener);
@@ -42,23 +45,38 @@ public class MenuHandler extends JMenuBar {
         this.listAllItem.addActionListener(this.listAllListener);
         this.finalisedItem.addActionListener(this.finalisedListener);
         this.needCompletedItem.addActionListener(this.needCompletedListener);
+        this.pastDueDateItem.addActionListener(this.pastDueDateListener);
     }
 
     void reNewMenu(){
-        this.removeAll();
-        this.add( this.clearItem );
-        this.add( this.enterItem );
-        this.add( this.updateItem );
-        this.add( this.deleteItem );
-        this.add( this.searchItem );
-        this.add( this.listAllItem );
-        this.add( this.exitItem );
+        super.removeAll();
+        super.revalidate();
+        super.repaint();
+        super.add( this.clearItem );
+        super.add( this.enterItem );
+        super.add( this.updateItem );
+        super.add( this.deleteItem );
+        super.add( this.searchItem );
+        super.add( this.listAllItem );
+        super.add( this.exitItem );
     }
 
     void finalisedMenu() {
-        this.add( this.finalisedItem );
-        this.add( this.needCompletedItem );
-        this.add( this.listAllItem );
-        this.add( this.exitItem );
+        super.removeAll();
+        super.revalidate();
+        super.repaint();
+        super.add( this.finalisedItem );
+        super.add( this.needCompletedItem );
+        super.add( this.listAllItem );
+        super.add( this.exitItem );
     }
+
+    void pastDateMenu() {
+        super.removeAll();
+        super.revalidate();
+        super.repaint();
+        super.add( this.pastDueDateItem );
+        super.add( this.listAllItem );
+        super.add( this.exitItem );
+    } 
 }

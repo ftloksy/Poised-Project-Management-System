@@ -12,7 +12,6 @@ public class ListenerListAll implements ActionListener {
     ProjectTable projectTable;
 
     FinalisedEditor finalisedDbEditor;
-    FinalisedTable finalisedTable;
     
     ListenerListAll(PmsFrame motherFrame, MysqlHandler dbPosie){
         this.mainFrame = motherFrame ;
@@ -25,11 +24,10 @@ public class ListenerListAll implements ActionListener {
         this.personDbEditor = this.mainFrame.pmsTab.personTab.dbEditor ;
         this.personTable = this.mainFrame.pmsTab.personTab.dbTable ;
 
-        this.projectDbEditor = this.mainFrame.pmsTab.projectTab.dbEditor ;
+        this.projectDbEditor = this.mainFrame.pmsTab.projectTab.projectEditor ;
         this.projectTable = this.mainFrame.pmsTab.projectTab.dbTable ;
 
-        this.finalisedDbEditor = this.mainFrame.pmsTab.finalisedTab.dbEditor ;
-        this.finalisedTable = this.mainFrame.pmsTab.finalisedTab.dbTable ;
+        this.finalisedDbEditor = this.mainFrame.pmsTab.projectTab.finalisedEditor;
         
         this.mainFrame.msgArea.setText("");
         int index = this.tabPane.getSelectedIndex();
@@ -45,11 +43,11 @@ public class ListenerListAll implements ActionListener {
                 this.projectDbEditor.updatePersonList();
                 this.projectTable.flashTable();
                 break;
-            case 2:
-                this.mainFrame.msgArea.setText("List all Project's Record.");
-                this.finalisedDbEditor.resetField();
-                this.finalisedTable.flashTable();
-                break;
+            // case 2:
+            //     this.mainFrame.msgArea.setText("List all Project's Record.");
+            //     this.finalisedDbEditor.resetField();
+            //     this.finalisedTable.flashTable();
+            //     break;
         }
     }
 }

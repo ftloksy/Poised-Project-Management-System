@@ -2,11 +2,6 @@ import java.awt.event.*;
 import javax.swing.* ;
 import java.sql.* ;
 
-
-
-
-
-
 public class ListenerEnter implements ActionListener {
     PmsFrame mainFrame;
     MysqlHandler dbHandler;
@@ -31,7 +26,7 @@ public class ListenerEnter implements ActionListener {
         this.personTable = this.personTab.dbTable ;
 
         this.projectTab = this.mainFrame.pmsTab.projectTab ;
-        this.projectDbEditor = this.projectTab.dbEditor ;
+        this.projectDbEditor = this.projectTab.projectEditor ;
         this.projectTable = this.projectTab.dbTable ;
         
         this.mainFrame.msgArea.setText("");
@@ -73,7 +68,6 @@ public class ListenerEnter implements ActionListener {
                 };
 
                 try {
-                        
                         
                         String architectVal = this.projectDbEditor.setArchitect.getSelectedItem().toString().split(":")[0] ;
                         String contractorVal = this.projectDbEditor.setContractor.getSelectedItem().toString().split(":")[0] ;

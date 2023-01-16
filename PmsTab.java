@@ -8,13 +8,13 @@ public class PmsTab {
     TabChangeListener changeListener ;
     ProjectTab projectTab;
     PersonTab personTab;
-    FinalisedTab finalisedTab; 
+    //FinalisedTab finalisedTab; 
     JTabbedPane tabbedPane ;
     
     PmsTab(PmsFrame motherFrame, MysqlHandler dbPosie) {
         this.personTab = new PersonTab(motherFrame, dbPosie);
         this.projectTab = new ProjectTab(motherFrame, dbPosie);
-        this.finalisedTab = new FinalisedTab(motherFrame, dbPosie);
+        //this.finalisedTab = new FinalisedTab(motherFrame, dbPosie);
         changeListener = new TabChangeListener(motherFrame);
     }
     
@@ -23,7 +23,7 @@ public class PmsTab {
 
         tabbedPane.addTab(personTabTilte, personTab);
         tabbedPane.addTab(projectTabTitle, projectTab);
-        tabbedPane.addTab(finalisedTabTitle, finalisedTab);
+        //tabbedPane.addTab(finalisedTabTitle, finalisedTab);
         tabbedPane.setSelectedIndex(0);
         
         tabbedPane.addChangeListener(changeListener);
