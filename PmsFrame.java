@@ -11,6 +11,10 @@ public class PmsFrame extends JFrame {
     
     PmsFrame(MysqlHandler dbPosie) {
         super();
+
+        this.msgArea = new JTextArea(3, 40);
+        this.msgArea.setEditable(false);
+
         super.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         super.setLayout(new BorderLayout());
         this.dbMenu = new MenuHandler(this, dbPosie);
@@ -19,9 +23,6 @@ public class PmsFrame extends JFrame {
         this.pmsTab.addComponentToPane(super.getContentPane());
 
         this.dbMenu.reNewMenu();
-        
-        this.msgArea = new JTextArea(3, 40);
-        this.msgArea.setEditable(false);
         
         super.add( this.msgArea, BorderLayout.SOUTH );
         super.setPreferredSize(new Dimension(1800, 900));

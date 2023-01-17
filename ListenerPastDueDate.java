@@ -2,7 +2,7 @@ import java.awt.event.*;
 
 public class ListenerPastDueDate implements ActionListener {
     PmsFrame mainFrame;
-    FinalisedEditor finalisedEditor ;
+    PastDueDateEditor pastDueDateEditor ;
     ProjectTable finalisedTable ;
     String completedDate  ;
     //String projectNo ;
@@ -16,8 +16,8 @@ public class ListenerPastDueDate implements ActionListener {
     public void actionPerformed(ActionEvent e)
     {
         this.mainFrame.msgArea.setText("");
-        this.finalisedEditor = this.mainFrame.pmsTab.projectTab.finalisedEditor;
-        this.completedDate = finalisedEditor.completedDateText.getText();
+        this.pastDueDateEditor = this.mainFrame.pmsTab.projectTab.pastDueDateEditor;
+        this.completedDate = pastDueDateEditor.completedDateText.getText();
         //this.projectNo = finalisedEditor.projectNoText.getText();
 
         //System.out.println("Project No:" + projectNo );

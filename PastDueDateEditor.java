@@ -2,7 +2,7 @@ import java.awt.*;
 import javax.swing.*;
 import java.util.Vector;
 
-public class PastDateEditor extends JPanel {
+public class PastDueDateEditor extends JPanel {
 
     Vector<String> personList;
 
@@ -10,7 +10,7 @@ public class PastDateEditor extends JPanel {
     JTextField completedDateText = new JTextField(java.time.LocalDate.now().toString(), 30);
 
 
-    PastDateEditor() {
+    PastDueDateEditor() {
         super();
         super.setLayout(new GridLayout(1, 2, 10, 5)); 
 

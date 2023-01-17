@@ -26,14 +26,23 @@ public class ProjectTabChangeListener implements ChangeListener {
 				this.dbMenu.listAllItem.setText("List All Project in List");
 				this.dbMenu.reNewMenu();
 				this.mainFrame.pmsTab.projectTab.projectEditor.updatePersonList();
+                this.mainFrame.pmsTab.projectTab.refleshView();
 				break;
             
             case 1:
                 this.dbMenu.finalisedMenu(); 
+                this.mainFrame.pmsTab.projectTab.refleshView();
 				break;
 
             case 2:
-                this.dbMenu.pastDateMenu();
+                this.dbMenu.pastDueDateMenu();
+                this.mainFrame.pmsTab.projectTab.refleshView();
+                break;
+
+            case 3:
+                this.dbMenu.searchByProjectNumberMenu();
+                this.mainFrame.pmsTab.projectTab.refleshView();
+                break;
 		}
     }
 }

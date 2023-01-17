@@ -373,6 +373,7 @@ public class MysqlHandler {
     }
 
     Vector<Vector<String>> searchProjectRecord(
+        // String projectNoVal,
         String projectNameVal,
         String physicalAddressVal, 
         String erfNoVal,
@@ -385,15 +386,16 @@ public class MysqlHandler {
         String customerVal,
         String managerVal,
         String engineerVal,
-        String completedDate,
+        // String completedDate,
         String isFinalised
     ) {
-        return makeProjectRow(  "SELECT "
+        String sqlStr = " SELECT"
             + " ProjectNumber, ProjectName, BuildingType, PhysicalAddress, ERFNumber, FeeCharged,"
             + " PaidToDate, Deadline,"
             + " Architect, Contractor, Customer, ProjectManager, StructuralEngineer,"
             + " Finalised, CompletedDate"
             + " FROM ProjectView WHERE "
+            // + " AND ProjectNumber like '%"     + projectNoVal + "%'"
             +     " ProjectName like '%"       + projectNameVal + "%'"
             + " AND BuildingType LIKE '%"      + buildingTypeVal + "%'"
             + " AND PhysicalAddress LIKE '%"   + physicalAddressVal + "%'"
@@ -406,11 +408,37 @@ public class MysqlHandler {
             + " AND Customer LIKE '%"          + customerVal + "%'"
             + " AND ProjectManager LIKE '%"     + managerVal + "%'"
             + " AND StructuralEngineer LIKE '%" + engineerVal + "%'"
-            + " AND CompletedDate LIKE '%"      + completedDate + "%'"
-            + " AND Finalised LIKE '%"          + isFinalised + "%'"
+            // + " AND CompletedDate LIKE '%"      + completedDate + "%'"
+            + " AND Finalised LIKE '%"          + isFinalised + "%'";
 
-             );
+        System.out.println(sqlStr);
+        return makeProjectRow( sqlStr );
     };
+
+    Vector<Vector<String>> selectByProjectNumberRecord(String projectNoVal){
+        String sqlStr = " SELECT"
+            + " ProjectNumber, ProjectName, BuildingType, PhysicalAddress, ERFNumber, FeeCharged,"
+            + " PaidToDate, Deadline,"
+            + " Architect, Contractor, Customer, ProjectManager, StructuralEngineer,"
+            + " Finalised, CompletedDate"
+            + " FROM ProjectView WHERE "
+            + " ProjectNumber like '%" + projectNoVal + "%'";
+            // +     " ProjectName like '%"       + projectNameVal + "%'"
+            // + " AND BuildingType LIKE '%"      + buildingTypeVal + "%'"
+            // + " AND PhysicalAddress LIKE '%"   + physicalAddressVal + "%'"
+            // + " AND ERFNumber LIKE '%"         + erfNoVal + "%'" 
+            // + " AND FeeCharged LIKE '%"        + feeChargedVal + "%'"
+            // + " AND PaidToDate LIKE '%"        + paidTodateVal + "%'"
+            // + " AND Deadline LIKE '%"          + deadLine + "%'"
+            // + " AND Architect LIKE '%"         + architectVal + "%'" 
+            // + " AND Contractor LIKE '%"        + contractorVal + "%'"
+            // + " AND Customer LIKE '%"          + customerVal + "%'"
+            // + " AND ProjectManager LIKE '%"     + managerVal + "%'"
+            // + " AND StructuralEngineer LIKE '%" + engineerVal + "%'"
+            // // + " AND CompletedDate LIKE '%"      + completedDate + "%'"
+            // + " AND Finalised LIKE '%"          + isFinalised + "%'";
+        return this.makeProjectRow( sqlStr );
+    }
 
     
     Vector<Vector<String>> selectPersonRecord() {
@@ -490,6 +518,18 @@ public class MysqlHandler {
             e.printStackTrace();
         }
         return resultVector;
+    }
+
+    String nextProjectNumber() throws SQLException {
+        String sqlStr = ""
+        + " SELECT AUTO_INCREMENT"
+        + " FROM information_schema.tables"
+        + " WHERE table_name = 'Project'"
+        + " and table_schema = 'PoisePMS'";
+        ResultSet rs = this.statement.executeQuery(sqlStr);
+        rs.next();
+        String returnText = rs.getString("AUTO_INCREMENT");
+        return returnText;
     }
 
     void finalisedProject(String completedDate, String projectNo) throws SQLException {

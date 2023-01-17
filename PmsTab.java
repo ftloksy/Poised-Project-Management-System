@@ -3,7 +3,7 @@ import javax.swing.*;
 
 public class PmsTab {
     final static String personTabTilte = "Person";
-    final static String projectTabTitle = "Poised";
+    final static String projectTabTitle = "Project";
     final static String finalisedTabTitle = "Finalised";
     TabChangeListener changeListener ;
     ProjectTab projectTab;

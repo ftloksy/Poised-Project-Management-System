@@ -3,10 +3,10 @@ import javax.swing.*;
 
 public class ProjectTab extends JPanel {
 
-
     final static String projectTabTitle = "Record Handler";
     final static String finalisedTabTitle = "Finalised Record";
     final static String pastDateTabTitle = "Past Date Record";
+    final static String searchByProjectNumberTabTitle = "Search by Project Number";
     JTabbedPane tabbedPane ;
     PmsFrame mainFrame ;
     MysqlHandler dbHandler ;
@@ -18,7 +18,8 @@ public class ProjectTab extends JPanel {
     ProjectTable dbTable;
     JScrollPane dbTableScroll;
     ProjectTabChangeListener changeListener ;
-    PastDateEditor pastDateEditor ;
+    PastDueDateEditor pastDueDateEditor ;
+    SearchByProjectNumberEditor searchByProjectNumberEditor ;
     
     ProjectTab(PmsFrame motherFrame, MysqlHandler dbPosie) {
         super();
@@ -30,13 +31,15 @@ public class ProjectTab extends JPanel {
 
         this.projectEditor = new ProjectEditor(motherFrame, dbPosie);
         this.finalisedEditor = new FinalisedEditor();
-        this.pastDateEditor = new PastDateEditor();
+        this.pastDueDateEditor = new PastDueDateEditor();
+        this.searchByProjectNumberEditor = new SearchByProjectNumberEditor(motherFrame, dbPosie);
 
         this.tabbedPane = new JTabbedPane();
 
         tabbedPane.addTab(projectTabTitle, projectEditor);
         tabbedPane.addTab(finalisedTabTitle, finalisedEditor);
-        tabbedPane.addTab(pastDateTabTitle, pastDateEditor);
+        tabbedPane.addTab(pastDateTabTitle, pastDueDateEditor);
+        tabbedPane.addTab(searchByProjectNumberTabTitle, searchByProjectNumberEditor);
         tabbedPane.setSelectedIndex(0);
         
         tabbedPane.addChangeListener(changeListener);
@@ -52,5 +55,10 @@ public class ProjectTab extends JPanel {
         // super.add( this.projectEditor, BorderLayout.NORTH );
         super.add( this.tabbedPane, BorderLayout.NORTH);
         super.add( this.dbTableScroll, BorderLayout.CENTER );
+    }
+
+    void refleshView() {
+        super.revalidate();
+        super.repaint();
     }
 }

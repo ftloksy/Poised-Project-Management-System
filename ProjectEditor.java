@@ -5,11 +5,13 @@ import java.sql.* ;
 
 public class ProjectEditor extends JPanel {
 
+    PmsFrame mainFrame;
+
     Vector<String> personList;
 
         //+ " ProjectNumber, ProjectName, PhysicalAddress, ERFNumber, FeeCharged, PaidToDate, Deadline,"
 
-    JTextField projectNoText = new JTextField("Project Number ", 30);
+    JTextField projectNoText = new JTextField("Project Number", 30);
     JLabel projectNoLabel = new JLabel("Project No", SwingConstants.RIGHT);
 
     JTextField projectNameText = new JTextField("Project Name", 30);
@@ -66,10 +68,11 @@ public class ProjectEditor extends JPanel {
         super();
         super.setLayout(new GridLayout(15, 2, 10, 5)); 
 
-        this.projectNoText.setEditable(false);
+        this.mainFrame = motherFrame;
         this.dbHandler = dbPosie ;
         this.createBdgList();
         this.createFinalisedList();
+        this.projectNoText.setEditable(false);
         this.setFinalised.setEnabled(false);
         this.completedDateText.setEditable(false);
         this.createPersonList();
@@ -122,9 +125,9 @@ public class ProjectEditor extends JPanel {
         super.add(this.completedDateText);
 
     }
-    
+
     void resetField() {
-        this.projectNoText.setText("project Number");
+        this.projectNoText.setText("Project Number");
         this.projectNameText.setText("");
         this.physicalAddressText.setText("");
         this.erfNoText.setText("");
@@ -157,13 +160,11 @@ public class ProjectEditor extends JPanel {
     }
     
     void createPersonList() {
-        
         this.architectBoxModel = new DefaultComboBoxModel<>();
         this.contractorBoxModel = new DefaultComboBoxModel<>();
         this.customerBoxModel = new DefaultComboBoxModel<>();
         this.managerBoxModel = new DefaultComboBoxModel<>();
         this.engineerBoxModel = new DefaultComboBoxModel<>();
-
         
         this.setArchitect = new JComboBox<>(this.architectBoxModel);
         this.setArchitect.setSelectedItem("");
