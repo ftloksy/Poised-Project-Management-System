@@ -13,6 +13,7 @@ public class ListenerSearch implements ActionListener {
     ProjectEditor projectDbEditor;
     ProjectTab projectTab ;
     SearchByProjectNumberEditor searchByProjectNumberEditor;
+    SearchByProjectNameEditor searchByProjectNameEditor;
     
     ListenerSearch (PmsFrame motherFrame, MysqlHandler dbPosie){
         this.mainFrame = motherFrame ;
@@ -29,6 +30,7 @@ public class ListenerSearch implements ActionListener {
         this.projectDbEditor = this.projectTab.projectEditor ;
         this.projectTable = this.projectTab.dbTable ;
         this.searchByProjectNumberEditor = this.projectTab.searchByProjectNumberEditor ;
+        this.searchByProjectNameEditor = this.projectTab.searchByProjectNameEditor ;
         
         this.mainFrame.msgArea.setText("");
         int index = this.tabPane.getSelectedIndex();
@@ -66,6 +68,7 @@ public class ListenerSearch implements ActionListener {
                 String engineerVal = this.projectDbEditor.setEngineer.getSelectedItem().toString() ;
 
                 String searchByProjectNumberVal = this.searchByProjectNumberEditor.projectNoText.getText();
+                String searchByProjectNameVal = this.searchByProjectNameEditor.projectNameText.getText();
 
                 String isFinalised = this.projectDbEditor.setFinalised.getSelectedItem().toString();
                 if ( isFinalised.equals("Yes")) {
@@ -105,6 +108,15 @@ public class ListenerSearch implements ActionListener {
                         this.mainFrame.msgArea.setText("Search Complete"); 
 		                this.projectDbEditor.resetField();
 		                this.projectTable.reNewTable( searchByProjectNumberResult );
+                        //     + searchByProjectNumberVal);
+                        break;
+                    
+                    case 4:
+		                Vector<Vector<String>> searchByProjectNameResult = this.dbHandler.selectByProjectNameRecord(
+		                    searchByProjectNameVal );
+                        this.mainFrame.msgArea.setText("Search Complete"); 
+		                this.projectDbEditor.resetField();
+		                this.projectTable.reNewTable( searchByProjectNameResult );
                         //     + searchByProjectNumberVal);
                         break;
                 }

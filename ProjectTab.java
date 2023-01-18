@@ -7,6 +7,7 @@ public class ProjectTab extends JPanel {
     final static String finalisedTabTitle = "Finalised Record";
     final static String pastDateTabTitle = "Past Date Record";
     final static String searchByProjectNumberTabTitle = "Search by Project Number";
+    final static String searchByProjectNameTabTitle = "Search by Project Name";
     JTabbedPane tabbedPane ;
     PmsFrame mainFrame ;
     MysqlHandler dbHandler ;
@@ -20,6 +21,7 @@ public class ProjectTab extends JPanel {
     ProjectTabChangeListener changeListener ;
     PastDueDateEditor pastDueDateEditor ;
     SearchByProjectNumberEditor searchByProjectNumberEditor ;
+    SearchByProjectNameEditor searchByProjectNameEditor;
     
     ProjectTab(PmsFrame motherFrame, MysqlHandler dbPosie) {
         super();
@@ -33,13 +35,14 @@ public class ProjectTab extends JPanel {
         this.finalisedEditor = new FinalisedEditor();
         this.pastDueDateEditor = new PastDueDateEditor();
         this.searchByProjectNumberEditor = new SearchByProjectNumberEditor(motherFrame, dbPosie);
-
+        this.searchByProjectNameEditor = new SearchByProjectNameEditor();
         this.tabbedPane = new JTabbedPane();
 
         tabbedPane.addTab(projectTabTitle, projectEditor);
         tabbedPane.addTab(finalisedTabTitle, finalisedEditor);
         tabbedPane.addTab(pastDateTabTitle, pastDueDateEditor);
         tabbedPane.addTab(searchByProjectNumberTabTitle, searchByProjectNumberEditor);
+        tabbedPane.addTab(searchByProjectNameTabTitle, searchByProjectNameEditor);
         tabbedPane.setSelectedIndex(0);
         
         tabbedPane.addChangeListener(changeListener);

@@ -88,4 +88,13 @@ public class MenuHandler extends JMenuBar {
         super.add( this.listAllItem );
         super.add( this.exitItem );
     }
+
+    void searchByProjectNameMenu() {
+        super.removeAll();
+        super.revalidate();
+        super.repaint();
+        super.add( this.searchItem );
+        super.add( this.listAllItem );
+        super.add( this.exitItem );
+    }
 }

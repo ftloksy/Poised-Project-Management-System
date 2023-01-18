@@ -429,6 +429,18 @@ public class MysqlHandler {
         return this.makeProjectRow( sqlStr );
     }
 
+    Vector<Vector<String>> selectByProjectNameRecord(String projectNameVal){
+        String sqlStr = " SELECT"
+            + " ProjectNumber, ProjectName, BuildingType, PhysicalAddress, ERFNumber, FeeCharged,"
+            + " PaidToDate, Deadline,"
+            + " Architect, Contractor, Customer, ProjectManager, StructuralEngineer,"
+            + " Finalised, CompletedDate"
+            + " FROM ProjectView WHERE "
+            + " ProjectName like '%" + projectNameVal + "%'";
+        System.out.println("By Name: " + sqlStr);
+        return this.makeProjectRow( sqlStr );
+    }
+
     
     Vector<Vector<String>> selectPersonRecord() {
         return this.makePersonRow( this.selectPerson );

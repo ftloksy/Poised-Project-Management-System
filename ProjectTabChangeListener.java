@@ -43,6 +43,12 @@ public class ProjectTabChangeListener implements ChangeListener {
                 this.dbMenu.searchByProjectNumberMenu();
                 this.mainFrame.pmsTab.projectTab.refleshView();
                 break;
+            
+            case 4:
+                this.dbMenu.searchByProjectNumberMenu();
+                this.mainFrame.pmsTab.projectTab.refleshView();
+                break;
+
 		}
     }
 }
