@@ -41,7 +41,7 @@ public class ProjectEditor extends JPanel {
     JLabel finalisedLabel = new JLabel("Finalised", SwingConstants.RIGHT);
 
     JLabel completedDateLabel = new JLabel("Completed Date", SwingConstants.RIGHT);
-    JTextField completedDateText = new JTextField("Completed Date", 30);
+    JTextField completedDateText = new JTextField("", 30);
 
     DefaultComboBoxModel<String> bdgTypeList;
 

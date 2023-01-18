@@ -115,8 +115,12 @@ public class ProjectTableSelect implements ListSelectionListener {
 				(String)this.dbModel.getValueAt(this.selectIndex, 1));
 
 
-			this.finalisedEditor.completedDateText.setText(
-					(String)this.dbModel.getValueAt(this.selectIndex, 14));
+			String completedDateString = (String)this.dbModel.getValueAt(this.selectIndex, 14);
+			if ( completedDateString ==  null) {
+				this.finalisedEditor.completedDateText.setText( java.time.LocalDate.now().toString() );
+			} else {
+				this.finalisedEditor.completedDateText.setText( completedDateString );
+			}
 			
 		} catch (ArrayIndexOutOfBoundsException g){
 			this.dbEditor.resetField();
