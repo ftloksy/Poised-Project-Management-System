@@ -101,28 +101,32 @@ public class MysqlHandler {
     String createTriggerProjectName = "CREATE TRIGGER IF NOT EXISTS project_name BEFORE INSERT ON Project"
         + " FOR EACH ROW"
         + " BEGIN"
-        + " IF new.ProjectName IS NULL THEN"
-        + " BEGIN"
-        + " SET new.ProjectName = "
-        + " ( SELECT CONCAT ("
-        + " new.BuildingType "
-        + " , ' ', "
-        + " (SELECT SurName from Person "
-        + " where"
-        + " id = new.CustomerPId "
-        + " )));"
-        + " SET new.ProjectName ="
-        + " ( SELECT CONCAT (new.ProjectName,"
-        + "  ' ',"
-        + " ( SELECT count(ProjectName) FROM Project"
-        + " WHERE ProjectName LIKE CONCAT ( new.ProjectName , '%') ) ));"
-        + " END;"
-        + " END IF;"
+           + " IF new.ProjectName IS NULL THEN"
+           + " BEGIN"
+              + " SET new.ProjectName = "
+              + " ( SELECT CONCAT ("
+              + " new.BuildingType "
+              + " , ' ', "
+              + " (SELECT SurName from Person "
+              + " where"
+              + " id = new.CustomerPId "
+              + " )));"
+
+              + " SET @countProjectNameExist = ( SELECT count(ProjectName) FROM Project WHERE"
+              + " ProjectName = new.ProjectName"
+              + " OR ProjectName REGEXP CONCAT ( '^' , new.ProjectName , ' [0-9]*') );"
+              + " If  @countProjectNameExist > 0  THEN"
+                + " BEGIN"
+                  + "  SET new.ProjectName = ( SELECT CONCAT (new.ProjectName,  ' ',  @countProjectNameExist )); "
+                + " END;"
+              + " END IF;"
+            + " END;"
+            + " END IF;"
         + " END;" ;
 
 
-    String insertPersonSQL = "INSERT INTO Person ( SurName )"
-        + " VALUES ( 'Chow' ), ( 'Chan' )";
+    // String insertPersonSQL = "INSERT INTO Person ( SurName )"
+    //     + " VALUES ( 'Chow' ), ( 'Chan' )";
     //String insertProjectSQL = "INSERT INTO Project (PersonRole, ProjectNumber, PersonId) "
         //+ " VALUES ( 'Customer', 1, 1 ), ( 'Customer', 2, 2 )";
     //String insertSQL = "INSERT INTO Poised ( TypeBuilding, ProjectNumber ) VALUES "
@@ -176,15 +180,15 @@ public class MysqlHandler {
     }
 
     /* Insert the base five records. */
-    void insertIntRecord() {
-        try {
-            this.statement.executeUpdate(this.insertPersonSQL);
-            //this.statement.executeUpdate(this.insertProjectSQL);
-            //this.statement.executeUpdate(this.insertSQL);
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-    }
+    // void insertIntRecord() {
+    //     try {
+    //         this.statement.executeUpdate(this.insertPersonSQL);
+    //         //this.statement.executeUpdate(this.insertProjectSQL);
+    //         //this.statement.executeUpdate(this.insertSQL);
+    //     } catch (SQLException e) {
+    //         e.printStackTrace();
+    //     }
+    // }
     
     Vector<String> getPersonList() throws SQLException {
         return this.getResultList( this.selectPersonTag );
@@ -278,7 +282,6 @@ public class MysqlHandler {
             }
 
             sqlStr += ")";
-        System.out.println(sqlStr);
         this.statement.executeUpdate(sqlStr);
     }
     
@@ -411,7 +414,6 @@ public class MysqlHandler {
             // + " AND CompletedDate LIKE '%"      + completedDate + "%'"
             + " AND Finalised LIKE '%"          + isFinalised + "%'";
 
-        System.out.println(sqlStr);
         return makeProjectRow( sqlStr );
     };
 
@@ -423,20 +425,7 @@ public class MysqlHandler {
             + " Finalised, CompletedDate"
             + " FROM ProjectView WHERE "
             + " ProjectNumber like '%" + projectNoVal + "%'";
-            // +     " ProjectName like '%"       + projectNameVal + "%'"
-            // + " AND BuildingType LIKE '%"      + buildingTypeVal + "%'"
-            // + " AND PhysicalAddress LIKE '%"   + physicalAddressVal + "%'"
-            // + " AND ERFNumber LIKE '%"         + erfNoVal + "%'" 
-            // + " AND FeeCharged LIKE '%"        + feeChargedVal + "%'"
-            // + " AND PaidToDate LIKE '%"        + paidTodateVal + "%'"
-            // + " AND Deadline LIKE '%"          + deadLine + "%'"
-            // + " AND Architect LIKE '%"         + architectVal + "%'" 
-            // + " AND Contractor LIKE '%"        + contractorVal + "%'"
-            // + " AND Customer LIKE '%"          + customerVal + "%'"
-            // + " AND ProjectManager LIKE '%"     + managerVal + "%'"
-            // + " AND StructuralEngineer LIKE '%" + engineerVal + "%'"
-            // // + " AND CompletedDate LIKE '%"      + completedDate + "%'"
-            // + " AND Finalised LIKE '%"          + isFinalised + "%'";
+
         return this.makeProjectRow( sqlStr );
     }
 
@@ -536,13 +525,11 @@ public class MysqlHandler {
         String sqlStr = "UPDATE Project SET Finalised = 1, "
         + " CompletedDate = '" + completedDate + "'"
         + " Where ProjectNumber = '" + projectNo + "'" ;
-        // System.out.println(sqlStr);
         this.statement.executeUpdate(sqlStr);
     }
     
-    public static void main(String[] args) {
-        MysqlHandler sqlHandler = new MysqlHandler();
-        sqlHandler.insertIntRecord();
-        // System.out.println(sqlHandler);
-    }
+    // public static void main(String[] args) {
+    //     MysqlHandler sqlHandler = new MysqlHandler();
+    //     // sqlHandler.insertIntRecord();
+    // }
 }
