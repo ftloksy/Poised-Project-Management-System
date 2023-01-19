@@ -3,6 +3,26 @@ import javax.swing.*;
 import java.util.Vector;
 import java.sql.* ;
 
+/*
+ * This is the Editor, 
+ * User can use it to enter record or update record into PoisePMS database Project table.
+ * 
+ * JTextField --------> Project Table Column
+ * projectNoText    =>     ProjectNumber
+ * projectNameText  =>     ProjectName
+ * erfNoText        =>     ERFNumber
+ * feeChargedText   =>     FeeCharged
+ * paidTodateText   =>     PaidToDate
+ * deadlineText     =>     Deadline
+ *
+ * User cannot enter or modify this JTextField. This information
+ * will handle by SQL Server.
+ * 
+ * JComboBox -----------> Project Table Column
+ * bdgType          => BuildingType
+ * setArchitect     => 
+ */
+
 public class ProjectEditor extends JPanel {
 
     PmsFrame mainFrame;
