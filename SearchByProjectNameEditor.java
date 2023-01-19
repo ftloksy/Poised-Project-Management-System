@@ -2,6 +2,10 @@ import java.awt.*;
 import javax.swing.*;
 import java.util.Vector;
 
+/* 
+ * This a SearchByProjectName page Editor, It can search Project data table by Project Name.
+ * and this is under the ProjectTab's JTabbedPane tabbedPane object.
+ */
 public class SearchByProjectNameEditor extends JPanel {
 
     Vector<String> personList;
@@ -12,7 +16,6 @@ public class SearchByProjectNameEditor extends JPanel {
     MysqlHandler dbHandler;
 
 
-    // SearchByProjectNameEditor(PmsFrame motherFrame, MysqlHandler dbPosie) {
     SearchByProjectNameEditor() {
         super();
         super.setLayout(new GridLayout(1, 2, 10, 5)); 

@@ -1,8 +1,11 @@
 import java.awt.*;
 import javax.swing.*;
 import java.util.Vector;
-import java.sql.* ;
 
+/* 
+ * This a SearchByProjectNumber page Editor, It can search Project data table by Project Number.
+ * and this is under the ProjectTab's JTabbedPane tabbedPane object.
+ */
 public class SearchByProjectNumberEditor extends JPanel {
 
     Vector<String> personList;
@@ -27,10 +30,6 @@ public class SearchByProjectNumberEditor extends JPanel {
     }
     
     void resetField() {
-        try {
-            this.projectNoText.setText(this.dbHandler.nextProjectNumber());
-        } catch (SQLException e) {
-            this.mainFrame.msgArea.setText("Have database problem.");
-        }
+        this.projectNoText.setText("0");
     }
 }
