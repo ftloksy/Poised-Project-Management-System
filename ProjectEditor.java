@@ -8,19 +8,38 @@ import java.sql.* ;
  * User can use it to enter record or update record into PoisePMS database Project table.
  * 
  * JTextField --------> Project Table Column
- * projectNoText    =>     ProjectNumber
- * projectNameText  =>     ProjectName
- * erfNoText        =>     ERFNumber
- * feeChargedText   =>     FeeCharged
- * paidTodateText   =>     PaidToDate
- * deadlineText     =>     Deadline
+ * projectNoText     =>    ProjectNumber
+ * projectNameText   =>    ProjectName
+ * erfNoText         =>    ERFNumber
+ * feeChargedText    =>    FeeCharged
+ * paidTodateText    =>    PaidToDate
+ * deadlineText      =>    Deadline
+ * completedDateText =>    CompletedDate
  *
- * User cannot enter or modify this JTextField. This information
- * will handle by SQL Server.
+ * User cannot enter or modify projectNoText JTextField. This information
+ * will handle by SQL Server. 
+ * completedDateText and setFinalised 
+ * just can edit or update in FinalisedEditor.
  * 
  * JComboBox -----------> Project Table Column
- * bdgType          => BuildingType
- * setArchitect     => 
+ * bdgType           =>    BuildingType
+ * setArchitect      =>    ArchitectPId
+ * setContractor     =>    ContractorPId
+ * setCustomer       =>    CustomerPId
+ * setManager        =>    ProjectManagerPId
+ * setEngineer       =>    StructuralEngineerPId
+ * setFinalised      =>    Finalised
+ * 
+ * bdgType is have this items ['House','Apartment','Block','Store'],
+ * User can use JComboBox to Select it.
+ * setArchitect, setContractor, setCustomer, setEngineer, setManager, 
+ * This is ref to the person id. But user cann't 
+ * use the ProjectNumber to assign the user. 
+ * User need the SurName and FirstName, so in the JComboBox has every
+ * Person's id + FirstName + SurName in the row.
+ * User can assign 
+ * [ Architect, Contractor, Customer, Structural Engineer, Project Manager ] 
+ * to every person.
  */
 
 public class ProjectEditor extends JPanel {
