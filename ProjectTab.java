@@ -1,6 +1,18 @@
 import java.awt.*;
 import javax.swing.*;
 
+/*
+ * In this Class have five Class (pages ) inside.
+ * ( Record Handler ) User can use this page to enter, update, search, delete record in Project data table.
+ * ( Finalised Record ) User can use this page to update the Project record to finalised,
+ * user need to set the completed data, default is current data ( Today ).
+ * ( Past Data Record ) User can set the completedDate JTextField, the Program will find Project table,
+ * What record's Deadline is early the completedDate and finalised is false.
+ * ( Search by Project Number ) Search Project's record by the Project Number.
+ * ( Search by Project Name ) Search Project's record by the Project Name.
+ * 
+ * And The Project JTable is at the button.
+ */
 public class ProjectTab extends JPanel {
 
     final static String projectTabTitle = "Record Handler";
@@ -11,10 +23,8 @@ public class ProjectTab extends JPanel {
     JTabbedPane tabbedPane ;
     PmsFrame mainFrame ;
     MysqlHandler dbHandler ;
-    // ProjectEditor projectEditor ;
     FinalisedEditor finalisedEditor;
 
-    // ProjectEditor projectEditor;
     ProjectEditor projectEditor;
     ProjectTable dbTable;
     JScrollPane dbTableScroll;
@@ -47,15 +57,9 @@ public class ProjectTab extends JPanel {
         
         tabbedPane.addChangeListener(changeListener);
 
-
-        // this.pmsProjectTab = new PmsProjectTab(motherFrame, dbPosie);
-        // this.pmsProjectTab.addComponentToPane(super.getComponents());
-        
         this.dbTable = new ProjectTable ( motherFrame, dbPosie );
         this.dbTableScroll = new JScrollPane( this.dbTable );
         
-
-        // super.add( this.projectEditor, BorderLayout.NORTH );
         super.add( this.tabbedPane, BorderLayout.NORTH);
         super.add( this.dbTableScroll, BorderLayout.CENTER );
     }

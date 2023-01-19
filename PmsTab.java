@@ -2,7 +2,7 @@ import java.awt.*;
 import javax.swing.*;
 
 /*
- * In this Class have two subclass.
+ * In this Class have two Class inside.
  * One is PersonTab, this is for handle Person database.
  * One is ProjectTab. this is for handle Project database.
  * TabChangeListener is a Listener, when you click the table,
