@@ -2,6 +2,11 @@ import javax.swing.*;
 import javax.swing.table.*;
 import java.util.Vector ;
 
+/*
+ * PersonTable ( JTable ) will to Display 
+ * Person table's information. 
+ * When user click the table row, it will trigger PersonTableSelect .
+ */
 public class PersonTable extends JTable {
     DefaultTableModel personModel;
     MysqlHandler dbHandler;
@@ -17,6 +22,7 @@ public class PersonTable extends JTable {
         createTable();
     }
     
+    /* Create the Table Header */
     void createTableHeader() {
         Vector<String> headerTitle = new Vector<String>();
         headerTitle.add("id");
@@ -28,10 +34,19 @@ public class PersonTable extends JTable {
         this.tableHeader = headerTitle ;
     }
     
+    /* When the user search Person database table, 
+     * then the table will display less record.
+     * Program can use this method 
+     * to display all record on table again.
+     */
     void flashTable () {
         reNewTable ( this.dbHandler.selectPersonRecord() );
     }
-    
+   
+    /*
+     * Program can use this method to do searching.
+     * flashTable method is a example.
+     */    
     void reNewTable( Vector<Vector<String>>  dbRow ) {
         this.personModel.setDataVector( dbRow , this.tableHeader );
     }
@@ -42,13 +57,11 @@ public class PersonTable extends JTable {
         
         this.tableHeader = new Vector<String>();
         this.createTableHeader();
-        //this.tableHeader.add("id");
-        //this.tableHeader.add("FirstName");
-        //this.tableHeader.add("SurName");
-        //this.tableHeader.add("Telephone");
-        //this.tableHeader.add("EmailAddress");
-        //this.tableHeader.add("PhysicalAddress");
 
+        /*
+         * Disable the table edit function. 
+         * User can select the row, but cannot edit.
+         */
         this.personModel = new DefaultTableModel( this.dbHandler.selectPersonRecord() ,this.tableHeader) {
             public boolean isCellEditable(int rowIndex, int mColIndex) {
                 return false;
