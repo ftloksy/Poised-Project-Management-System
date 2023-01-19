@@ -1,6 +1,10 @@
 import javax.swing.event.*;
 import javax.swing.table.*;
 
+/*
+ * This is Person Table's Listener, 
+ * when user click the table's row, It will trigger it.
+ */
 public class PersonTableSelect implements ListSelectionListener {
     PmsFrame mainFrame ;
     PersonEditor personDbEditor;
@@ -18,6 +22,7 @@ public class PersonTableSelect implements ListSelectionListener {
             this.personTable = this.mainFrame.pmsTab.personTab.dbTable ;
             this.personModel = this.mainFrame.pmsTab.personTab.dbTable.personModel ;
             
+            /* Follow the Table row's data to update the Person Editor. */
             Integer selectIndex;
             selectIndex = this.personTable.getSelectedRow();
             this.personDbEditor.idText.setText( 
