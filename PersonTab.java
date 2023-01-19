@@ -1,6 +1,11 @@
 import java.awt.*;
 import javax.swing.*;
 
+/*
+ * This Tab has two parts,
+ * PersonEditor in on the top, it is for input data about the Person table insert.
+ * PersonTable is on the buttom, it is for display Person table rows.
+ */
 public class PersonTab extends JPanel {
     
     PmsFrame mainFrame;

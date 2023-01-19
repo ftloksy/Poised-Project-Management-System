@@ -1,13 +1,20 @@
 import java.awt.*;
 import javax.swing.*;
 
+/* 
+ * The Main Frame have a JTabbedPane PmsTab
+ * every database handler include editor and table inside PmsTab.
+ * 
+ * MenuHandler have more button, handle action request.
+ * e.g. Search Record, Enter Record, Update Record, Delete Record.
+ * 
+ * msgArea is a message notice.
+ * programming will use msgArea to share information to client.
+ */
 public class PmsFrame extends JFrame {
-    PmsTab pmsTab;
+    PmsTab pmsTab; 
     MenuHandler dbMenu ;
     JTextArea msgArea ;
-
-    // Disable menu for Development
-    // Boolean menuEnable = true ;
     
     PmsFrame(MysqlHandler dbPosie) {
         super();
