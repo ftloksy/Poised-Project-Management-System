@@ -2,6 +2,10 @@ import javax.swing.event.*;
 import javax.swing.table.*;
 import javax.swing.* ;
 
+/*
+ * This is Project Table's Listener, 
+ * when user click the table's row, It will trigger it.
+ */
 public class ProjectTableSelect implements ListSelectionListener {
     PmsFrame mainFrame ;
     ProjectEditor dbEditor;
@@ -15,14 +19,23 @@ public class ProjectTableSelect implements ListSelectionListener {
     ProjectTableSelect(PmsFrame motherFrame){
         this.mainFrame = motherFrame ;
     }
-    
+
+	/* 
+	 * The bdgTypeList and BuildingType 's order is not same. 
+	 * this method to match this two record.
+	 */
     Integer findBdgType() {
         return findIndex( 
             (String)this.dbModel.getValueAt(this.selectIndex, 2) ,
             this.dbEditor.bdgTypeList
             );
     }
-    
+
+	/* 
+	 * this is match method.
+	 * Use the table's value to find in DefaultComboBoxModel's List.
+	 * return the match content's index.
+	 */
     Integer findIndex(String targetTxt, DefaultComboBoxModel<String> checkModel) {
         for (int i = 0 ; i < checkModel.getSize() ; i ++ ) {
             if ( checkModel.getElementAt(i).indexOf(targetTxt) > -1 ) {
@@ -32,18 +45,9 @@ public class ProjectTableSelect implements ListSelectionListener {
         return -1;
     }
     
-    Integer findIndex(String targetTxt, DefaultListModel<String> checkModel) {
-        for (int i = 0 ; i < checkModel.size() ; i ++ ) {
-            if ( checkModel.getElementAt(i).indexOf(targetTxt) > -1 ) {
-                return i;
-            }
-        }
-        return -1;
-    }
-
+	/* Reset the Project Editor */
     public void valueChanged(ListSelectionEvent e) {
         this.tabPane = this.mainFrame.pmsTab.tabbedPane ;
-        // int index = this.tabPane.getSelectedIndex();
         this.projectTab = this.mainFrame.pmsTab.projectTab ;
         this.dbEditor = this.projectTab.projectEditor ;
         this.finalisedEditor = this.projectTab.finalisedEditor;
@@ -114,7 +118,12 @@ public class ProjectTableSelect implements ListSelectionListener {
 			this.finalisedEditor.projectNameText.setText(
 				(String)this.dbModel.getValueAt(this.selectIndex, 1));
 
-
+			/* 
+			 * If the Project isn't finalised. the record hasn't CompletedDate.
+			 * so set the completedDateText to currect date ( today ).
+			 * If the Project is finalised. the record has CompletedDate .
+			 * so set the completedDateText follow the record.
+			 */
 			String completedDateString = (String)this.dbModel.getValueAt(this.selectIndex, 14);
 			if ( completedDateString ==  null) {
 				this.finalisedEditor.completedDateText.setText( java.time.LocalDate.now().toString() );
