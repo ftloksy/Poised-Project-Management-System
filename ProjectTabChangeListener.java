@@ -1,6 +1,7 @@
 import javax.swing.*;
 import javax.swing.event.*;
 
+/* When User click the ProjectTab and change the Page, Program will trigger this class.  */
 public class ProjectTabChangeListener implements ChangeListener {
     PmsFrame mainFrame;
     MenuHandler dbMenu;
@@ -12,6 +13,7 @@ public class ProjectTabChangeListener implements ChangeListener {
 	    this.dbMenu = motherFrame.dbMenu;
     }
 
+    /*  Modify the Menu button's label  */
     public void stateChanged(ChangeEvent changeEvent) {
         JTabbedPane sourceTabbedPane = (JTabbedPane) changeEvent.getSource();
         int index = sourceTabbedPane.getSelectedIndex();
