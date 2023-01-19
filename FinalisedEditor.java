@@ -2,6 +2,10 @@ import java.awt.*;
 import javax.swing.*;
 import java.util.Vector;
 
+/* 
+ * This a Finalised Editor, It can update the Project table's finalised field.
+ * and this is under the ProjectTab's JTabbedPane tabbedPane object.
+ */
 public class FinalisedEditor extends JPanel {
 
     Vector<String> personList;
@@ -20,6 +24,13 @@ public class FinalisedEditor extends JPanel {
         super();
         super.setLayout(new GridLayout(3, 2, 10, 5)); 
 
+        /* 
+         * the Project Number and Project Name don't need modify and Update 
+         * So disable edit function. here Project Number and Project Name 
+         * is make sure the record is user want to modify,
+         * when user update the record, Finalised will update to true.
+         * and user can input completed date information.
+         */
         this.projectNoText.setEditable(false);
         this.projectNameText.setEditable(false);
         this.completedDateText.setEditable(true);
@@ -34,6 +45,7 @@ public class FinalisedEditor extends JPanel {
         super.add(this.completedDateText);
     }
     
+    /* reset the editor JTextFields. */
     void resetField() {
         this.projectNoText.setText("project Number");
         this.projectNameText.setText("");
