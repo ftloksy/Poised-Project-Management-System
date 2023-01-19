@@ -1,7 +1,7 @@
 import javax.swing.*;
 import javax.swing.event.*;
 
-/* When User click the PmsTab, Program will trigger this class. */
+/* When User click the PmsTab and change the Page, Program will trigger this class. */
 public class TabChangeListener implements ChangeListener {
     PmsFrame mainFrame;
     MenuHandler dbMenu;
