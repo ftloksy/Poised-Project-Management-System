@@ -1,6 +1,25 @@
 import java.awt.*;
 import javax.swing.*;
 
+/* 
+ * This is editor for PoisedPMS database Person Table. 
+ * All User's information is use this editor to Enter and Modify
+ * Include Architect, Contractor, Customer, Project Manager, Structural Engineer.
+ * 
+ * JTextField     ------> Person Table column.
+ * idText              => id,
+ * surNameText         => SurName,
+ * firstNameText       => FirstName,
+ * telephoneText       => Telephone,
+ * emailAddressText    => EmailAddress,
+ * physicalAddressText => PhysicalAddress
+ * 
+ * user cann't enter or modify idText.
+ * When Record entry, SQL server will care this field.
+ * When Search and Modify the Record. 
+ * PersonTableSelect ( Listener ) will care this.
+ */
+
 public class PersonEditor extends JPanel {
 
     JTextField idText = new JTextField("id", 30);
@@ -43,6 +62,11 @@ public class PersonEditor extends JPanel {
         super.add(this.physicalAddressLabel);
         super.add(this.physicalAddressText); 
     }
+
+    /* 
+     * When user want to search or enter new record.  
+     * User maybe need to reset all JTextField in PersonEditor.
+     */
     
     void resetField() {
         this.idText.setText("Id");
