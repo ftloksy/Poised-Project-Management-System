@@ -3,8 +3,8 @@ import java.awt.event.*;
 public class ListenerPastDueDate implements ActionListener {
     PmsFrame mainFrame;
     PastDueDateEditor pastDueDateEditor ;
-    ProjectTable finalisedTable ;
-    String completedDate  ;
+    ProjectTable projectTable ;
+    String targetDate  ;
     //String projectNo ;
     MysqlHandler dbHandler;
     
@@ -17,15 +17,15 @@ public class ListenerPastDueDate implements ActionListener {
     {
         this.mainFrame.msgArea.setText("");
         this.pastDueDateEditor = this.mainFrame.pmsTab.projectTab.pastDueDateEditor;
-        this.completedDate = pastDueDateEditor.completedDateText.getText();
+        this.targetDate = pastDueDateEditor.targetDateText.getText();
         //this.projectNo = finalisedEditor.projectNoText.getText();
 
         //System.out.println("Project No:" + projectNo );
 
-        if ( !this.completedDate.equals("") ) {
+        if ( !this.targetDate.equals("") ) {
 
-            this.finalisedTable = this.mainFrame.pmsTab.projectTab.dbTable ;
-            this.finalisedTable.pastDueDate( this.completedDate );
+            this.projectTable = this.mainFrame.pmsTab.projectTab.dbTable ;
+            this.projectTable.pastDueDate( this.targetDate );
             this.mainFrame.msgArea.setText("Past Due Date Project.");
 
         } else {
