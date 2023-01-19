@@ -35,11 +35,12 @@ import java.sql.* ;
  * setArchitect, setContractor, setCustomer, setEngineer, setManager, 
  * This is ref to the person id. But user cann't 
  * use the ProjectNumber to assign the user. 
- * User need the SurName and FirstName, so in the JComboBox has every
- * Person's id + FirstName + SurName in the row.
- * User can assign 
+ * ( Humen cannot easy use the id number to handle record)
+ * User need the SurName and FirstName to handle it, so in the JComboBox has every
+ * Person's [ id + FirstName + SurName ] in the row.
+ * User can use this to assign 
  * [ Architect, Contractor, Customer, Structural Engineer, Project Manager ] 
- * to every person.
+ * to a person.
  */
 
 public class ProjectEditor extends JPanel {
@@ -219,6 +220,7 @@ public class ProjectEditor extends JPanel {
         this.updatePersonList();
     }
     
+    /* use Person data table's record to update the JComboBox's rows */
     void updatePersonList() {
         try {
             this.personList = this.dbHandler.getPersonList();
