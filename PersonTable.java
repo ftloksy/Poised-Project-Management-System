@@ -34,7 +34,8 @@ public class PersonTable extends JTable {
         this.tableHeader = headerTitle ;
     }
     
-    /* When the user search Person database table, 
+    /* 
+     * When the user search Person database table, 
      * then the table will display less record.
      * Program can use this method 
      * to display all record on table again.

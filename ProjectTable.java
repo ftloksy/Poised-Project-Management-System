@@ -2,6 +2,11 @@ import javax.swing.*;
 import javax.swing.table.*;
 import java.util.Vector ;
 
+/*
+ * ProjectTable ( JTable ) will to Display 
+ * Project table's information. 
+ * When user click the table row, it will trigger ProjectTableSelect .
+ */
 public class ProjectTable extends JTable {
     DefaultTableModel dbModel;
     MysqlHandler dbHandler;
@@ -17,6 +22,7 @@ public class ProjectTable extends JTable {
         createTable();
     }
     
+    /* Create the Table Header */
     void createTableHeader() {
         Vector<String> headerTitle = new Vector<String>();
         headerTitle.add("ProjectNumber");
@@ -37,19 +43,35 @@ public class ProjectTable extends JTable {
         headerTitle.add("CompletedDate");
         this.tableHeader =  headerTitle;
     }
-    
+
+    /* 
+     * When the user search Project database table, 
+     * then the table will display less record.
+     * Program can use this method 
+     * to display all record on table again.
+     */ 
     void flashTable () {
         reNewTable ( this.dbHandler.selectProjectRecord() );
     }
     
+    /*
+     * Program can use this method to do searching.
+     * flashTable method is a example.
+     */     
     void reNewTable( Vector<Vector<String>>  dbRow ) {
         this.dbModel.setDataVector( dbRow , this.tableHeader );
     }
 
+    /* Find What Record haven't finalised. */
     void needCompleted() {
         reNewTable ( this.dbHandler.selectNeedCompletedProjectRecord() );
     }
 
+    /* 
+     * Follow the compledDate to find 
+     * what Project's Deadline is early then the completedDate 
+     * and hasn't finalised . 
+     */
     void pastDueDate(String completedDate) {
         reNewTable ( this.dbHandler.selectPastDueDate(completedDate) );
     }
@@ -61,6 +83,10 @@ public class ProjectTable extends JTable {
         this.tableHeader = new Vector<String>();
         this.createTableHeader();
 
+        /*
+         * Disable the table edit function. 
+         * User can select the row, but cannot edit.
+         */        
         this.dbModel = new DefaultTableModel( this.dbHandler.selectProjectRecord() ,this.tableHeader) {
             public boolean isCellEditable(int rowIndex, int mColIndex) {
                 return false;

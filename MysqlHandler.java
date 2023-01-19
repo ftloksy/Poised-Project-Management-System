@@ -456,7 +456,8 @@ public class MysqlHandler {
 
     Vector<Vector<String>> selectPastDueDate(String completedDate) {
         String sqlStr = this.selectPastDueDateProject 
-                + " WHERE CompletedDate < '" + completedDate + "'";
+                + " WHERE CompletedDate < '" + completedDate + "'"
+                + " AND Finalised = 0";
         return this.makeProjectRow( sqlStr );  
     }
     
