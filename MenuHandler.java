@@ -18,7 +18,7 @@ public class MenuHandler extends JMenuBar {
     JButton needCompletedItem = new JButton("unCompleted Project");
     JButton pastDueDateItem = new JButton("Past Due Date");
 
-    ListenerExit exitProgram = new ListenerExit();
+    ListenerExit exitProgram ;
     /* ListenerClear will clear all textfield in the PersonEditor or ProjectEditor */
     ListenerClear clearListener;
     /* 
@@ -79,6 +79,7 @@ public class MenuHandler extends JMenuBar {
     
     MenuHandler (PmsFrame motherFrame, MysqlHandler dbPosie) {
         super();
+        this.exitProgram = new ListenerExit(dbPosie) ;
         this.clearListener = new ListenerClear( motherFrame );
         this.enterListener = new ListenerEnter( motherFrame, dbPosie );
         this.deleteListener = new ListenerDelete( motherFrame, dbPosie );
