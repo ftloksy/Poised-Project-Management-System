@@ -1,5 +1,6 @@
 import javax.swing.*;
 import java.awt.event.*;
+import java.sql.SQLException;
 import java.util.Vector;
 
 /*
@@ -103,43 +104,56 @@ public class ListenerSearch implements ActionListener {
                       * Record Handler page.
                       */
                     case 0:
-		                Vector<Vector<String>> searchProjectResult = this.dbHandler.searchProjectRecord(
-		                    projectNameVal,
-		                    physicalAddressVal, 
-		                    erfNoVal,
-		                    feeChargedVal,
-		                    paidTodateVal,
-		                    buildingTypeVal,
-		                    deadLine,
-		                    architectVal,
-		                    contractorVal,
-		                    customerVal,
-		                    managerVal,
-		                    engineerVal,
-		                    isFinalised
-		                );
+                        try {
+                            Vector<Vector<String>> searchProjectResult = this.dbHandler.searchProjectRecord(
+                                projectNameVal,
+                                physicalAddressVal, 
+                                erfNoVal,
+                                feeChargedVal,
+                                paidTodateVal,
+                                buildingTypeVal,
+                                deadLine,
+                                architectVal,
+                                contractorVal,
+                                customerVal,
+                                managerVal,
+                                engineerVal,
+                                isFinalised
+                            );
 		
-		                this.mainFrame.msgArea.setText("Search Complete.");
-		                this.projectDbEditor.resetField();
-		                this.projectTable.reNewTable( searchProjectResult );
+		                    this.mainFrame.msgArea.setText("Search Complete.");
+		                    this.projectDbEditor.resetField();
+		                    this.projectTable.reNewTable( searchProjectResult );
+
+                        } catch ( SQLException spj ) {
+                            this.mainFrame.msgArea.setText( spj.getMessage() );
+                        }
                         break;
 
                     /* Search by Project Number page */
                     case 3:
-		                Vector<Vector<String>> searchByProjectNumberResult = this.dbHandler.selectByProjectNumberRecord(
-		                    searchByProjectNumberVal );
-                        this.mainFrame.msgArea.setText("Search Complete"); 
-		                this.projectDbEditor.resetField();
-		                this.projectTable.reNewTable( searchByProjectNumberResult );
+                        try {
+                            Vector<Vector<String>> searchByProjectNumberResult = this.dbHandler.selectByProjectNumberRecord(
+                                searchByProjectNumberVal );
+                            this.mainFrame.msgArea.setText("Search Complete"); 
+                            this.projectDbEditor.resetField();
+                            this.projectTable.reNewTable( searchByProjectNumberResult );
+                        } catch ( SQLException spjno ) {
+                            this.mainFrame.msgArea.setText( spjno.getMessage() );
+                        }
                         break;
                     
                     /* Search by Project Name page */
                     case 4:
-		                Vector<Vector<String>> searchByProjectNameResult = this.dbHandler.selectByProjectNameRecord(
-		                    searchByProjectNameVal );
-                        this.mainFrame.msgArea.setText("Search Complete"); 
-		                this.projectDbEditor.resetField();
-		                this.projectTable.reNewTable( searchByProjectNameResult );
+                        try {
+                            Vector<Vector<String>> searchByProjectNameResult = this.dbHandler.selectByProjectNameRecord(
+                                searchByProjectNameVal );
+                            this.mainFrame.msgArea.setText("Search Complete"); 
+                            this.projectDbEditor.resetField();
+                            this.projectTable.reNewTable( searchByProjectNameResult );
+                        } catch ( SQLException spjne ) {
+                            this.mainFrame.msgArea.setText( spjne.getMessage() );
+                        }
                         break;
                 }
 

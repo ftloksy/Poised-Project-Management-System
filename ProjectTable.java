@@ -1,5 +1,7 @@
 import javax.swing.*;
 import javax.swing.table.*;
+
+import java.sql.SQLException;
 import java.util.Vector ;
 
 /*
@@ -51,7 +53,11 @@ public class ProjectTable extends JTable {
      * to display all record on table again.
      */ 
     void flashTable () {
-        reNewTable ( this.dbHandler.selectProjectRecord() );
+        try {
+            reNewTable ( this.dbHandler.selectProjectRecord() );
+        } catch ( SQLException spj ) {
+           this.mainFrame.msgArea.setText( spj.getMessage() );
+        }
     }
     
     /*
@@ -64,7 +70,11 @@ public class ProjectTable extends JTable {
 
     /* Find What Record haven't finalised. */
     void needCompleted() {
-        reNewTable ( this.dbHandler.selectNeedCompletedProjectRecord() );
+        try {
+            reNewTable ( this.dbHandler.selectNeedCompletedProjectRecord() );
+        } catch ( SQLException sncpj ) {
+            this.mainFrame.msgArea.setText( sncpj.getMessage() ) ;
+        }
     }
 
     /* 
@@ -72,7 +82,7 @@ public class ProjectTable extends JTable {
      * what Project's Deadline is early then the completedDate 
      * and hasn't finalised . 
      */
-    void pastDueDate(String completedDate) {
+    void pastDueDate(String completedDate) throws SQLException {
         reNewTable ( this.dbHandler.selectPastDueDate(completedDate) );
     }
     
@@ -87,11 +97,21 @@ public class ProjectTable extends JTable {
          * Disable the table edit function. 
          * User can select the row, but cannot edit.
          */        
-        this.dbModel = new DefaultTableModel( this.dbHandler.selectProjectRecord() ,this.tableHeader) {
-            public boolean isCellEditable(int rowIndex, int mColIndex) {
-                return false;
+        try {
+            this.dbModel = new DefaultTableModel( this.dbHandler.selectProjectRecord() ,this.tableHeader) {
+                public boolean isCellEditable(int rowIndex, int mColIndex) {
+                    return false;
+                };
             };
-        };
+        } catch ( SQLException dbm) {
+            Vector<Vector<String>> hasBug = new Vector<>();
+            this.dbModel = new DefaultTableModel( hasBug, this.tableHeader) {
+                public boolean isCellEditable(int rowIndex, int mColIndex) {
+                    return false;
+                };
+            };
+            this.mainFrame.msgArea.setText( dbm.getMessage() );
+        }
         
         super.setModel(this.dbModel);
         super.getSelectionModel().addListSelectionListener(this.projectTbSelect);

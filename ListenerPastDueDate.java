@@ -1,4 +1,5 @@
 import java.awt.event.*;
+import java.sql.SQLException;
 
 /*
  * This is Listener for [ Past Due Date ] Button in "Past Due Date Record" page at ProjectTab, 
@@ -32,8 +33,12 @@ public class ListenerPastDueDate implements ActionListener {
              * and Finalised is '0' ( This Project isn't Finalised ) .
              * the ProjectTable JTable.
              */
-            this.projectTable.pastDueDate( this.targetDate );
-            this.mainFrame.msgArea.setText("Past Due Date Project.");
+            try {
+                this.projectTable.pastDueDate( this.targetDate );
+                this.mainFrame.msgArea.setText("Past Due Date Project.");
+            } catch ( SQLException pdd ) {
+                this.mainFrame.msgArea.setText( pdd.getMessage() );
+            }
 
         } else {
 

@@ -324,12 +324,11 @@ public class MysqlHandler {
             + " StructuralEngineerPId = '" +  structuralEngineerPId + "', "
             + " Finalised = '" + isFinalised + "'";
 
-            if ( !completedDate.equals("") ) {
-                sqlStr += ", CompletedDate = '" + completedDate + "',";
-            };
+        if ( !completedDate.equals("") ) {
+            sqlStr += ", CompletedDate = '" + completedDate + "'";
+        };
 
-            sqlStr += " WHERE ProjectNumber = '" + projectNo + "'";
-        
+        sqlStr += " WHERE ProjectNumber = '" + projectNo + "'";
         this.statement.executeUpdate(sqlStr);
     }
     
@@ -395,7 +394,7 @@ public class MysqlHandler {
      * to search record in Project table in database.
      * It is like searchPersonRecord method.
      */
-    Vector<Vector<String>> searchProjectRecord(
+    Vector<Vector<String>> searchProjectRecord (
         // String projectNoVal,
         String projectNameVal,
         String physicalAddressVal, 
@@ -411,7 +410,7 @@ public class MysqlHandler {
         String engineerVal,
         // String completedDate,
         String isFinalised
-    ) {
+    ) throws SQLException {
         String sqlStr = " SELECT"
             + " ProjectNumber, ProjectName, BuildingType, PhysicalAddress, ERFNumber, FeeCharged,"
             + " PaidToDate, Deadline,"
@@ -438,7 +437,7 @@ public class MysqlHandler {
     };
 
     /* It is use at "Search By Project Number" Page. */
-    Vector<Vector<String>> selectByProjectNumberRecord(String projectNoVal){
+    Vector<Vector<String>> selectByProjectNumberRecord(String projectNoVal) throws SQLException {
         String sqlStr = " SELECT"
             + " ProjectNumber, ProjectName, BuildingType, PhysicalAddress, ERFNumber, FeeCharged,"
             + " PaidToDate, Deadline,"
@@ -451,7 +450,7 @@ public class MysqlHandler {
     }
 
     /* It is use at "Search By Project Name" Page. */
-    Vector<Vector<String>> selectByProjectNameRecord(String projectNameVal){
+    Vector<Vector<String>> selectByProjectNameRecord(String projectNameVal) throws SQLException {
         String sqlStr = " SELECT"
             + " ProjectNumber, ProjectName, BuildingType, PhysicalAddress, ERFNumber, FeeCharged,"
             + " PaidToDate, Deadline,"
@@ -469,17 +468,17 @@ public class MysqlHandler {
     }
     
     /* Select all Project record for Project JTable.  */
-    Vector<Vector<String>> selectProjectRecord() {
+    Vector<Vector<String>> selectProjectRecord() throws SQLException {
         return this.makeProjectRow( this.selectProject );
     }
 
     /* use in Finalised page. find any hasn't finalised record in Project table. */
-    Vector<Vector<String>> selectNeedCompletedProjectRecord() {
+    Vector<Vector<String>> selectNeedCompletedProjectRecord() throws SQLException {
         return this.makeProjectRow( this.selectNeedCompletedProject );
     }
 
     /* use in [Past Due Date] page.  */
-    Vector<Vector<String>> selectPastDueDate(String completedDate) {
+    Vector<Vector<String>> selectPastDueDate(String completedDate) throws SQLException {
         String sqlStr = this.selectProject 
                 + " WHERE Deadline < '" + completedDate + "'"
                 + " AND Finalised = 0";
@@ -518,10 +517,9 @@ public class MysqlHandler {
      * for DefaultTableModel to display information to ProjectTable ( JTable ).
      */
     
-    Vector<Vector<String>> makeProjectRow(String sqlString) {
+    Vector<Vector<String>> makeProjectRow(String sqlString) throws SQLException {
         Vector<Vector<String>> resultVector = new Vector<Vector<String>>();
 
-        try {
             ResultSet rs = this.statement.executeQuery( sqlString );
             while( rs.next() ){
                 Vector<String> resultRow = new Vector<>();
@@ -550,9 +548,6 @@ public class MysqlHandler {
                 }
                 resultVector.add(resultRow);
             }
-        }catch ( SQLException e) {
-            e.printStackTrace();
-        }
         return resultVector;
     }
 
