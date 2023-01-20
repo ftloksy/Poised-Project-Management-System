@@ -2,6 +2,10 @@ import javax.swing.*;
 import java.awt.event.*;
 import java.sql.* ;
 
+/*
+ * This is Listener for Update Button, When User click the Button, 
+ * will trigger this action.
+ */
 public class ListenerUpdate implements ActionListener {
     PmsFrame mainFrame;
     MysqlHandler dbHandler;
@@ -26,10 +30,12 @@ public class ListenerUpdate implements ActionListener {
         this.projectDbEditor = this.projectTab.projectEditor ;
         this.projectTable = this.projectTab.dbTable ;
         
+        /* On ProjectTab page or PersonTab page the action isn't same  */
         this.mainFrame.msgArea.setText("");
         int index = this.tabPane.getSelectedIndex();
         switch ( index ) {
             case 0:
+                /* Get data from PersonEditor JTextField and update to Person table in database.  */
                 try {
                     this.dbHandler.updatePersonRecord(
                         this.personDbEditor.idText.getText(),
@@ -39,12 +45,17 @@ public class ListenerUpdate implements ActionListener {
                         this.personDbEditor.emalAddressText.getText(),
                         this.personDbEditor.physicalAddressText.getText()
                     );
-;
                     this.mainFrame.msgArea.setText("Update is Success.");
                     this.personDbEditor.resetField();
                     this.personTable.flashTable();
                 } catch (SQLException pe) {
                     String sqlCode = pe.getSQLState();
+
+                    /* 
+                     * Data isn't complete from PersonEditor JTextField 
+                     * and Cann't update to Person table in database. 
+                     * Show the error message to msgArea in Main Frame.
+                     */
                     if ( sqlCode.equals("22001") ) {
                         this.mainFrame.msgArea.setText(
                              "If you want to delete a record. Please select a record in the table." );
@@ -55,6 +66,8 @@ public class ListenerUpdate implements ActionListener {
                 break;
             case 1:
             
+                /* Get data from ProjectEditor JTextField and update to Project table in database.  */
+
                 String projectNoVal = this.projectDbEditor.projectNoText.getText();
                 String projectNameVal = this.projectDbEditor.projectNameText.getText() ;
                 String physicalAddressVal = this.projectDbEditor.physicalAddressText.getText();
@@ -73,12 +86,17 @@ public class ListenerUpdate implements ActionListener {
                             isFinalised = "0";
                         };
                         
+                        /* 
+                         * The DefaultComboxBoxModel's row format is id:SurName FirstName 
+                         * so use ":" to cut the data, and get first item (id) .
+                         */
                         String architectVal = this.projectDbEditor.setArchitect.getSelectedItem().toString().split(":")[0] ;
                         String contractorVal = this.projectDbEditor.setContractor.getSelectedItem().toString().split(":")[0] ;
                         String customerVal = this.projectDbEditor.setCustomer.getSelectedItem().toString().split(":")[0] ;
                         String managerVal = this.projectDbEditor.setManager.getSelectedItem().toString().split(":")[0] ;
                         String engineerVal = this.projectDbEditor.setEngineer.getSelectedItem().toString().split(":")[0] ;
                         
+                        /* Update the Project Record. */
                         try {
                             this.dbHandler.updateProjectRecord(
                                 projectNoVal,
