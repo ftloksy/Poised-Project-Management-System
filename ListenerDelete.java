@@ -2,6 +2,11 @@ import javax.swing.*;
 import java.awt.event.*;
 import java.sql.* ;
 
+/*
+ * This is Listener for [Delete] Button, When User click the Button, 
+ * will trigger this action.
+ * The Listener will delete Project table record follow ProjectNumber, Person table record follow id .
+ */
 public class ListenerDelete implements ActionListener {
     PmsFrame mainFrame;
     MysqlHandler dbHandler;
@@ -30,6 +35,7 @@ public class ListenerDelete implements ActionListener {
         this.mainFrame.msgArea.setText("");
         int index = this.tabPane.getSelectedIndex();
         switch ( index ) {
+            /* in PersonTab page. */
             case 0:
                 String id = this.personDbEditor.idText.getText();
                 if ( !id.equals("Id") ) {
@@ -38,6 +44,10 @@ public class ListenerDelete implements ActionListener {
                         this.mainFrame.msgArea.setText("Delete is Success.");
                         this.personTable.flashTable();
                     } catch (SQLException pe) { 
+                        /* 
+                         * If in the Project table has any Customer, Project Manager, ....
+                         * is ref to this Person, User cann't delete the Person.
+                         */
                         String sqlCode = pe.getSQLState();
                         if ( sqlCode.equals("23000") ) {
                             this.mainFrame.msgArea.setText(
@@ -51,8 +61,12 @@ public class ListenerDelete implements ActionListener {
                     this.mainFrame.msgArea.setText("You haven't choice a Person record.");
                 }
                 break;
+            /* in ProjectTab page. */
             case 1:
-                
+                /* 
+                 * Delete Project record and follow the ProjectNumber. 
+                 * then flash the ProjectEditor.
+                 */
                 String projectNoVal = this.projectDbEditor.projectNoText.getText();
                 
                 try {
