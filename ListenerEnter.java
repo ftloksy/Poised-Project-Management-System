@@ -2,6 +2,12 @@ import java.awt.event.*;
 import javax.swing.* ;
 import java.sql.* ;
 
+/*
+ * This is Listener for [Enter] Button, When User click the Button, 
+ * will trigger this action.
+ * The Listener will get PersonEditor or ProjectEditor 
+ * to Enter Project or Person table record .
+ */
 public class ListenerEnter implements ActionListener {
     PmsFrame mainFrame;
     MysqlHandler dbHandler;
@@ -32,6 +38,7 @@ public class ListenerEnter implements ActionListener {
         this.mainFrame.msgArea.setText("");
         int index = this.tabPane.getSelectedIndex();
         switch ( index ) {
+            /* get PersonEditor JTextFields's value to insert to Person data table. */
             case 0:
                 try {
                     this.dbHandler.insertPersonRecord(
@@ -48,6 +55,7 @@ public class ListenerEnter implements ActionListener {
                     this.mainFrame.msgArea.setText(pe.getMessage());
                 }
                 break;
+            /* get ProjectEditor JTextFields's value to insert to Project data table, */
             case 1:
             
                 String projectNameVal = this.projectDbEditor.projectNameText.getText() ;
@@ -61,6 +69,10 @@ public class ListenerEnter implements ActionListener {
             
                 String buildingTypeVal = this.projectDbEditor.bdgType.getSelectedItem().toString() ;
                 String isFinalised = this.projectDbEditor.setFinalised.getSelectedItem().toString();
+                /*
+                 * In Finalised's JComboBox value "Yes" map to 1, 
+                 * Other map to 0.
+                 */
                 if ( isFinalised.equals("Yes")) {
                     isFinalised = "1";
                 } else {
@@ -68,7 +80,10 @@ public class ListenerEnter implements ActionListener {
                 };
 
                 try {
-                        
+                        /* 
+                         * The DefaultComboxBoxModel's row format is id:SurName FirstName 
+                         * so use ":" to cut the data, and get first item (id) .
+                         */ 
                         String architectVal = this.projectDbEditor.setArchitect.getSelectedItem().toString().split(":")[0] ;
                         String contractorVal = this.projectDbEditor.setContractor.getSelectedItem().toString().split(":")[0] ;
                         String customerVal = this.projectDbEditor.setCustomer.getSelectedItem().toString().split(":")[0] ;
