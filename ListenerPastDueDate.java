@@ -5,7 +5,6 @@ public class ListenerPastDueDate implements ActionListener {
     PastDueDateEditor pastDueDateEditor ;
     ProjectTable projectTable ;
     String targetDate  ;
-    //String projectNo ;
     MysqlHandler dbHandler;
     
     ListenerPastDueDate(PmsFrame motherFrame, MysqlHandler dbPosie){
@@ -18,9 +17,6 @@ public class ListenerPastDueDate implements ActionListener {
         this.mainFrame.msgArea.setText("");
         this.pastDueDateEditor = this.mainFrame.pmsTab.projectTab.pastDueDateEditor;
         this.targetDate = pastDueDateEditor.targetDateText.getText();
-        //this.projectNo = finalisedEditor.projectNoText.getText();
-
-        //System.out.println("Project No:" + projectNo );
 
         if ( !this.targetDate.equals("") ) {
 
