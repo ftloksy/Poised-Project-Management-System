@@ -1,6 +1,12 @@
 import javax.swing.*;
 import java.awt.event.*;
 
+/*
+ * This is Listener for ListAll Button, When User click the Button, 
+ * will trigger this action.
+ * It will update the ProjectTable JTable or PersonTable JTable
+ * and List all record in JTables.
+ */
 public class ListenerListAll implements ActionListener {
     PmsFrame mainFrame;
     MysqlHandler dbHandler;
@@ -43,11 +49,6 @@ public class ListenerListAll implements ActionListener {
                 this.projectDbEditor.updatePersonList();
                 this.projectTable.flashTable();
                 break;
-            // case 2:
-            //     this.mainFrame.msgArea.setText("List all Project's Record.");
-            //     this.finalisedDbEditor.resetField();
-            //     this.finalisedTable.flashTable();
-            //     break;
         }
     }
 }

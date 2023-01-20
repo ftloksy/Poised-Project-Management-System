@@ -17,7 +17,7 @@ public class ProjectTab extends JPanel {
 
     final static String projectTabTitle = "Record Handler";
     final static String finalisedTabTitle = "Finalised Record";
-    final static String pastDateTabTitle = "Past Date Record";
+    final static String pastDateTabTitle = "Past Due Date Record";
     final static String searchByProjectNumberTabTitle = "Search by Project Number";
     final static String searchByProjectNameTabTitle = "Search by Project Name";
     JTabbedPane tabbedPane ;

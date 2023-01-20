@@ -1,5 +1,9 @@
 import java.awt.event.*;
 
+/*
+ * This is Listener for [ Past Due Date ] Button in "Past Due Date Record" page at ProjectTab, 
+ * When User click the Button, that will trigger this action.
+ */
 public class ListenerPastDueDate implements ActionListener {
     PmsFrame mainFrame;
     PastDueDateEditor pastDueDateEditor ;
@@ -14,6 +18,7 @@ public class ListenerPastDueDate implements ActionListener {
 
     public void actionPerformed(ActionEvent e)
     {
+        /* Get the targetDateText date from pastDueDateEditor */
         this.mainFrame.msgArea.setText("");
         this.pastDueDateEditor = this.mainFrame.pmsTab.projectTab.pastDueDateEditor;
         this.targetDate = pastDueDateEditor.targetDateText.getText();
@@ -21,6 +26,12 @@ public class ListenerPastDueDate implements ActionListener {
         if ( !this.targetDate.equals("") ) {
 
             this.projectTable = this.mainFrame.pmsTab.projectTab.dbTable ;
+            /* 
+             * Find the record and update 
+             * The record's Deadline is early than targetDate 
+             * and Finalised is '0' ( This Project isn't Finalised ) .
+             * the ProjectTable JTable.
+             */
             this.projectTable.pastDueDate( this.targetDate );
             this.mainFrame.msgArea.setText("Past Due Date Project.");
 

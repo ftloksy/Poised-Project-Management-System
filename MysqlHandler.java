@@ -529,7 +529,7 @@ public class MysqlHandler {
                 resultRow.add( rs.getString("ProjectName") );
                 resultRow.add( rs.getString("BuildingType") );
                 resultRow.add( rs.getString("PhysicalAddress") );
-                resultRow.add( rs.getString("ERFNumber")) );
+                resultRow.add( rs.getString("ERFNumber") );
                 resultRow.add( Integer.toString( rs.getInt("FeeCharged")) );
                 resultRow.add( Integer.toString( rs.getInt("PaidToDate")) );
                 resultRow.add( rs.getDate("Deadline").toString() );
@@ -562,6 +562,16 @@ public class MysqlHandler {
         + " CompletedDate = '" + completedDate + "'"
         + " Where ProjectNumber = '" + projectNo + "'" ;
         this.statement.executeUpdate(sqlStr);
+    }
+
+    /* Close sql statement and connection. */
+    void closeSQLConnectionAndStatement() {
+        try {
+            this.statement.close();
+            this.connection.close();
+        } catch (SQLException ce) {
+            ce.printStackTrace();
+        }
     }
     
 }

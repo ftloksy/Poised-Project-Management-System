@@ -1,6 +1,14 @@
 import java.awt.event.*;
 import java.sql.SQLException;
 
+/*
+ * This is Listener for [Finalised Project] Button, When User click the Button, 
+ * will trigger this action.
+ * It will modify the Project table set the row's Finalised column to 'Yes'.
+ * and record the completedDate.
+ * If the CompletedDate is emtry or not date input format will
+ * show message in msgArea at Main Frame.
+ */
 public class ListenerFinalised implements ActionListener {
     PmsFrame mainFrame;
     FinalisedEditor finalisedEditor ;
@@ -20,21 +28,16 @@ public class ListenerFinalised implements ActionListener {
         this.completedDate = finalisedEditor.completedDateText.getText();
         this.projectNo = finalisedEditor.projectNoText.getText();
 
-        //System.out.println("Project No:" + projectNo );
-
-        if ( !this.completedDate.equals("") ) {
-
-            try {
-                this.dbHandler.finalisedProject(this.completedDate, this.projectNo);
-                this.mainFrame.msgArea.setText("Finalised The Project.");
-                this.mainFrame.pmsTab.projectTab.dbTable.flashTable();
-            } catch ( SQLException fe){
-                this.mainFrame.msgArea.setText( fe.getMessage() );
+        try {
+            /* Set the record's Finalised to 1 and update the CompletedDate  */
+            this.dbHandler.finalisedProject(this.completedDate, this.projectNo);
+            this.mainFrame.msgArea.setText("Finalised The Project.");
+            this.mainFrame.pmsTab.projectTab.dbTable.flashTable();
+        } catch ( SQLException fe){
+            String sqlCode = fe.getSQLState();
+            if ( sqlCode.equals("22001") ) {
+                this.mainFrame.msgArea.setText( "Please complete the 'Completed Date' field." );
             }
-
-        } else {
-
-            this.mainFrame.msgArea.setText("Please insert the 'Completed Date' field.");
         }
     }
 }
