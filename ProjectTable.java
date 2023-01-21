@@ -52,12 +52,8 @@ public class ProjectTable extends JTable {
      * Program can use this method 
      * to display all record on table again.
      */ 
-    void flashTable () {
-        try {
-            reNewTable ( this.dbHandler.selectProjectRecord() );
-        } catch ( SQLException spj ) {
-           this.mainFrame.msgArea.setText( spj.getMessage() );
-        }
+    void flashTable () throws SQLException {
+        reNewTable ( this.dbHandler.selectProjectRecord() );
     }
     
     /*
@@ -69,12 +65,8 @@ public class ProjectTable extends JTable {
     }
 
     /* Find What Record haven't finalised. */
-    void needCompleted() {
-        try {
-            reNewTable ( this.dbHandler.selectNeedCompletedProjectRecord() );
-        } catch ( SQLException sncpj ) {
-            this.mainFrame.msgArea.setText( sncpj.getMessage() ) ;
-        }
+    void needCompleted() throws SQLException {
+        reNewTable ( this.dbHandler.selectNeedCompletedProjectRecord() );
     }
 
     /* 

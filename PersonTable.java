@@ -1,5 +1,7 @@
 import javax.swing.*;
 import javax.swing.table.*;
+
+import java.sql.SQLException;
 import java.util.Vector ;
 
 /*
@@ -40,7 +42,7 @@ public class PersonTable extends JTable {
      * Program can use this method 
      * to display all record on table again.
      */
-    void flashTable () {
+    void flashTable () throws SQLException {
         reNewTable ( this.dbHandler.selectPersonRecord() );
     }
    
@@ -63,11 +65,21 @@ public class PersonTable extends JTable {
          * Disable the table edit function. 
          * User can select the row, but cannot edit.
          */
-        this.personModel = new DefaultTableModel( this.dbHandler.selectPersonRecord() ,this.tableHeader) {
-            public boolean isCellEditable(int rowIndex, int mColIndex) {
-                return false;
+        try {
+            this.personModel = new DefaultTableModel( this.dbHandler.selectPersonRecord() ,this.tableHeader) {
+                public boolean isCellEditable(int rowIndex, int mColIndex) {
+                    return false;
+                };
             };
-        };
+        } catch ( SQLException spr ) {
+            Vector<Vector<String>> hasBug = new Vector<>();
+            this.personModel = new DefaultTableModel( hasBug, this.tableHeader) {
+                public boolean isCellEditable(int rowIndex, int mColIndex) {
+                    return false;
+                };
+            };
+            this.mainFrame.msgArea.setText( spr.getMessage() );
+        }
         
         super.setModel(this.personModel);
         super.getSelectionModel().addListSelectionListener(this.personTbSelect);

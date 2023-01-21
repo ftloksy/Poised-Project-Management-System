@@ -1,5 +1,6 @@
 import javax.swing.*;
 import java.awt.event.*;
+import java.sql.SQLException;
 
 /*
  * This is Listener for ListAll Button, When User click the Button, 
@@ -41,13 +42,21 @@ public class ListenerListAll implements ActionListener {
             case 0:
                 this.mainFrame.msgArea.setText("List all Person's Record.");
                 this.personDbEditor.resetField();
-                this.personTable.flashTable();
+                try {
+                    this.personTable.flashTable();
+                } catch (SQLException ft) {
+                    this.mainFrame.msgArea.setText( ft.getMessage() );
+                }
                 break;
             case 1:
                 this.mainFrame.msgArea.setText("List all Project's Record.");
                 this.finalisedDbEditor.resetField();
                 this.projectDbEditor.updatePersonList();
-                this.projectTable.flashTable();
+                try {
+                    this.projectTable.flashTable();
+                } catch (SQLException ft) {
+                    this.mainFrame.msgArea.setText( ft.getMessage() );
+                }
                 break;
         }
     }

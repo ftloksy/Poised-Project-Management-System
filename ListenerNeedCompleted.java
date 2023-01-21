@@ -1,4 +1,5 @@
 import java.awt.event.*;
+import java.sql.* ;
 
 /*
  * This is Listener for [ Need Complete Date ] Button, 
@@ -23,7 +24,11 @@ public class ListenerNeedCompleted implements ActionListener {
          * The project is not finalised.
          */
         this.finalisedTable = this.mainFrame.pmsTab.projectTab.dbTable ;
-        this.finalisedTable.needCompleted();
-        this.mainFrame.msgArea.setText("List Need Completed Project.");
+        try {
+            this.finalisedTable.needCompleted();
+            this.mainFrame.msgArea.setText("List Need Completed Project.");
+        } catch ( SQLException nc ) {
+            this.mainFrame.msgArea.setText( nc.getMessage() );
+        }
     }
 }

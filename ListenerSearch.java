@@ -47,17 +47,20 @@ public class ListenerSearch implements ActionListener {
              * Update the PersonTable JTable.
              */
             case 0:
-
-                Vector<Vector<String>> searchPersonResult = this.dbHandler.searchPersonRecord(
-                    this.personDbEditor.firstNameText.getText(),
-                    this.personDbEditor.surNameText.getText(),
-                    this.personDbEditor.telephoneText.getText(),
-                    this.personDbEditor.emalAddressText.getText(),
-                    this.personDbEditor.physicalAddressText.getText()
-                );
-                this.mainFrame.msgArea.setText("Search is Complete.");
-                this.personDbEditor.resetField();
-                this.personTable.reNewTable( searchPersonResult );
+                try {
+                    Vector<Vector<String>> searchPersonResult = this.dbHandler.searchPersonRecord(
+                        this.personDbEditor.firstNameText.getText(),
+                        this.personDbEditor.surNameText.getText(),
+                        this.personDbEditor.telephoneText.getText(),
+                        this.personDbEditor.emalAddressText.getText(),
+                        this.personDbEditor.physicalAddressText.getText()
+                    );
+                    this.mainFrame.msgArea.setText("Search is Complete.");
+                    //this.personDbEditor.resetField();
+                    this.personTable.reNewTable( searchPersonResult );
+                } catch (SQLException spr) {
+                    this.mainFrame.msgArea.setText( spr.getMessage() );
+                }
 
                 break;
             
@@ -122,7 +125,7 @@ public class ListenerSearch implements ActionListener {
                             );
 		
 		                    this.mainFrame.msgArea.setText("Search Complete.");
-		                    this.projectDbEditor.resetField();
+		                    //this.projectDbEditor.resetField();
 		                    this.projectTable.reNewTable( searchProjectResult );
 
                         } catch ( SQLException spj ) {
@@ -136,7 +139,7 @@ public class ListenerSearch implements ActionListener {
                             Vector<Vector<String>> searchByProjectNumberResult = this.dbHandler.selectByProjectNumberRecord(
                                 searchByProjectNumberVal );
                             this.mainFrame.msgArea.setText("Search Complete"); 
-                            this.projectDbEditor.resetField();
+                            //this.projectDbEditor.resetField();
                             this.projectTable.reNewTable( searchByProjectNumberResult );
                         } catch ( SQLException spjno ) {
                             this.mainFrame.msgArea.setText( spjno.getMessage() );
@@ -149,7 +152,7 @@ public class ListenerSearch implements ActionListener {
                             Vector<Vector<String>> searchByProjectNameResult = this.dbHandler.selectByProjectNameRecord(
                                 searchByProjectNameVal );
                             this.mainFrame.msgArea.setText("Search Complete"); 
-                            this.projectDbEditor.resetField();
+                            //this.projectDbEditor.resetField();
                             this.projectTable.reNewTable( searchByProjectNameResult );
                         } catch ( SQLException spjne ) {
                             this.mainFrame.msgArea.setText( spjne.getMessage() );

@@ -379,7 +379,7 @@ public class MysqlHandler {
             String telePhone,
             String emailAddress,
             String physicalAddress      
-        ) {
+        ) throws SQLException {
         return makePersonRow( "SELECT * FROM Person WHERE"
                     + " FirstName like '%" + firstName + "%'"
                     + " AND SurName like '%" + surName + "%' "
@@ -463,7 +463,7 @@ public class MysqlHandler {
     }
 
     /* Select all Person record for Person JTable.  */
-    Vector<Vector<String>> selectPersonRecord() {
+    Vector<Vector<String>> selectPersonRecord() throws SQLException {
         return this.makePersonRow( this.selectPerson );
     }
     
@@ -489,26 +489,22 @@ public class MysqlHandler {
      * format Person Select Result to Vector<Vector<String>> and 
      * for DefaultTableModel to display information to PersonTable ( JTable ).
      */
-    Vector<Vector<String>> makePersonRow(String sqlString) {
+    Vector<Vector<String>> makePersonRow(String sqlString) throws SQLException {
         Vector<Vector<String>> resultVector = new Vector<Vector<String>>();
 
-        try {
-            ResultSet rs = this.statement.executeQuery( sqlString );
+        ResultSet rs = this.statement.executeQuery( sqlString );
             
-            while( rs.next() ){
-                Vector<String> resultRow = new Vector<>();
-                resultRow.add( Integer.toString(rs.getInt("id")) );
-                resultRow.add( rs.getString("FirstName") );
-                resultRow.add( rs.getString("SurName") );
-                resultRow.add( rs.getString("Telephone") );
-                resultRow.add( rs.getString("EmailAddress") );
-                resultRow.add( rs.getString("PhysicalAddress") );
-                resultVector.add(resultRow);
-            }
-            
-        }catch ( SQLException e) {
-            e.printStackTrace();
+        while( rs.next() ){
+            Vector<String> resultRow = new Vector<>();
+            resultRow.add( Integer.toString(rs.getInt("id")) );
+            resultRow.add( rs.getString("FirstName") );
+            resultRow.add( rs.getString("SurName") );
+            resultRow.add( rs.getString("Telephone") );
+            resultRow.add( rs.getString("EmailAddress") );
+            resultRow.add( rs.getString("PhysicalAddress") );
+            resultVector.add(resultRow);
         }
+            
         return resultVector;
     }
 
