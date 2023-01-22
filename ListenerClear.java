@@ -1,7 +1,7 @@
 import javax.swing.*;
 import java.awt.event.*;
 
-/*
+/**
  * This is Listener for [Clear] Button, When User click the Button, 
  * will trigger this action.
  * The Listener will clear ProjectEditor and PersonEditor all JTextField .
@@ -11,11 +11,23 @@ public class ListenerClear implements ActionListener {
     JTabbedPane tabPane;
     PersonEditor personDbEditor;
     ProjectEditor projectDbEditor;
-    
-    ListenerClear(PmsFrame motherFrame){
+
+    /**
+     * ListenerClear constructor
+     * 
+     * @param motherFrame the main Frame ( Root Frame )
+     */ 
+    public ListenerClear(PmsFrame motherFrame){
         this.mainFrame = motherFrame ;
     }
 
+    /** 
+     * When user click the button, will target here.
+     * In different tab, action is not same.<br/>
+     * 
+     * In tab 1, will handle the Person.<br/>
+     * In tab 2, will handle the Project.<br/>
+     */
     public void actionPerformed(ActionEvent e)
     {
         this.tabPane = this.mainFrame.pmsTab.tabbedPane ;
@@ -23,14 +35,14 @@ public class ListenerClear implements ActionListener {
         this.mainFrame.msgArea.setText("");
         int index = this.tabPane.getSelectedIndex();
         switch ( index ) {
-            /* Clear PersonEditor's JTextFields . */
+            /** Clear PersonEditor's JTextFields . */
             case 0:
                 this.tabPane = this.mainFrame.pmsTab.tabbedPane ;
                 this.personDbEditor = this.mainFrame.pmsTab.personTab.dbEditor ;
                 this.personDbEditor.resetField();
                 this.mainFrame.msgArea.setText("");
                 break;
-            /* Clear ProjectEditor's JTextFields . */
+            /** Clear ProjectEditor's JTextFields . */
             case 1:
                 this.projectDbEditor = this.mainFrame.pmsTab.projectTab.projectEditor ;
                 this.projectDbEditor.resetField();

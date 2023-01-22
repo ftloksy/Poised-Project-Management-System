@@ -3,7 +3,7 @@ import java.awt.event.*;
 import java.sql.SQLException;
 import java.util.Vector;
 
-/*
+/**
  * This is Listener for Search Button, When User click the Button, 
  * will trigger this action.
  */
@@ -20,11 +20,30 @@ public class ListenerSearch implements ActionListener {
     SearchByProjectNumberEditor searchByProjectNumberEditor;
     SearchByProjectNameEditor searchByProjectNameEditor;
     
-    ListenerSearch (PmsFrame motherFrame, MysqlHandler dbPosie){
+    /**
+     * ListenerSearch constructor
+     * 
+     * @param motherFrame the main Frame ( Root Frame )
+     * @param dbPosie the DatabaseHandler.
+     */
+    public ListenerSearch (PmsFrame motherFrame, MysqlHandler dbPosie){
         this.mainFrame = motherFrame ;
         this.dbHandler = dbPosie ;
     }
 
+    /**
+     * Get data from PersonEditor and Search in Person data table then
+     * Update the PersonTable JTable when the pmsTab selected index is 0 .<br/>
+     * 
+     * Get data from ProjectEditor and Search in Project data table then
+     * Update the ProjectTable JTable when the pmsTab selected index is 1 and projectTab selected index is 0.<br/>
+     * 
+     * Get data from SearchByProjectNumberEditor and Search in Project data table follow Project Number then
+     * Update ProjectTable JTable when the pmsTab selected index is 1 and projectTab selected index is 3.<br/>
+     * 
+     * Get data from SearchByProjectNameEditor and Search in Project data table follow Project Name then
+     * Update ProjectTable JTable when the pmsTab selected index is 1 and projectTab selected index is 4.<br/>
+     */
     public void actionPerformed(ActionEvent e)
     {
         this.tabPane = this.mainFrame.pmsTab.tabbedPane ;
@@ -133,7 +152,7 @@ public class ListenerSearch implements ActionListener {
                         }
                         break;
 
-                    /* Search by Project Number page */
+                    /* Search Project Number page */
                     case 3:
                         try {
                             Vector<Vector<String>> searchByProjectNumberResult = this.dbHandler.selectByProjectNumberRecord(

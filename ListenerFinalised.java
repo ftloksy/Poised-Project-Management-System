@@ -1,13 +1,9 @@
 import java.awt.event.*;
 import java.sql.SQLException;
 
-/*
+/**
  * This is Listener for [Finalised Project] Button, When User click the Button, 
  * will trigger this action.
- * It will modify the Project table set the row's Finalised column to 'Yes'.
- * and record the completedDate.
- * If the CompletedDate is emtry or not date input format will
- * show message in msgArea at Main Frame.
  */
 public class ListenerFinalised implements ActionListener {
     PmsFrame mainFrame;
@@ -16,11 +12,27 @@ public class ListenerFinalised implements ActionListener {
     String projectNo ;
     MysqlHandler dbHandler;
     
-    ListenerFinalised(PmsFrame motherFrame, MysqlHandler dbPosie){
+    /**
+     * ListenerFinalised constructor
+     * 
+     * @param motherFrame the main Frame ( Root Frame )
+     * @param dbPosie the DatabaseHandler.
+     */
+    public ListenerFinalised(PmsFrame motherFrame, MysqlHandler dbPosie){
         this.mainFrame = motherFrame;
         this.dbHandler = dbPosie;
     }
 
+    /** 
+     * This action will update the Project table's Finalised and insert CompleteDate. 
+     * 
+     * Listener will Update Project table's Finalised columns value to 1 
+     * Project table's Finalised's data Type is boolean so if Project is finalised.
+     * set the Finalised to 1.
+     * then insert CompleteDate follow completeDate.
+     * If the CompletedDate is emtry or not date input format will
+     * show message in msgArea at Main Frame.
+     */
     public void actionPerformed(ActionEvent e)
     {
         this.mainFrame.msgArea.setText("");

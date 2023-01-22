@@ -1,6 +1,6 @@
 import java.awt.event.*;
 
-/*
+/**
  * This is Listener for [Exit] Button, When User click the Button, 
  * will trigger this action.
  * The program will close sql statement and sql connection.
@@ -8,9 +8,16 @@ import java.awt.event.*;
 public class ListenerExit implements ActionListener {
     MysqlHandler dbHandler;
 
-    ListenerExit(MysqlHandler dbPoise ) {
+    /**
+     * ListenerEnter constructor
+     * 
+     * @param dbPosie the Database Handler.
+     */  
+    public ListenerExit(MysqlHandler dbPoise ) {
         this.dbHandler = dbPoise ;
     }
+
+    /** This action will less the program exist. */
     public void actionPerformed(ActionEvent e)
     {
         this.dbHandler.closeSQLConnectionAndStatement();

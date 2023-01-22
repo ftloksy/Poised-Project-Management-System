@@ -1,9 +1,9 @@
 import java.awt.*;
 import javax.swing.*;
 
-/* 
+/** 
  * The Main Frame have a JTabbedPane PmsTab
- * every database handler include editor and table inside PmsTab.
+ * every editor tab include editor and display JTable inside PmsTab.
  * 
  * MenuHandler have more button, handle action request.
  * e.g. Search Record, Enter Record, Update Record, Delete Record.
@@ -16,7 +16,10 @@ public class PmsFrame extends JFrame {
     MenuHandler dbMenu ;
     JTextArea msgArea ;
     
-    PmsFrame(MysqlHandler dbPosie) {
+    /**
+     * param dbPosie  it care the PoisePMS database query and insert and update.
+     */
+    PmsFrame(MysqlHandler dbPoise) {
         super();
 
         this.msgArea = new JTextArea(3, 40);
@@ -24,9 +27,9 @@ public class PmsFrame extends JFrame {
 
         super.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         super.setLayout(new BorderLayout());
-        this.dbMenu = new MenuHandler(this, dbPosie);
+        this.dbMenu = new MenuHandler(this, dbPoise);
         super.setJMenuBar(this.dbMenu);
-        this.pmsTab = new PmsTab(this, dbPosie);
+        this.pmsTab = new PmsTab(this, dbPoise);
         this.pmsTab.addComponentToPane(super.getContentPane());
 
         this.dbMenu.reNewMenu();

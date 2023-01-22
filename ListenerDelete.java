@@ -2,7 +2,7 @@ import javax.swing.*;
 import java.awt.event.*;
 import java.sql.* ;
 
-/*
+/**
  * This is Listener for [Delete] Button, When User click the Button, 
  * will trigger this action.
  * The Listener will delete Project table record follow ProjectNumber, Person table record follow id .
@@ -16,12 +16,26 @@ public class ListenerDelete implements ActionListener {
     ProjectTab projectTab ;
     ProjectTable projectTable;
     ProjectEditor projectDbEditor;
-    
-    ListenerDelete(PmsFrame motherFrame, MysqlHandler dbPosie){
+
+
+    /**
+     * ListenerDelete constructor
+     * 
+     * @param motherFrame the main Frame ( Root Frame )
+     * @param dbPosie the Database Handler.
+     */
+    public ListenerDelete(PmsFrame motherFrame, MysqlHandler dbPosie){
         this.mainFrame = motherFrame ;
         this.dbHandler = dbPosie ;
     }
 
+    /**
+     * When User click the [Delete] Button, will trigger the action.
+     * If you click the PmsTab, it will change the index,
+     * and hava different action. 
+     * Listener will handle PersonEditor if the PmsTab's Selected Index is 0.
+     * Listener will handle ProjectEditor if the PmsTab's Selected Index is 1.
+     */
     public void actionPerformed(ActionEvent e)
     {
         
@@ -35,7 +49,7 @@ public class ListenerDelete implements ActionListener {
         this.mainFrame.msgArea.setText("");
         int index = this.tabPane.getSelectedIndex();
         switch ( index ) {
-            /* in PersonTab page. */
+            /** in PersonTab page. */
             case 0:
                 String id = this.personDbEditor.idText.getText();
                 if ( !id.equals("Id") ) {
@@ -44,7 +58,7 @@ public class ListenerDelete implements ActionListener {
                         this.mainFrame.msgArea.setText("Delete is Success.");
                         this.personTable.flashTable();
                     } catch (SQLException pe) { 
-                        /* 
+                        /** 
                          * If in the Project table has any Customer, Project Manager, ....
                          * is ref to this Person, User cann't delete the Person.
                          */
@@ -61,9 +75,9 @@ public class ListenerDelete implements ActionListener {
                     this.mainFrame.msgArea.setText("You haven't choice a Person record.");
                 }
                 break;
-            /* in ProjectTab page. */
+            /** in ProjectTab page. */
             case 1:
-                /* 
+                /** 
                  * Delete Project record and follow the ProjectNumber. 
                  * then flash the ProjectEditor.
                  */

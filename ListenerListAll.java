@@ -2,7 +2,7 @@ import javax.swing.*;
 import java.awt.event.*;
 import java.sql.SQLException;
 
-/*
+/**
  * This is Listener for ListAll Button, When User click the Button, 
  * will trigger this action.
  * It will update the ProjectTable JTable or PersonTable JTable
@@ -20,11 +20,26 @@ public class ListenerListAll implements ActionListener {
 
     FinalisedEditor finalisedDbEditor;
     
-    ListenerListAll(PmsFrame motherFrame, MysqlHandler dbPosie){
+    /**
+     * ListenerListAll constructor
+     * 
+     * It will update the ProjectTable JTable or PersonTable JTable
+     * and List all record in JTables.
+     * 
+     * @param motherFrame the main Frame ( Root Frame )
+     * @param dbPosie the DatabaseHandler.
+     */
+    public ListenerListAll(PmsFrame motherFrame, MysqlHandler dbPosie){
         this.mainFrame = motherFrame ;
         this.dbHandler = dbPosie ;
     }
 
+    /**
+     * Flash PersonTable JTable in the pmsTab's selected index is 0,
+     * And Display all Person database records in the PersonTable.<br/>
+     * Flash ProjectTable JTable in the pmsTab's selected index is 1.
+     * And Display all Project database records in the ProjectTable.<br/>
+     */
     public void actionPerformed(ActionEvent e)
     {
         this.tabPane = this.mainFrame.pmsTab.tabbedPane ;

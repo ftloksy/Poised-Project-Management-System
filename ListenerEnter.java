@@ -2,7 +2,7 @@ import java.awt.event.*;
 import javax.swing.* ;
 import java.sql.* ;
 
-/*
+/**
  * This is Listener for [Enter] Button, When User click the Button, 
  * will trigger this action.
  * The Listener will get PersonEditor or ProjectEditor 
@@ -19,11 +19,26 @@ public class ListenerEnter implements ActionListener {
     ProjectTable projectTable;
     ProjectEditor projectDbEditor;
     
-    ListenerEnter(PmsFrame motherFrame, MysqlHandler dbPosie){
+    /**
+     * ListenerEnter constructor
+     * 
+     * @param motherFrame the main Frame ( Root Frame )
+     * @param dbPosie the Database Handler.
+     */
+    public ListenerEnter(PmsFrame motherFrame, MysqlHandler dbPosie){
         this.mainFrame = motherFrame ;
         this.dbHandler = dbPosie ;
     }
 
+    /**
+     * When User click the [Enter] Button, will trigger the action.
+     * If you click the PmsTab, it will change the index,
+     * and hava different action. 
+     * Listener will handle PersonEditor if the PmsTab's Selected Index is 0.
+     * Listener will use PersonEditor JTextField's value to Insert record to Person data Table.
+     * Listener will handle ProjectEditor if the PmsTab's Selected Index is 1.
+     * Listener will use ProjectEditor JTextField's value to Insert record to Project data Table.
+     */    
     public void actionPerformed(ActionEvent e)
     {
         this.tabPane = this.mainFrame.pmsTab.tabbedPane ;
@@ -69,7 +84,7 @@ public class ListenerEnter implements ActionListener {
             
                 String buildingTypeVal = this.projectDbEditor.bdgType.getSelectedItem().toString() ;
                 String isFinalised = this.projectDbEditor.setFinalised.getSelectedItem().toString();
-                /*
+                /**
                  * In Finalised's JComboBox value "Yes" map to 1, 
                  * Other map to 0.
                  */
