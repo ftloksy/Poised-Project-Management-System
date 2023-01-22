@@ -4,7 +4,7 @@
  * MysqlHandler is the database connection and query.
  */
 class SwingRun implements Runnable {
-    private void run() {
+    public void run() {
             MysqlHandler dbHandler = new MysqlHandler();
             PmsFrame mainFrame = new PmsFrame(dbHandler);
             mainFrame.pack();
