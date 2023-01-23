@@ -5,6 +5,12 @@ import java.sql.* ;
 /**
  * This is Listener for Update Button, When User click the Button, 
  * will trigger this action.
+ * 
+ * @author      Frankie Chow
+ * @version     2023-1-23
+ * @see         ProjectTable
+ * @see         PersonTable
+ * @see         MysqlHandler
  */
 public class ListenerUpdate implements ActionListener {
     PmsFrame mainFrame;
@@ -20,8 +26,8 @@ public class ListenerUpdate implements ActionListener {
     /**
      * ListenerUpdate constructor
      * 
-     * @param motherFrame the main Frame ( Root Frame )
-     * @param dbPosie the DatabaseHandler.
+     * @param motherFrame   the main Frame ( Root Frame )
+     * @param dbPosie       the DatabaseHandler.
      */
     public ListenerUpdate(PmsFrame motherFrame, MysqlHandler dbPosie){
         this.mainFrame = motherFrame ;
