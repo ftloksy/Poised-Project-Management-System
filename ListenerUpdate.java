@@ -2,7 +2,7 @@ import javax.swing.*;
 import java.awt.event.*;
 import java.sql.* ;
 
-/*
+/**
  * This is Listener for Update Button, When User click the Button, 
  * will trigger this action.
  */
@@ -15,12 +15,25 @@ public class ListenerUpdate implements ActionListener {
     ProjectTable projectTable;
     ProjectEditor projectDbEditor;
     ProjectTab projectTab;
-    
-    ListenerUpdate(PmsFrame motherFrame, MysqlHandler dbPosie){
+
+
+    /**
+     * ListenerUpdate constructor
+     * 
+     * @param motherFrame the main Frame ( Root Frame )
+     * @param dbPosie the DatabaseHandler.
+     */
+    public ListenerUpdate(PmsFrame motherFrame, MysqlHandler dbPosie){
         this.mainFrame = motherFrame ;
         this.dbHandler = dbPosie ;
     }
 
+    /** 
+     * Get the JTextField's information PersonEditor or ProjectEditor 
+     * Update database Person table or Project table.
+     * If the pmsTab selected index is 0, it will update the Person data table.<br/>
+     * If the pmsTab selected index is 1, it will update the Project data table.<br/>
+     */
     public void actionPerformed(ActionEvent e)
     {
         this.tabPane = this.mainFrame.pmsTab.tabbedPane ;

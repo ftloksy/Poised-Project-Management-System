@@ -1,9 +1,33 @@
 import java.sql.*;
 import java.util.Vector;
 
-/*
+/**
  * This class is handle mysql require.
  * Include create table, Insert, delete, update and select.
+ * 
+ * <ul>
+ *  <li>createProjectTableSQL :  Create Project table</li>
+ *  <li>createPersonTableSQL :  Create Person Table</li>
+ *  <li>createProjectViewSQL :  Create a PersonView for display Person table information to Person JTable.</li>
+ *  <li>createTriggerPersonSurNameInsertSQL :  Make Sure When User insert data to Person, SurName isn't '', 
+ *          because in gui always will add this value to data table. </li>
+ *  <li>createTriggerPersonSurNameUpdateSQL :  Make Sure When User update data to Person, SurName isn't '', 
+ *          because in gui always will add this value to data table. </li>
+ *   <li>selectPersonTag :   Create a select for DefaultComboBoxModel, for user to select  ArchitectPId, ContractorPId ...  </li>
+ *   <li>createTriggerProjectName :  Create a trigger for 
+ *      <pre>
+ *     -------
+ *      If a project name is not provided
+ *      when the information is captured, name the project using the surname of
+ *      the customer. For example, a house being built by Mike Tyson would be
+ *      called “House Tyson” and an apartment block owned by Jared Goldman
+ *      would be called “Apartment Goldman”.
+ *     -------
+ *       </pre></li>
+ *   <li>selectPerson :  Select all information from Person for display in Person Table.</li>
+ *   <li>selectProject :  Select all information from ProjectView for display in Project Table. </li>
+ *   <li>selectNeedCompletedProject :  Select all information from Project, that it isn't finalised. </li>
+ * <ul>
  */
 public class MysqlHandler {
     Connection connection = null ;
@@ -166,7 +190,14 @@ public class MysqlHandler {
         + " FROM ProjectView"
         + " WHERE Finalised = 0";
 
-    MysqlHandler () {
+    /**
+     * MysqlHandler constructor
+     * Connect to the PoisedPMS database
+     * And Query and Update database table.
+     * 
+     * @throws SQLException If the database cannot connection or query at database or table.
+     */   
+    public MysqlHandler () {
         try {
             // Connect to the PoisedPMS database, via the jdbc:mysql: channel on localhost (this PC)
             // Use username "otheruser", password "swordfish".
@@ -191,13 +222,22 @@ public class MysqlHandler {
     }
 
     
-    /* Select person information for DefaultComboBoxModel for choice ArchitectPId, ContractorPId ...  */
-    Vector<String> getPersonList() throws SQLException {
+    /** 
+     * Select person information for DefaultComboBoxModel for choice ArchitectPId, ContractorPId ...  
+     *
+     * @throws SQLException If the database cannot connection or query at database or table.
+     */
+    public Vector<String> getPersonList() throws SQLException {
         return this.getResultList( this.selectPersonTag );
     }
     
-    /* Follow the SqlStr to select from database, and it just return one column. */
-    Vector<String> getResultList(String sqlString) throws SQLException {
+    /**
+     * Follow the SqlStr to select from database, and it just return one column.
+     * 
+     * @param sqlString follow this string to query database.
+     * @throws SQLException If the database cannot connection or query at database or table.
+     */
+    public Vector<String> getResultList(String sqlString) throws SQLException {
         
         ResultSet rs = this.statement.executeQuery( sqlString );
         Vector<String> personTagList = new Vector<>();
@@ -209,9 +249,18 @@ public class MysqlHandler {
         return personTagList;
             
     }
-    
-    /* Enter new Person record. */
-    void insertPersonRecord (
+
+    /**
+     * Enter new Person record to Person data table.
+     * 
+     * @param firstName this is person's First Name.
+     * @param surName this is person's SurName.
+     * @param telephone this is person's telephone.
+     * @param emailAddress this is person's email address.
+     * @param physicalAddress this is person's physical address.
+     * @throws SQLException If the database cannot connection or query at database or table.
+     */
+    public void insertPersonRecord (
             String firstName,
             String surName,
             String telePhone,
@@ -230,8 +279,26 @@ public class MysqlHandler {
         this.statement.executeUpdate(sqlStr);
     }
     
-    /* Enter new Project record. */
-    void insertProjectRecord (
+    /** 
+     * Enter new Project record to Project data table.
+     * 
+     * @param projectName Project's Name.
+     * @param buildingType Project Building's Type.
+     * @param physicalAddress Project Building's Physical Address.
+     * @param eRFNumber Project Building's erf number.
+     * @param feeCharged The total fee being charged for the project.
+     * @param paidToDate The total amount paid to date.
+     * @param deadLine Deadline for the project.
+     * @param architectPId The Person id ( ref Person table ) of the architect for the project.
+     * @param contractorPId The Person id ( ref Person table ) of the contractor for the project.
+     * @param customerPId The Person id ( ref Person table ) of the customer for the project.
+     * @param projectManagerPId The Person id ( ref Person table ) of the Project Manager for the project.
+     * @param structuralEngineerPId The Person id ( ref Person table ) of the Structural Engineer for the project.
+     * @param isFinalised The Project is Finalised.
+     * @param completeDate The Project's complete date.
+     * @throws SQLException If the database cannot connection or query at database or table.
+     */
+    public void insertProjectRecord (
             String projectName,
             String buildingType,
             String physicalAddress,
@@ -290,8 +357,27 @@ public class MysqlHandler {
         this.statement.executeUpdate(sqlStr);
     }
     
-    /* Follow ProjectNumber to update exist Project record. */
-    void updateProjectRecord (
+    /** 
+     * Follow ProjectNumber to update exist Project record. 
+     *  
+     * @param projectNo Project number.
+     * @param projectName Project's Name.
+     * @param buildingType Project Building's Type.
+     * @param physicalAddress Project Building's Physical Address.
+     * @param eRFNumber Project Building's erf number.
+     * @param feeCharged The total fee being charged for the project.
+     * @param paidToDate The total amount paid to date.
+     * @param deadLine Deadline for the project.
+     * @param architectPId The Person id ( ref Person table ) of the architect for the project.
+     * @param contractorPId The Person id ( ref Person table ) of the contractor for the project.
+     * @param customerPId The Person id ( ref Person table ) of the customer for the project.
+     * @param projectManagerPId The Person id ( ref Person table ) of the Project Manager for the project.
+     * @param structuralEngineerPId The Person id ( ref Person table ) of the Structural Engineer for the project.
+     * @param isFinalised The Project is Finalised.
+     * @param completeDate The Project's complete date.
+     * @throws SQLException If the database cannot connection or query at database or table.
+     */
+    public void updateProjectRecord (
             String projectNo,
             String projectName,
             String buildingType,
@@ -332,24 +418,44 @@ public class MysqlHandler {
         this.statement.executeUpdate(sqlStr);
     }
     
-    /* Follow id to delete exist Person record. */
-    void deletePerson (String id) throws SQLException {
+    /** 
+     * Follow id to delete exist Person record. 
+     * 
+     * @param id Person's record id.
+     * @throws SQLException If the database cannot connection or query at database or table.
+     */
+    public void deletePerson (String id) throws SQLException {
         String sqlStr = "DELETE FROM Person"
             + " WHERE id ="
             + " '" + id + "'" ;
         this.statement.executeUpdate(sqlStr); 
     }
     
-    /* Follow ProjectNumber to delete exist Project record. */
-    void deleteProject (String id) throws SQLException {
+    /** 
+     * Follow ProjectNumber to delete exist Project record. 
+     * 
+     * @param id Person's record id.
+     * @throws SQLException If the database cannot connection or query at database or table.
+     */
+    public void deleteProject (String id) throws SQLException {
         String sqlStr = "DELETE FROM Project"
             + " WHERE ProjectNumber ="
             + " '" + id + "'" ;
         this.statement.executeUpdate(sqlStr); 
     }
     
-    /* Follow id to update exist Person record. */
-    void updatePersonRecord (
+    /** 
+     * Follow id to update exist Person record. 
+     * 
+     * @param id Person's record id.
+     * @param firstName this is person's First Name.
+     * @param surName this is person's SurName.
+     * @param telephone this is person's telephone.
+     * @param emailAddress this is person's email address.
+     * @param physicalAddress this is person's physical address.
+     * @throws SQLException If the database cannot connection or query at database or table.
+     */
+    public void updatePersonRecord (
             String id,
             String firstName,
             String surName,
@@ -367,13 +473,20 @@ public class MysqlHandler {
         this.statement.executeUpdate(sqlStr); 
     }
     
-    /*
+    /**
      * User can type in the PersonEditor any JTextField
      * to search record in Person table in database.
      * User key in "Frank" in FirstName field.
      * It will return "Frankie" FirstName's and "Franky" FirstName's rows.
+     * 
+     * @param firstName this is person's First Name.
+     * @param surName this is person's SurName.
+     * @param telephone this is person's telephone.
+     * @param emailAddress this is person's email address.
+     * @param physicalAddress this is person's physical address.
+     * @throws SQLException If the database cannot connection or query at database or table.
      */
-    Vector<Vector<String>> searchPersonRecord(
+    public Vector<Vector<String>> searchPersonRecord(
             String firstName,
             String surName,
             String telePhone,
@@ -389,25 +502,41 @@ public class MysqlHandler {
             );
     }
 
-    /*
+    /**
      * User can type in the ProjectEditor any JTextField
      * to search record in Project table in database.
      * It is like searchPersonRecord method.
+     * 
+     * @param projectName Project's Name.
+     * @param buildingType Project Building's Type.
+     * @param physicalAddress Project Building's Physical Address.
+     * @param eRFNumber Project Building's erf number.
+     * @param feeCharged The total fee being charged for the project.
+     * @param paidToDate The total amount paid to date.
+     * @param deadLine Deadline for the project.
+     * @param architectPId The Person id ( ref Person table ) of the architect for the project.
+     * @param contractorPId The Person id ( ref Person table ) of the contractor for the project.
+     * @param customerPId The Person id ( ref Person table ) of the customer for the project.
+     * @param projectManagerPId The Person id ( ref Person table ) of the Project Manager for the project.
+     * @param structuralEngineerPId The Person id ( ref Person table ) of the Structural Engineer for the project.
+     * @param isFinalised The Project is Finalised.
+     * @param completeDate The Project's complete date.
+     * @throws SQLException If the database cannot connection or query at database or table.
      */
-    Vector<Vector<String>> searchProjectRecord (
+    public Vector<Vector<String>> searchProjectRecord (
         // String projectNoVal,
-        String projectNameVal,
-        String physicalAddressVal, 
-        String erfNoVal,
-        String feeChargedVal,
-        String paidTodateVal,
-        String buildingTypeVal,
+        String projectName,
+        String physicalAddress, 
+        String eRFNumber,
+        String feeCharged,
+        String paidToDate,
+        String buildingType,
         String deadLine,
-        String architectVal,
-        String contractorVal,
-        String customerVal,
-        String managerVal,
-        String engineerVal,
+        String architectPId,
+        String contractorPId,
+        String customerPId,
+        String projectManagerPId,
+        String structuralEngineerPId,
         // String completedDate,
         String isFinalised
     ) throws SQLException {
@@ -418,78 +547,108 @@ public class MysqlHandler {
             + " Finalised, CompletedDate"
             + " FROM ProjectView WHERE "
             // + " AND ProjectNumber like '%"     + projectNoVal + "%'"
-            +     " ProjectName like '%"       + projectNameVal + "%'"
-            + " AND BuildingType LIKE '%"      + buildingTypeVal + "%'"
-            + " AND PhysicalAddress LIKE '%"   + physicalAddressVal + "%'"
-            + " AND ERFNumber LIKE '%"         + erfNoVal + "%'" 
-            + " AND FeeCharged LIKE '%"        + feeChargedVal + "%'"
-            + " AND PaidToDate LIKE '%"        + paidTodateVal + "%'"
+            +     " ProjectName like '%"       + projectName + "%'"
+            + " AND BuildingType LIKE '%"      + buildingType + "%'"
+            + " AND PhysicalAddress LIKE '%"   + physicalAddress + "%'"
+            + " AND ERFNumber LIKE '%"         + eRFNumber + "%'" 
+            + " AND FeeCharged LIKE '%"        + feeCharged + "%'"
+            + " AND PaidToDate LIKE '%"        + paidToDate + "%'"
             + " AND Deadline LIKE '%"          + deadLine + "%'"
-            + " AND Architect LIKE '%"         + architectVal + "%'" 
-            + " AND Contractor LIKE '%"        + contractorVal + "%'"
-            + " AND Customer LIKE '%"          + customerVal + "%'"
-            + " AND ProjectManager LIKE '%"     + managerVal + "%'"
-            + " AND StructuralEngineer LIKE '%" + engineerVal + "%'"
+            + " AND Architect LIKE '%"         + architectPId + "%'" 
+            + " AND Contractor LIKE '%"        + contractorPId + "%'"
+            + " AND Customer LIKE '%"          + customerPId + "%'"
+            + " AND ProjectManager LIKE '%"     + projectManagerPId + "%'"
+            + " AND StructuralEngineer LIKE '%" + structuralEngineerPId + "%'"
             // + " AND CompletedDate LIKE '%"      + completedDate + "%'"
             + " AND Finalised LIKE '%"          + isFinalised + "%'";
 
         return makeProjectRow( sqlStr );
     };
 
-    /* It is use at "Search By Project Number" Page. */
-    Vector<Vector<String>> selectByProjectNumberRecord(String projectNoVal) throws SQLException {
+    /** 
+     * It is use at "Search By Project Number" Page. 
+     * 
+     * @param projectNo Project number.
+     * @throws SQLException If the database cannot connection or query at database or table.
+     */
+    public Vector<Vector<String>> selectByProjectNumberRecord(String projectNo) throws SQLException {
         String sqlStr = " SELECT"
             + " ProjectNumber, ProjectName, BuildingType, PhysicalAddress, ERFNumber, FeeCharged,"
             + " PaidToDate, Deadline,"
             + " Architect, Contractor, Customer, ProjectManager, StructuralEngineer,"
             + " Finalised, CompletedDate"
             + " FROM ProjectView WHERE "
-            + " ProjectNumber like '%" + projectNoVal + "%'";
+            + " ProjectNumber like '%" + projectNo + "%'";
 
         return this.makeProjectRow( sqlStr );
     }
 
-    /* It is use at "Search By Project Name" Page. */
-    Vector<Vector<String>> selectByProjectNameRecord(String projectNameVal) throws SQLException {
+    /** 
+     * It is use at "Search By Project Name" Page. 
+     * 
+     * @param projectName Project's Name.
+     * @throws SQLException If the database cannot connection or query at database or table.
+     */
+    public Vector<Vector<String>> selectByProjectNameRecord(String projectName) throws SQLException {
         String sqlStr = " SELECT"
             + " ProjectNumber, ProjectName, BuildingType, PhysicalAddress, ERFNumber, FeeCharged,"
             + " PaidToDate, Deadline,"
             + " Architect, Contractor, Customer, ProjectManager, StructuralEngineer,"
             + " Finalised, CompletedDate"
             + " FROM ProjectView WHERE "
-            + " ProjectName like '%" + projectNameVal + "%'";
+            + " ProjectName like '%" + projectName + "%'";
         System.out.println("By Name: " + sqlStr);
         return this.makeProjectRow( sqlStr );
     }
 
-    /* Select all Person record for Person JTable.  */
-    Vector<Vector<String>> selectPersonRecord() throws SQLException {
+    /** 
+     * Select all Person record for Person JTable.  
+     * 
+     * @throws SQLException If the database cannot connection or query at database or table.
+     */
+    public Vector<Vector<String>> selectPersonRecord() throws SQLException {
         return this.makePersonRow( this.selectPerson );
     }
     
-    /* Select all Project record for Project JTable.  */
-    Vector<Vector<String>> selectProjectRecord() throws SQLException {
+    /** 
+     * Select all Project record for Project JTable.  
+     * 
+     * @throws SQLException If the database cannot connection or query at database or table.
+     */
+    public Vector<Vector<String>> selectProjectRecord() throws SQLException {
         return this.makeProjectRow( this.selectProject );
     }
 
-    /* use in Finalised page. find any hasn't finalised record in Project table. */
-    Vector<Vector<String>> selectNeedCompletedProjectRecord() throws SQLException {
+    /** 
+     * use in Finalised page. find any hasn't finalised record in Project table. 
+     * 
+     * @throws SQLException If the database cannot connection or query at database or table.
+     */
+    public Vector<Vector<String>> selectNeedCompletedProjectRecord() throws SQLException {
         return this.makeProjectRow( this.selectNeedCompletedProject );
     }
 
-    /* use in [Past Due Date] page.  */
-    Vector<Vector<String>> selectPastDueDate(String completedDate) throws SQLException {
+    /**
+     *  use in [Past Due Date] page.  
+     * 
+     * @param completeDate The Project's complete date.
+     * @throws SQLException If the database cannot connection or query at database or table.
+     */
+    public Vector<Vector<String>> selectPastDueDate(String completedDate) throws SQLException {
         String sqlStr = this.selectProject 
                 + " WHERE Deadline < '" + completedDate + "'"
                 + " AND Finalised = 0";
         return this.makeProjectRow( sqlStr );  
     }
     
-    /*
+    /**
      * format Person Select Result to Vector<Vector<String>> and 
      * for DefaultTableModel to display information to PersonTable ( JTable ).
+     * 
+     * @param sqlString follow this string to query database.
+     * @throws SQLException If the database cannot connection or query at database or table.
      */
-    Vector<Vector<String>> makePersonRow(String sqlString) throws SQLException {
+    public Vector<Vector<String>> makePersonRow(String sqlString) throws SQLException {
         Vector<Vector<String>> resultVector = new Vector<Vector<String>>();
 
         ResultSet rs = this.statement.executeQuery( sqlString );
@@ -508,12 +667,14 @@ public class MysqlHandler {
         return resultVector;
     }
 
-    /*
+    /**
      * format Project Select Result to Vector<Vector<String>> and 
      * for DefaultTableModel to display information to ProjectTable ( JTable ).
+     * 
+     * @param sqlString follow this string to query database.
+     * @throws SQLException If the database cannot connection or query at database or table.
      */
-    
-    Vector<Vector<String>> makeProjectRow(String sqlString) throws SQLException {
+    public Vector<Vector<String>> makeProjectRow(String sqlString) throws SQLException {
         Vector<Vector<String>> resultVector = new Vector<Vector<String>>();
 
             ResultSet rs = this.statement.executeQuery( sqlString );
@@ -547,16 +708,26 @@ public class MysqlHandler {
         return resultVector;
     }
 
-    /* Update Project record's Finalised to '1' ( true ) and set the completeDate  */
-    void finalisedProject(String completedDate, String projectNo) throws SQLException {
+    /** 
+     * Update Project record's Finalised to '1' ( true ) and set the completeDate  
+     * 
+     * @param completeDate The Project's complete date.
+     * @param projectNo Project number.
+     * @throws SQLException If the database cannot connection or query at database or table.
+     */
+    public void finalisedProject(String completedDate, String projectNo) throws SQLException {
         String sqlStr = "UPDATE Project SET Finalised = 1, "
         + " CompletedDate = '" + completedDate + "'"
         + " Where ProjectNumber = '" + projectNo + "'" ;
         this.statement.executeUpdate(sqlStr);
     }
 
-    /* Close sql statement and connection. */
-    void closeSQLConnectionAndStatement() {
+    /** 
+     * Close sql statement and connection. 
+     * 
+     * @throws SQLException If the database cannot connection.
+     */
+    public void closeSQLConnectionAndStatement() {
         try {
             this.statement.close();
             this.connection.close();

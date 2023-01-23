@@ -2,7 +2,7 @@ import java.awt.*;
 import javax.swing.*;
 import java.util.Vector;
 
-/* 
+/** 
  * This a SearchByProjectNumber page Editor, It can search Project data table by Project Number.
  * and this is under the ProjectTab's JTabbedPane tabbedPane object.
  */
@@ -15,8 +15,8 @@ public class SearchByProjectNumberEditor extends JPanel {
     PmsFrame mainFrame;
     MysqlHandler dbHandler;
 
-
-    SearchByProjectNumberEditor(PmsFrame motherFrame, MysqlHandler dbPosie) {
+    /** SearchByProjectNameEditor constructor */
+    public SearchByProjectNumberEditor(PmsFrame motherFrame, MysqlHandler dbPosie) {
         super();
         super.setLayout(new GridLayout(1, 2, 10, 5)); 
 
@@ -28,8 +28,9 @@ public class SearchByProjectNumberEditor extends JPanel {
         super.add(this.projectNoLabel);
         super.add(this.projectNoText);
     }
-    
-    void resetField() {
+
+    /** Re-set the JTextField.  */
+    public void resetField() {
         this.projectNoText.setText("0");
     }
 }

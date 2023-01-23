@@ -1,19 +1,19 @@
 import javax.swing.*;
 import javax.swing.event.*;
 
-/* When User click the PmsTab and change the Page, Program will trigger this class. */
+/** When User click the PmsTab and change the Page, Program will trigger this class. */
 public class TabChangeListener implements ChangeListener {
     PmsFrame mainFrame;
     MenuHandler dbMenu;
 
-    
-    TabChangeListener(PmsFrame motherFrame) {
+    /** TabChangeListener constructor */ 
+    public TabChangeListener(PmsFrame motherFrame) {
         super();
         this.mainFrame = motherFrame;
 	    this.dbMenu = motherFrame.dbMenu;
     }
 
-	/* Modify the Menu button's label */
+	/** Modify the Menu button's label */
     public void stateChanged(ChangeEvent changeEvent) {
         JTabbedPane sourceTabbedPane = (JTabbedPane) changeEvent.getSource();
         int index = sourceTabbedPane.getSelectedIndex();

@@ -1,11 +1,16 @@
 import javax.swing.*;
 
-/*
- * This will create a Menu at Frame's top side.
- * It has many button. If user click any buttons.
+/**
+ * This will create a Menu at ( Root ) Frame's top side.
+ * It has many button. If user click a buttons.
  * It will trigger its relations Listener.
+ * 
+ * Switch PmsTab, It will have differnet menu button in the Person and Projects tab,
+ * It will reset the Menu.
+ * 
+ * In the Project tab. it have another JTabbedPanel
+ * finalised, pastDueDate, searchByProjectNumber and searchByProjectName.
  */
-
 public class MenuHandler extends JMenuBar {
     JButton enterItem = new JButton("Enter Person");
     JButton clearItem = new JButton("Clear Person");
@@ -18,23 +23,28 @@ public class MenuHandler extends JMenuBar {
     JButton needCompletedItem = new JButton("unCompleted Project");
     JButton pastDueDateItem = new JButton("Past Due Date");
 
-    ListenerExit exitProgram ;
-    /* ListenerClear will clear all textfield in the PersonEditor or ProjectEditor */
-    ListenerClear clearListener;
-    /* 
+    /** ListenerExist will exist program */
+    public ListenerExit exitProgram ;
+
+    /** ListenerClear will clear all textfield in the PersonEditor or ProjectEditor */
+    public ListenerClear clearListener;
+
+    /**
      * ListenerEnter will use Editor textfield's values 
      * insert to the Person and Project Database. 
      */
-    ListenerEnter enterListener;
-    /*
+    public ListenerEnter enterListener;
+
+    /**
      * User need click the tables's ( Person or Project ) row.
      * It will update the Editor's Project Number or id Textfield 
      * ( and another Textfield )
      * then user click deleteItem button, then will delete the Person or Project
      * tables in PoisePMS database record follow Project Number or id.
      */
-    ListenerDelete deleteListener;
-    /*
+    public ListenerDelete deleteListener;
+
+    /**
      * User need click the tables's ( Person or Project ) row.
      * It will update the Editor's Textfields.
      * then user can update Textfields, 
@@ -42,42 +52,53 @@ public class MenuHandler extends JMenuBar {
      * then will update the Person or Project tables in PoisePMS
      * database record follow Project Number or id.
      */
-    ListenerUpdate updateListener;
-    /*
+    public ListenerUpdate updateListener;
+
+    /**
      * User can insert any data in Editor's textfield.
      * It will filter the Person or Project tables
      * User can use this filter to search inside 
      * the Person or Project tables.
      */
-    ListenerSearch searchListener;
-    /*
+    public ListenerSearch searchListener;
+
+    /**
      * After filtering the tables, It will display less rows
      * at tables, User can click listAllItem button,
      * It will reflash the table and display all record in table.
      */
-    ListenerListAll listAllListener;
-    /* 
+    public ListenerListAll listAllListener;
+
+    /** 
      * User can use finalisedItem buttom to update the record
      * to finalised. user can add the completed data if user 
      * modify the CompletedDate Textfield.
      * If user don't modify the value in completed textfield.
      * program will use "today" ( Currect date ) to set in completed date.
      */
-    ListenerFinalised finalisedListener;
-    /*
+    public ListenerFinalised finalisedListener;
+
+    /**
      * User can use needCompletedItem button to list what
      * Project hasn't completed and need to finish.
      */
-    ListenerNeedCompleted needCompletedListener;
-    /*
+    public ListenerNeedCompleted needCompletedListener;
+
+    /**
      * User can modify the completedDate textfield's value
      * And find what project completedDate is less then it.
      * If user hasn't modify the completedDate textfield.
      * It will use "today" ( Currect date ) to find the Project record.
      */
-    ListenerPastDueDate pastDueDateListener;
+    public ListenerPastDueDate pastDueDateListener;
     
-    MenuHandler (PmsFrame motherFrame, MysqlHandler dbPosie) {
+    /**
+     * MenuHandler constructor
+     * 
+     * @param motherFrame the main Frame ( Root Frame )
+     * @param dbPosie     the DatabaseHandler.
+     */    
+    public MenuHandler (PmsFrame motherFrame, MysqlHandler dbPosie) {
         super();
         this.exitProgram = new ListenerExit(dbPosie) ;
         this.clearListener = new ListenerClear( motherFrame );
@@ -101,11 +122,11 @@ public class MenuHandler extends JMenuBar {
         this.pastDueDateItem.addActionListener(this.pastDueDateListener);
     }
 
-    /*
+    /**
      * In the Project and Person's tab,
-     * can reset the Menu.
+     * can reset the Menu to seven button.
      */
-     void reNewMenu(){
+    public void reNewMenu(){
         this.redraw();
         super.add( this.clearItem );
         super.add( this.enterItem );
@@ -116,17 +137,15 @@ public class MenuHandler extends JMenuBar {
         super.add( this.exitItem );
     }
 
+    /** Re-paint the Menu. */
     private void redraw() {
         super.removeAll();
         super.revalidate();
         super.repaint();
     }
 
-    /*
-     * In the Project tab. it have another JTabbedPanel
-     * finalised, pastDueDate, searchByProjectNumber and searchByProjectName.
-     */
-    void finalisedMenu() {
+    /** Update the Finalised Page's Menu.  */
+    public void finalisedMenu() {
         this.redraw();
         super.add( this.finalisedItem );
         super.add( this.needCompletedItem );
@@ -134,21 +153,24 @@ public class MenuHandler extends JMenuBar {
         super.add( this.exitItem );
     }
 
-    void pastDueDateMenu() {
+    /** Update the Post Due Date Page's Menu.  */
+    public void pastDueDateMenu() {
         this.redraw();
         super.add( this.pastDueDateItem );
         super.add( this.listAllItem );
         super.add( this.exitItem );
     } 
 
-    void searchByProjectNumberMenu() {
+    /** Update the Search By Project Number Page's Menu.  */
+    public void searchByProjectNumberMenu() {
         this.redraw();
         super.add( this.searchItem );
         super.add( this.listAllItem );
         super.add( this.exitItem );
     }
 
-    void searchByProjectNameMenu() {
+    /** Update the Search By Project Name Page's Menu.  */
+    public void searchByProjectNameMenu() {
         this.redraw();
         super.add( this.searchItem );
         super.add( this.listAllItem );

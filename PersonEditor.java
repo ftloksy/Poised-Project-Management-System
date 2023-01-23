@@ -1,25 +1,40 @@
 import java.awt.*;
 import javax.swing.*;
 
-/* 
+/** 
  * This is editor for PoisedPMS database Person Table. 
  * All User's information is use this editor to Enter and Modify
  * Include Architect, Contractor, Customer, Project Manager, Structural Engineer.
  * 
- * JTextField     ------> Person Table column.
- * idText              => id,
- * surNameText         => SurName,
- * firstNameText       => FirstName,
- * telephoneText       => Telephone,
- * emailAddressText    => EmailAddress,
- * physicalAddressText => PhysicalAddress
+ * <table>
+ * <tr>
+ * <th> JTextField </th>     <th> -> Person Table column </th>
+ * </tr>
+ * <tr>
+ * <td>idText</td>               <td> => id </td>
+ * </tr>
+ * <tr>
+ * <td>surNameText</td>          <td> => SurName </td>
+ * </tr>
+ * <tr>
+ * <td>firstNameText</td>        <td> => FirstName </td>
+ * </tr>
+ * <tr>
+ * <td>telephoneText</td>        <td> => Telephone </td>
+ * </tr>
+ * <tr>
+ * <td>emailAddressText</td>     <td> => EmailAddress </td>
+ * </tr>
+ * <tr>
+ * <td>physicalAddressText</td>  <td> => PhysicalAddress </td>
+ * </tr>
+ * </table>
  * 
  * user cann't enter or modify idText.
  * When Record entry, SQL server will care this field.
  * When Search and Modify the Record. 
  * PersonTableSelect ( Listener ) will care this.
  */
-
 public class PersonEditor extends JPanel {
 
     JTextField idText = new JTextField("id", 30);
@@ -40,7 +55,8 @@ public class PersonEditor extends JPanel {
     JLabel physicalAddressLabel = new JLabel("Address", SwingConstants.RIGHT);
     JTextField physicalAddressText = new JTextField("Address", 30);
     
-    PersonEditor() {
+    /** PastDueDateEditor constructor */  
+    public PersonEditor() {
         super();
         super.setLayout(new GridLayout(6, 2, 10, 5)); 
         this.idText.setEditable(false);
@@ -63,12 +79,11 @@ public class PersonEditor extends JPanel {
         super.add(this.physicalAddressText); 
     }
 
-    /* 
+    /** 
      * When user want to search or enter new record.  
      * User maybe need to reset all JTextField in PersonEditor.
      */
-    
-    void resetField() {
+    public void resetField() {
         this.idText.setText("Id");
         this.firstNameText.setText("");
         this.surNameText.setText("");
