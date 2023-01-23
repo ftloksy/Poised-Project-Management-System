@@ -6,6 +6,11 @@ import java.util.Vector;
  * This a Past Due Editor, It can search the Project table's record follow 
  * Target date, this Project tables entry's Deadline is early than Target Date 
  * and the Finalised is not finalised.
+ * 
+ * @author      Frankie Chow
+ * @version     2023-1-23
+ * @see         ProjectEditor 
+ * @see         MysqlHandler
  */
 public class PastDueDateEditor extends JPanel {
 

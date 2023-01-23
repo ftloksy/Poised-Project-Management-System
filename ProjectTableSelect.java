@@ -2,9 +2,14 @@ import javax.swing.event.*;
 import javax.swing.table.*;
 import javax.swing.* ;
 
-/*
+/**
  * This is Project Table's Listener, 
  * when user click the table's row, It will trigger it.
+ * 
+ * @author   Frankie Chow
+ * @version  2023-1-23
+ * @see      ProjectTable
+ * @see      ProjectEditor
  */
 public class ProjectTableSelect implements ListSelectionListener {
     PmsFrame mainFrame ;
@@ -16,27 +21,42 @@ public class ProjectTableSelect implements ListSelectionListener {
     Integer selectIndex;
     JTabbedPane tabPane;
 
-    ProjectTableSelect(PmsFrame motherFrame){
+	/**
+	 *  ProjectTableSelect constructor 
+	 * 
+	 * @param motherFrame  the main Frame ( Root Frame )
+	 */
+    public ProjectTableSelect(PmsFrame motherFrame){
         this.mainFrame = motherFrame ;
     }
 
-	/* 
-	 * The bdgTypeList and BuildingType 's order is not same. 
-	 * this method to match this two record.
+	/** 
+	 * use ProjectTable's bdgType column to find in 
+	 * use ProjectEditor's bdgType JComboBox's information
+	 * find the target String's Model index.
+	 * 
+	 * This will call findIndex to find it.
+	 * 
+	 * @return the index if found, if cannot find return -1.
 	 */
-    Integer findBdgType() {
+    public Integer findBdgType() {
         return findIndex( 
             (String)this.dbModel.getValueAt(this.selectIndex, 2) ,
             this.dbEditor.bdgTypeList
             );
     }
 
-	/* 
+	/** 
 	 * this is match method.
-	 * Use the table's value to find in DefaultComboBoxModel's List.
+	 * Use the targetTxt to find in DefaultComboBoxModel's List.
 	 * return the match content's index.
+	 * 
+	 * @param targetTxt    the finding target String.
+	 * @param checkModel   find in checkModel contents
+	 * @return             the index, If find return the index, 
+	 *                     if cannot find return -1.
 	 */
-    Integer findIndex(String targetTxt, DefaultComboBoxModel<String> checkModel) {
+    public Integer findIndex(String targetTxt, DefaultComboBoxModel<String> checkModel) {
         for (int i = 0 ; i < checkModel.getSize() ; i ++ ) {
             if ( checkModel.getElementAt(i).indexOf(targetTxt) > -1 ) {
                 return i;
@@ -45,7 +65,7 @@ public class ProjectTableSelect implements ListSelectionListener {
         return -1;
     }
     
-	/* Reset the Project Editor */
+	/**  Reset the Project Editor */
     public void valueChanged(ListSelectionEvent e) {
         this.tabPane = this.mainFrame.pmsTab.tabbedPane ;
         this.projectTab = this.mainFrame.pmsTab.projectTab ;

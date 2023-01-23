@@ -1,10 +1,15 @@
 import java.awt.event.*;
 import java.sql.* ;
 
-/*
+/**
  * This is Listener for [ Need Complete Date ] Button, 
  * in "Finalised Record" page at ProjectTab, 
  * When User click the Button, it will trigger this action.
+ * 
+ * @author      Frankie Chow
+ * @version     2023-1-23
+ * @see         ProjectTable
+ * @see         MysqlHandler
  */
 public class ListenerNeedCompleted implements ActionListener {
     PmsFrame mainFrame;
@@ -15,8 +20,8 @@ public class ListenerNeedCompleted implements ActionListener {
     /**
      * ListenerNeedCompleted constructor
      * 
-     * @param motherFrame the main Frame ( Root Frame )
-     * @param dbPosie the DatabaseHandler.
+     * @param motherFrame   the main Frame ( Root Frame )
+     * @param dbPosie       the DatabaseHandler.
      */   
     public ListenerNeedCompleted(PmsFrame motherFrame, MysqlHandler dbPosie) {
         this.dbHandler = dbPosie;

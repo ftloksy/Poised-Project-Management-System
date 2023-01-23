@@ -10,16 +10,37 @@ import javax.swing.*;
  * 
  * msgArea is a message notice.
  * programming will use msgArea to share information to client.
+ * 
+ * @author     Frankie Chow
+ * @version    2023-1-23
  */
 public class PmsFrame extends JFrame {
-    PmsTab pmsTab; 
-    MenuHandler dbMenu ;
-    JTextArea msgArea ;
+
+    /** 
+     * This Frame have a pmsTab, 
+     * and pmsTab has PersonTab for handle Person data table.
+     * and has ProjectTab for handle Project data table.
+     */
+    public PmsTab pmsTab; 
+
+    /** 
+     * MenuHandler have more button, handle action request.
+     * e.g. Search Record, Enter Record, Update Record, Delete Record.
+     */
+    public MenuHandler dbMenu ;
+
+    /**
+     * msgArea is a message notice. 
+     * programming will use msgArea to share information to client.
+     */
+    public JTextArea msgArea ;
     
     /**
-     * param dbPosie  it care the PoisePMS database query and insert and update.
+     * PmsFrame constructor
+     * 
+     * @param dbPosie  it care the PoisePMS database query and insert and update.
      */
-    PmsFrame(MysqlHandler dbPoise) {
+    public PmsFrame(MysqlHandler dbPoise) {
         super();
 
         this.msgArea = new JTextArea(3, 40);

@@ -10,6 +10,10 @@ import javax.swing.*;
  * 
  * In the Project tab. it have another JTabbedPanel
  * finalised, pastDueDate, searchByProjectNumber and searchByProjectName.
+ * 
+ * @author      Frankie Chow
+ * @version     2023-1-23
+ * @see         PmsFrame
  */
 public class MenuHandler extends JMenuBar {
     JButton enterItem = new JButton("Enter Person");

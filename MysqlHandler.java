@@ -28,13 +28,16 @@ import java.util.Vector;
  *   <li>selectProject :  Select all information from ProjectView for display in Project Table. </li>
  *   <li>selectNeedCompletedProject :  Select all information from Project, that it isn't finalised. </li>
  * <ul>
+ * 
+ * @author      Frankie Chow
+ * @version     2023-1-23
  */
 public class MysqlHandler {
     Connection connection = null ;
     Statement statement = null ;
 
-    /* Create Project table */
-    String createProjectTableSQL = "CREATE TABLE IF NOT EXISTS Project ("
+    /** Create Project table */
+    private String createProjectTableSQL = "CREATE TABLE IF NOT EXISTS Project ("
         + " ProjectNumber int(6) ZEROFILL NOT NULL AUTO_INCREMENT," // Project Number
         + " ProjectName varchar(50),"  // Project name.
         + " BuildingType "  // What type of building is being designed? 
@@ -64,8 +67,8 @@ public class MysqlHandler {
         + " FOREIGN KEY (ProjectManagerPId) REFERENCES Person(id),"
         + " FOREIGN KEY (StructuralEngineerPId) REFERENCES Person(id))";
 
-    /* Create Person Table */
-    String createPersonTableSQL = "CREATE TABLE IF NOT EXISTS Person ("
+    /** Create Person Table */
+    private String createPersonTableSQL = "CREATE TABLE IF NOT EXISTS Person ("
         + " id int(6) ZEROFILL NOT NULL AUTO_INCREMENT,"
         + " FirstName varchar(50),"       // First name
         + " SurName varchar(50) NOT NULL,"     // Surname name.
@@ -75,8 +78,8 @@ public class MysqlHandler {
         + " UNIQUE (EmailAddress),"        // Email Address is unique.
         + " PRIMARY KEY (id))";
 
-    /* Create a PersonView for display Person table information to Person JTable. */
-    String createProjectViewSQL = ""
+    /** Create a PersonView for display Person table information to Person JTable. */
+    private String createProjectViewSQL = ""
         + " create or replace view ProjectView as"
         + " SELECT ProjectNumber, ProjectName, BuildingType," 
         + " PhysicalAddress, ERFNumber, FeeCharged, PaidToDate, Deadline," 
@@ -99,11 +102,11 @@ public class MysqlHandler {
         + " as StructuralEngineer"
         + " FROM Project";
 
-    /* 
+    /**
      * Make Sure When User insert data to Person, SurName isn't '', 
      * because in gui always will add this value to data table.
      */
-    String createTriggerPersonSurNameInsertSQL = "CREATE TRIGGER IF NOT EXISTS insert_has_surname BEFORE INSERT ON Person"
+    private String createTriggerPersonSurNameInsertSQL = "CREATE TRIGGER IF NOT EXISTS insert_has_surname BEFORE INSERT ON Person"
         + " FOR EACH ROW"
         + " BEGIN"
         + " IF EXISTS"
@@ -115,11 +118,11 @@ public class MysqlHandler {
         + " END IF;"
         + " END;";
 
-    /* 
+    /** 
      * Make Sure When User update data to Person, SurName isn't '', 
      * because in gui always will add this value to data table.
      */
-    String createTriggerPersonSurNameUpdateSQL = "CREATE TRIGGER IF NOT EXISTS update_has_surname BEFORE UPDATE ON Person"
+    private String createTriggerPersonSurNameUpdateSQL = "CREATE TRIGGER IF NOT EXISTS update_has_surname BEFORE UPDATE ON Person"
         + " FOR EACH ROW"
         + " BEGIN"
         + " IF EXISTS"
@@ -131,10 +134,10 @@ public class MysqlHandler {
         + " END IF;"
         + " END;" ;
         
-    /* Create a select for DefaultComboBoxModel, for user to select  ArchitectPId, ContractorPId ...  */
-    String selectPersonTag = "SELECT CONCAT( id, ': ', FirstName, ' ', SurName ) AS Result FROM Person" ;
+    /** Create a select for DefaultComboBoxModel, for user to select  ArchitectPId, ContractorPId ...  */
+    private String selectPersonTag = "SELECT CONCAT( id, ': ', FirstName, ' ', SurName ) AS Result FROM Person" ;
 
-    /* Create a trigger for 
+    /** Create a trigger for 
      * -------
      *  If a project name is not provided
      * when the information is captured, name the project using the surname of
@@ -143,7 +146,7 @@ public class MysqlHandler {
      * would be called “Apartment Goldman”.
      * -------
      */
-    String createTriggerProjectName = "CREATE TRIGGER IF NOT EXISTS project_name BEFORE INSERT ON Project"
+    private String createTriggerProjectName = "CREATE TRIGGER IF NOT EXISTS project_name BEFORE INSERT ON Project"
         + " FOR EACH ROW"
         + " BEGIN"
            + " IF new.ProjectName IS NULL THEN"
@@ -183,8 +186,8 @@ public class MysqlHandler {
         + " Architect, Contractor, Customer, ProjectManager, StructuralEngineer, Finalised, CompletedDate "
         + " FROM ProjectView";
 
-    /* Select all information from Project, that it isn't finalised. */
-    String selectNeedCompletedProject = "SELECT "
+    /** Select all information from Project, that it isn't finalised. */
+    private String selectNeedCompletedProject = "SELECT "
         + " ProjectNumber, ProjectName, BuildingType, PhysicalAddress, ERFNumber, FeeCharged, PaidToDate, Deadline,"
         + " Architect, Contractor, Customer, ProjectManager, StructuralEngineer, Finalised, CompletedDate "
         + " FROM ProjectView"
@@ -226,6 +229,7 @@ public class MysqlHandler {
      * Select person information for DefaultComboBoxModel for choice ArchitectPId, ContractorPId ...  
      *
      * @throws SQLException If the database cannot connection or query at database or table.
+     * @return database query result 
      */
     public Vector<String> getPersonList() throws SQLException {
         return this.getResultList( this.selectPersonTag );
@@ -236,6 +240,7 @@ public class MysqlHandler {
      * 
      * @param sqlString follow this string to query database.
      * @throws SQLException If the database cannot connection or query at database or table.
+     * @return database query result (this is just a column. )
      */
     public Vector<String> getResultList(String sqlString) throws SQLException {
         
@@ -485,6 +490,7 @@ public class MysqlHandler {
      * @param emailAddress this is person's email address.
      * @param physicalAddress this is person's physical address.
      * @throws SQLException If the database cannot connection or query at database or table.
+     * @return database query result and format for JTable 's Model.
      */
     public Vector<Vector<String>> searchPersonRecord(
             String firstName,
@@ -522,6 +528,7 @@ public class MysqlHandler {
      * @param isFinalised The Project is Finalised.
      * @param completeDate The Project's complete date.
      * @throws SQLException If the database cannot connection or query at database or table.
+     * @return database query result and format for JTable 's Model.
      */
     public Vector<Vector<String>> searchProjectRecord (
         // String projectNoVal,
@@ -570,6 +577,7 @@ public class MysqlHandler {
      * 
      * @param projectNo Project number.
      * @throws SQLException If the database cannot connection or query at database or table.
+     * @return database query result and format for JTable 's Model.
      */
     public Vector<Vector<String>> selectByProjectNumberRecord(String projectNo) throws SQLException {
         String sqlStr = " SELECT"
@@ -588,6 +596,7 @@ public class MysqlHandler {
      * 
      * @param projectName Project's Name.
      * @throws SQLException If the database cannot connection or query at database or table.
+     * @return database query result and format for JTable 's Model.
      */
     public Vector<Vector<String>> selectByProjectNameRecord(String projectName) throws SQLException {
         String sqlStr = " SELECT"
@@ -605,6 +614,7 @@ public class MysqlHandler {
      * Select all Person record for Person JTable.  
      * 
      * @throws SQLException If the database cannot connection or query at database or table.
+     * @return database query result and format for JTable 's Model.
      */
     public Vector<Vector<String>> selectPersonRecord() throws SQLException {
         return this.makePersonRow( this.selectPerson );
@@ -614,6 +624,7 @@ public class MysqlHandler {
      * Select all Project record for Project JTable.  
      * 
      * @throws SQLException If the database cannot connection or query at database or table.
+     * @return database query result and format for JTable 's Model.
      */
     public Vector<Vector<String>> selectProjectRecord() throws SQLException {
         return this.makeProjectRow( this.selectProject );
@@ -623,6 +634,7 @@ public class MysqlHandler {
      * use in Finalised page. find any hasn't finalised record in Project table. 
      * 
      * @throws SQLException If the database cannot connection or query at database or table.
+     * @return database query result and format for JTable 's Model.
      */
     public Vector<Vector<String>> selectNeedCompletedProjectRecord() throws SQLException {
         return this.makeProjectRow( this.selectNeedCompletedProject );
@@ -633,6 +645,7 @@ public class MysqlHandler {
      * 
      * @param completeDate The Project's complete date.
      * @throws SQLException If the database cannot connection or query at database or table.
+     * @return database query result and format for JTable 's Model.
      */
     public Vector<Vector<String>> selectPastDueDate(String completedDate) throws SQLException {
         String sqlStr = this.selectProject 
@@ -647,6 +660,7 @@ public class MysqlHandler {
      * 
      * @param sqlString follow this string to query database.
      * @throws SQLException If the database cannot connection or query at database or table.
+     * @return database query result and format for JTable 's Model.
      */
     public Vector<Vector<String>> makePersonRow(String sqlString) throws SQLException {
         Vector<Vector<String>> resultVector = new Vector<Vector<String>>();
@@ -673,6 +687,7 @@ public class MysqlHandler {
      * 
      * @param sqlString follow this string to query database.
      * @throws SQLException If the database cannot connection or query at database or table.
+     * @return database query result and format for JTable 's Model.
      */
     public Vector<Vector<String>> makeProjectRow(String sqlString) throws SQLException {
         Vector<Vector<String>> resultVector = new Vector<Vector<String>>();

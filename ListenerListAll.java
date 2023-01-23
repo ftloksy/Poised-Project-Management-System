@@ -7,6 +7,12 @@ import java.sql.SQLException;
  * will trigger this action.
  * It will update the ProjectTable JTable or PersonTable JTable
  * and List all record in JTables.
+ * 
+ * @author      Frankie Chow
+ * @version     2023-1-23
+ * @see         PersonTable 
+ * @see         ProjectTable
+ * @see         MysqlHandler
  */
 public class ListenerListAll implements ActionListener {
     PmsFrame mainFrame;
@@ -26,8 +32,8 @@ public class ListenerListAll implements ActionListener {
      * It will update the ProjectTable JTable or PersonTable JTable
      * and List all record in JTables.
      * 
-     * @param motherFrame the main Frame ( Root Frame )
-     * @param dbPosie the DatabaseHandler.
+     * @param motherFrame  the main Frame ( Root Frame )
+     * @param dbPosie      the DatabaseHandler.
      */
     public ListenerListAll(PmsFrame motherFrame, MysqlHandler dbPosie){
         this.mainFrame = motherFrame ;

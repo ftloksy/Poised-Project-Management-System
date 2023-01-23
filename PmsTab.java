@@ -1,12 +1,15 @@
 import java.awt.*;
 import javax.swing.*;
 
-/*
+/**
  * In this Class have two Class inside.
  * One is PersonTab, this is for handle Person database.
  * One is ProjectTab. this is for handle Project database.
  * TabChangeListener is a Listener, when you click the table,
  * It will trigger TabChangeListener.
+ * 
+ * @author      Frankie Chow
+ * @version     2023-1-23
  */
 public class PmsTab {
     final static String personTabTilte = "Person";
@@ -16,12 +19,22 @@ public class PmsTab {
     PersonTab personTab;
     JTabbedPane tabbedPane ;
     
-    PmsTab(PmsFrame motherFrame, MysqlHandler dbPosie) {
+
+    /**
+     * PmsTab constructor
+     * 
+     * @param motherFrame    the main Frame ( Root Frame )
+     * @param dbPosie        the DatabaseHandler.
+     */  
+    public PmsTab(PmsFrame motherFrame, MysqlHandler dbPosie) {
         this.personTab = new PersonTab(motherFrame, dbPosie);
         this.projectTab = new ProjectTab(motherFrame, dbPosie);
         changeListener = new TabChangeListener(motherFrame);
     }
     
+    /**
+     * add personTab and projectTab to here.
+     */
     public void addComponentToPane(Container pane) {
         this.tabbedPane = new JTabbedPane();
 

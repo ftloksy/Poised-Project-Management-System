@@ -4,10 +4,15 @@ import javax.swing.table.*;
 import java.sql.SQLException;
 import java.util.Vector ;
 
-/*
+/**
  * ProjectTable ( JTable ) will to Display 
  * Project table's information. 
  * When user click the table row, it will trigger ProjectTableSelect .
+ * 
+ * @author   Frankie Chow
+ * @version  2023-1-23
+ * @see      ProjectTableSelect
+ * @see      MysqlHandler
  */
 public class ProjectTable extends JTable {
     DefaultTableModel dbModel;
@@ -16,7 +21,13 @@ public class ProjectTable extends JTable {
     ProjectTableSelect projectTbSelect ;
     PmsFrame mainFrame;
     
-    ProjectTable(PmsFrame motherFrame, MysqlHandler dbPosie) {
+    /** 
+     * ProjectTable constructor 
+     * 
+     * @param motherFrame the main Frame ( Root Frame )
+     * @param dbPosie     the DatabaseHandler.
+     */
+    public ProjectTable(PmsFrame motherFrame, MysqlHandler dbPosie) {
         super();
         this.dbHandler = dbPosie ;
         this.mainFrame = motherFrame ;
@@ -24,8 +35,8 @@ public class ProjectTable extends JTable {
         createTable();
     }
     
-    /* Create the Table Header */
-    void createTableHeader() {
+    /** Create the Table Header */
+    public void createTableHeader() {
         Vector<String> headerTitle = new Vector<String>();
         headerTitle.add("ProjectNumber");
         headerTitle.add("ProjectName");
@@ -46,39 +57,50 @@ public class ProjectTable extends JTable {
         this.tableHeader =  headerTitle;
     }
 
-    /* 
+    /** 
      * When the user search Project database table, 
      * then the table will display less record.
      * Program can use this method 
      * to display all record on table again.
      */ 
-    void flashTable () throws SQLException {
+    public void flashTable () throws SQLException {
         reNewTable ( this.dbHandler.selectProjectRecord() );
     }
     
-    /*
+    /**
      * Program can use this method to do searching.
      * flashTable method is a example.
+     * 
+     * @param dbRow this is a query result from sql server. 
+     *     MysqlHandler very format the result to Vector<Vector<String>> ,
      */     
-    void reNewTable( Vector<Vector<String>>  dbRow ) {
+    public void reNewTable( Vector<Vector<String>>  dbRow ) {
         this.dbModel.setDataVector( dbRow , this.tableHeader );
     }
 
-    /* Find What Record haven't finalised. */
-    void needCompleted() throws SQLException {
+    /** 
+     * Find What Record haven't finalised. 
+     * 
+     * @throws SQLException If the database cannot connection or query at database or table. 
+     */
+    public void needCompleted() throws SQLException {
         reNewTable ( this.dbHandler.selectNeedCompletedProjectRecord() );
     }
 
-    /* 
+    /** 
      * Follow the compledDate to find 
      * what Project's Deadline is early then the completedDate 
      * and hasn't finalised . 
+     *  
+     * @param completedDate the Project CompletedDate.
+     * @throws SQLException If the database cannot connection or query at database or table. 
      */
-    void pastDueDate(String completedDate) throws SQLException {
+    public void pastDueDate(String completedDate) throws SQLException {
         reNewTable ( this.dbHandler.selectPastDueDate(completedDate) );
     }
     
-    void createTable() {
+    /** Create the Project JTable */
+    public void createTable() {
         
         this.projectTbSelect = new ProjectTableSelect(this.mainFrame);
         

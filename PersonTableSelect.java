@@ -1,9 +1,14 @@
 import javax.swing.event.*;
 import javax.swing.table.*;
 
-/*
+/**
  * This is Person Table's Listener, 
  * when user click the table's row, It will trigger it.
+ * 
+ * @author     Frankie Chow
+ * @version    2023-1-23
+ * @see        PersonTable
+ * @see        PersonEditor
  */
 public class PersonTableSelect implements ListSelectionListener {
     PmsFrame mainFrame ;
@@ -11,10 +16,19 @@ public class PersonTableSelect implements ListSelectionListener {
     DefaultTableModel personModel;
     PersonTable personTable;
     
-    PersonTableSelect(PmsFrame motherFrame){
+    /**
+     * PersonTableSelect constructor
+     * 
+     * It will update the PersonTable JTable
+     * and List all record in JTables.
+     * 
+     * @param motherFrame the main Frame ( Root Frame )
+     */   
+    public PersonTableSelect(PmsFrame motherFrame){
         this.mainFrame = motherFrame ;
     }
     
+    /** When User choice a row, it will update the PersonEditor */
     public void valueChanged(ListSelectionEvent e) {
         try {
             

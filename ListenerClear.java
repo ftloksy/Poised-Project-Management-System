@@ -5,6 +5,12 @@ import java.awt.event.*;
  * This is Listener for [Clear] Button, When User click the Button, 
  * will trigger this action.
  * The Listener will clear ProjectEditor and PersonEditor all JTextField .
+ * 
+ * @author      Frankie Chow
+ * @version     2023-1-23
+ * @see         ProjectEditor 
+ * @see         PersonEditor
+ * @see         FinalisedEditor
  */
 public class ListenerClear implements ActionListener {
     PmsFrame mainFrame;

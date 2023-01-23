@@ -5,6 +5,11 @@ import java.util.Vector;
 /** 
  * This a SearchByProjectName page Editor, It can search Project data table by Project Name.
  * and this is under the ProjectTab's JTabbedPane tabbedPane object.
+ * 
+ * @author   Frankie Chow
+ * @version  2023-1-23
+ * @see      ProjectTable
+ * @see      ProjectTab
  */
 public class SearchByProjectNameEditor extends JPanel {
 

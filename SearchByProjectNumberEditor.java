@@ -5,6 +5,11 @@ import java.util.Vector;
 /** 
  * This a SearchByProjectNumber page Editor, It can search Project data table by Project Number.
  * and this is under the ProjectTab's JTabbedPane tabbedPane object.
+ * 
+ * @author   Frankie Chow
+ * @version  2023-1-23
+ * @see      ProjectTable
+ * @see      ProjectTab
  */
 public class SearchByProjectNumberEditor extends JPanel {
 
@@ -15,7 +20,12 @@ public class SearchByProjectNumberEditor extends JPanel {
     PmsFrame mainFrame;
     MysqlHandler dbHandler;
 
-    /** SearchByProjectNameEditor constructor */
+    /** 
+     * SearchByProjectNameEditor constructor 
+     * 
+     * @param motherFrame the main Frame ( Root Frame )
+     * @param dbPosie     the DatabaseHandler.
+     */
     public SearchByProjectNumberEditor(PmsFrame motherFrame, MysqlHandler dbPosie) {
         super();
         super.setLayout(new GridLayout(1, 2, 10, 5)); 

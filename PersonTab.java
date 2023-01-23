@@ -1,10 +1,15 @@
 import java.awt.*;
 import javax.swing.*;
 
-/*
+/**
  * This Tab has two parts,
  * PersonEditor in on the top, it is for input data about the Person table insert.
  * PersonTable is on the buttom, it is for display Person table rows.
+ * 
+ * @author     Frankie Chow
+ * @version    2023-1-23
+ * @see        PersonTable
+ * @see        PersonEditor
  */
 public class PersonTab extends JPanel {
     
@@ -13,6 +18,12 @@ public class PersonTab extends JPanel {
     PersonTable dbTable ;
     PersonEditor dbEditor ;
     
+    /**
+     * PersonTab constructor
+     * 
+     * @param motherFrame   the main Frame ( Root Frame )
+     * @param dbPosie       the DatabaseHandler.
+     */ 
     PersonTab(PmsFrame motherFrame, MysqlHandler dbPosie) { super();
         
         dbEditor = new PersonEditor();

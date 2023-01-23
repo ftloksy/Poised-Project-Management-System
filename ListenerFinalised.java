@@ -4,6 +4,11 @@ import java.sql.SQLException;
 /**
  * This is Listener for [Finalised Project] Button, When User click the Button, 
  * will trigger this action.
+ * 
+ * @author      Frankie Chow
+ * @version     2023-1-23
+ * @see         FinalisedEditor 
+ * @see         MysqlHandler
  */
 public class ListenerFinalised implements ActionListener {
     PmsFrame mainFrame;
@@ -15,8 +20,8 @@ public class ListenerFinalised implements ActionListener {
     /**
      * ListenerFinalised constructor
      * 
-     * @param motherFrame the main Frame ( Root Frame )
-     * @param dbPosie the DatabaseHandler.
+     * @param motherFrame  the main Frame ( Root Frame )
+     * @param dbPosie      the DatabaseHandler.
      */
     public ListenerFinalised(PmsFrame motherFrame, MysqlHandler dbPosie){
         this.mainFrame = motherFrame;

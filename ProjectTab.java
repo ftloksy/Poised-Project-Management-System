@@ -1,7 +1,7 @@
 import java.awt.*;
 import javax.swing.*;
 
-/*
+/**
  * In this Class have five Class (pages ) inside.
  * ( Record Handler ) User can use this page to enter, update, search, delete record in Project data table.
  * ( Finalised Record ) User can use this page to update the Project record to finalised,
@@ -12,6 +12,11 @@ import javax.swing.*;
  * ( Search by Project Name ) Search Project's record by the Project Name.
  * 
  * And The Project JTable is at the button.
+ * 
+ * @author   Frankie Chow
+ * @version  2023-1-23
+ * @see      ProjectTable
+ * @see      ProjectEditor
  */
 public class ProjectTab extends JPanel {
 
@@ -33,7 +38,13 @@ public class ProjectTab extends JPanel {
     SearchByProjectNumberEditor searchByProjectNumberEditor ;
     SearchByProjectNameEditor searchByProjectNameEditor;
     
-    ProjectTab(PmsFrame motherFrame, MysqlHandler dbPosie) {
+    /**
+     * ProjectTab constructor
+     * 
+     * @param motherFrame   the main Frame ( Root Frame )
+     * @param dbPosie       the DatabaseHandler.
+     */   
+    public ProjectTab(PmsFrame motherFrame, MysqlHandler dbPosie) {
         super();
         super.setLayout(new BorderLayout());
 
@@ -64,7 +75,8 @@ public class ProjectTab extends JPanel {
         super.add( this.dbTableScroll, BorderLayout.CENTER );
     }
 
-    void refleshView() {
+    /** Re-paint this tabbedPane */
+    public void refleshView() {
         super.revalidate();
         super.repaint();
     }

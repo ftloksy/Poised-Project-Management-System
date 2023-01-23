@@ -5,6 +5,10 @@ import java.util.Vector;
 /** 
  * This a Finalised Editor, It can update the Project table's finalised field.
  * and this is under the ProjectTab's JTabbedPane tabbedPane object.
+ * 
+ * @author      Frankie Chow
+ * @version     2023-1-23
+ * @see         ProjectTab
  */
 public class FinalisedEditor extends JPanel {
 
@@ -21,6 +25,8 @@ public class FinalisedEditor extends JPanel {
 
 
     /** 
+     * FinalisedEditor constructor
+     * 
      * the Project Number and Project Name don't need modify and Update 
      * So disable edit function. here Project Number and Project Name 
      * is make sure the record is user want to modify,
@@ -46,9 +52,7 @@ public class FinalisedEditor extends JPanel {
         super.add(this.completedDateText);
     }
     
-    /** 
-     * reset the editor JTextFields. 
-     */
+    /** reset the editor JTextFields. */
     public void resetField() {
         this.projectNoText.setText("project Number");
         this.projectNameText.setText("");

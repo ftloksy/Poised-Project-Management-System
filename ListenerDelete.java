@@ -6,6 +6,11 @@ import java.sql.* ;
  * This is Listener for [Delete] Button, When User click the Button, 
  * will trigger this action.
  * The Listener will delete Project table record follow ProjectNumber, Person table record follow id .
+ * 
+ * @author      Frankie Chow
+ * @version     2023-1-23
+ * @see         ProjectEditor 
+ * @see         PersonEditor
  */
 public class ListenerDelete implements ActionListener {
     PmsFrame mainFrame;
@@ -21,8 +26,8 @@ public class ListenerDelete implements ActionListener {
     /**
      * ListenerDelete constructor
      * 
-     * @param motherFrame the main Frame ( Root Frame )
-     * @param dbPosie the Database Handler.
+     * @param motherFrame   the main Frame ( Root Frame )
+     * @param dbPosie       the Database Handler.
      */
     public ListenerDelete(PmsFrame motherFrame, MysqlHandler dbPosie){
         this.mainFrame = motherFrame ;

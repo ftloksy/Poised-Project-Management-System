@@ -7,6 +7,12 @@ import java.sql.* ;
  * will trigger this action.
  * The Listener will get PersonEditor or ProjectEditor 
  * to Enter Project or Person table record .
+ * 
+ * @author      Frankie Chow
+ * @version     2023-1-23
+ * @see         ProjectEditor 
+ * @see         PersonEditor
+ * @see         MysqlHandler
  */
 public class ListenerEnter implements ActionListener {
     PmsFrame mainFrame;
@@ -22,8 +28,8 @@ public class ListenerEnter implements ActionListener {
     /**
      * ListenerEnter constructor
      * 
-     * @param motherFrame the main Frame ( Root Frame )
-     * @param dbPosie the Database Handler.
+     * @param motherFrame    the main Frame ( Root Frame )
+     * @param dbPosie        the Database Handler.
      */
     public ListenerEnter(PmsFrame motherFrame, MysqlHandler dbPosie){
         this.mainFrame = motherFrame ;

@@ -3,32 +3,68 @@ import javax.swing.*;
 import java.util.Vector;
 import java.sql.* ;
 
-/*
+/**
  * This is the Editor, 
  * User can use it to enter record or update record into PoisePMS database Project table.
  * 
- * JTextField --------> Project Table Column
- * projectNoText     =>    ProjectNumber
- * projectNameText   =>    ProjectName
- * erfNoText         =>    ERFNumber
- * feeChargedText    =>    FeeCharged
- * paidTodateText    =>    PaidToDate
- * deadlineText      =>    Deadline
- * completedDateText =>    CompletedDate
+ * <table>
+ * <tr>
+ * <th>JTextField</th>       <th> -> Project Table Column</th>
+ * </tr>
+ * <tr>
+ * <td>projectNoText</td>    <td> => ProjectNumber</td>
+ * </tr>
+ * <tr>
+ * <td>projectNameText</td>  <td> => ProjectName</td>
+ * </tr>
+ * <tr>
+ * <td>erfNoText</td>         <td> => ERFNumber</td>
+ * </tr>
+ * <tr>
+ * <td>feeChargedText</td>    <td> => FeeCharged</td>
+ * </tr>
+ * <tr>
+ * <td>paidTodateText</td>    <td> => PaidToDate</td>
+ * </tr>
+ * <tr>
+ * <td>deadlineText</td>      <td> => Deadline</td>
+ * </tr>
+ * <tr>
+ * <td>completedDateText</td> <td> => CompletedDate</td>
+ * </tr>
+ * </table>
  *
  * User cannot enter or modify projectNoText JTextField. This information
  * will handle by SQL Server. 
  * completedDateText and setFinalised 
  * just can edit or update in FinalisedEditor.
  * 
- * JComboBox -----------> Project Table Column
- * bdgType           =>    BuildingType
- * setArchitect      =>    ArchitectPId
- * setContractor     =>    ContractorPId
- * setCustomer       =>    CustomerPId
- * setManager        =>    ProjectManagerPId
- * setEngineer       =>    StructuralEngineerPId
- * setFinalised      =>    Finalised
+ * <table>
+ * <tr>
+ * <th>JComboBox</th>       <th> -> Project Table Column</th>
+ * </tr>
+ * <tr>
+ * <td>bdgType</td>         <td> => BuildingType</td>
+ * </tr>
+ * <tr>
+ * <td>setArchitect</td>    <td> => ArchitectPId</td>
+ * </tr>
+ * <tr>
+ * <td>setContractor</td>   <td> => ContractorPId</td>
+ * </tr>
+ * <tr>
+ * <td>setCustomer</td>     <td> => CustomerPId</td>
+ * </tr>
+ * <tr>
+ * <td>setManager</td>      <td> => ProjectManagerPId</td>
+ * </tr>
+ * <tr>
+ * <td>setEngineer</td>     <td> => StructuralEngineerPId</td>
+ * </tr>
+ * <tr>
+ * <td>setFinalised</td>    <td> => Finalised</td>
+ * </tr>
+ * </table>
  * 
  * bdgType is have this items ['House','Apartment','Block','Store'],
  * User can use JComboBox to Select it.
@@ -38,18 +74,19 @@ import java.sql.* ;
  * ( Humen cannot easy use the id number to handle record)
  * User need the SurName and FirstName to handle it, so in the JComboBox has every
  * Person's [ id + FirstName + SurName ] in the row.
- * User can use this to assign 
- * [ Architect, Contractor, Customer, Structural Engineer, Project Manager ] 
+ * User can use this to assign<br/>
+ * [ Architect, Contractor, Customer, Structural Engineer, Project Manager ]<br/>
  * to a person.
+ * 
+ * @author   Frankie Chow
+ * @version  2023-1-23
+ * @see      MysqlHanlder
  */
-
 public class ProjectEditor extends JPanel {
 
     PmsFrame mainFrame;
 
     Vector<String> personList;
-
-        //+ " ProjectNumber, ProjectName, PhysicalAddress, ERFNumber, FeeCharged, PaidToDate, Deadline,"
 
     JTextField projectNoText = new JTextField("Project Number", 30);
     JLabel projectNoLabel = new JLabel("Project No", SwingConstants.RIGHT);
@@ -104,7 +141,13 @@ public class ProjectEditor extends JPanel {
 
     MysqlHandler dbHandler;
 
-    ProjectEditor(PmsFrame motherFrame, MysqlHandler dbPosie) {
+    /**
+     * ProjectEditor constructor
+     * 
+     * @param motherFrame    the main Frame ( Root Frame )
+     * @param dbPosie        the DatabaseHandler.
+     */   
+    public ProjectEditor(PmsFrame motherFrame, MysqlHandler dbPosie) {
         super();
         super.setLayout(new GridLayout(15, 2, 10, 5)); 
 
@@ -141,8 +184,6 @@ public class ProjectEditor extends JPanel {
         super.add(this.deadlineLabel);
         super.add(this.deadlineText);
 
-        /*    */
-
         super.add(this.architectLabel);
         super.add(this.setArchitect);
 
@@ -166,7 +207,8 @@ public class ProjectEditor extends JPanel {
 
     }
 
-    void resetField() {
+    /** reset the editor JTextFields. */
+    public void resetField() {
         this.projectNoText.setText("Project Number");
         this.projectNameText.setText("");
         this.physicalAddressText.setText("");
@@ -177,7 +219,8 @@ public class ProjectEditor extends JPanel {
         this.completedDateText.setText("");
     }
 
-    void createBdgList() {
+    /** Create Building Type JComboBox's content ( Model ) */
+    public void createBdgList() {
         this.bdgTypeList = new DefaultComboBoxModel<>();
         this.bdgTypeList.addElement("House");
         this.bdgTypeList.addElement("Apartment");
@@ -189,7 +232,11 @@ public class ProjectEditor extends JPanel {
         this.bdgType.setSelectedItem("");;
     }
 
-    void createFinalisedList() {
+    /** 
+     * Create Finalised JComboBox's content ( Model ),
+     * This is ["Yes", "No", ""] choicer. 
+     */
+    public void createFinalisedList() {
         this.yesNoBoxModel = new DefaultComboBoxModel<>();
         this.yesNoBoxModel.addElement("Yes");
         this.yesNoBoxModel.addElement("No");
@@ -199,7 +246,11 @@ public class ProjectEditor extends JPanel {
         this.setFinalised.setSelectedItem("");;
     }
     
-    void createPersonList() {
+    /**
+     * Create about Person's JComboBox
+     * [ Architect, Contractor, Customer, Structural Engineer, Project Manager ]<br/>
+     */
+    public void createPersonList() {
         this.architectBoxModel = new DefaultComboBoxModel<>();
         this.contractorBoxModel = new DefaultComboBoxModel<>();
         this.customerBoxModel = new DefaultComboBoxModel<>();
@@ -220,8 +271,8 @@ public class ProjectEditor extends JPanel {
         this.updatePersonList();
     }
     
-    /* use Person data table's record to update the JComboBox's rows */
-    void updatePersonList() {
+    /** use Person data table's record to update the JComboBox's rows */
+    public void updatePersonList() {
         try {
             this.personList = this.dbHandler.getPersonList();
         } catch ( SQLException e) {

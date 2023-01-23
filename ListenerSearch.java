@@ -6,6 +6,12 @@ import java.util.Vector;
 /**
  * This is Listener for Search Button, When User click the Button, 
  * will trigger this action.
+ * 
+ * @author      Frankie Chow
+ * @version     2023-1-23
+ * @see         ProjectTable
+ * @see         PersonTable
+ * @see         MysqlHandler
  */
 public class ListenerSearch implements ActionListener {
     PmsFrame mainFrame;
@@ -23,8 +29,8 @@ public class ListenerSearch implements ActionListener {
     /**
      * ListenerSearch constructor
      * 
-     * @param motherFrame the main Frame ( Root Frame )
-     * @param dbPosie the DatabaseHandler.
+     * @param motherFrame   the main Frame ( Root Frame )
+     * @param dbPosie       the DatabaseHandler.
      */
     public ListenerSearch (PmsFrame motherFrame, MysqlHandler dbPosie){
         this.mainFrame = motherFrame ;

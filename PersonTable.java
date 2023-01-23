@@ -4,10 +4,16 @@ import javax.swing.table.*;
 import java.sql.SQLException;
 import java.util.Vector ;
 
-/*
+/**
  * PersonTable ( JTable ) will to Display 
  * Person table's information. 
  * When user click the table row, it will trigger PersonTableSelect .
+ * 
+ * @author    Frankie Chow
+ * @version   2023-1-23
+ * @see       PersonTable
+ * @see       PersonEditor
+ * @see       MysqlHandler
  */
 public class PersonTable extends JTable {
     DefaultTableModel personModel;
@@ -16,7 +22,13 @@ public class PersonTable extends JTable {
     PersonTableSelect personTbSelect ;
     PmsFrame mainFrame;
     
-    PersonTable(PmsFrame motherFrame, MysqlHandler dbPosie) {
+    /**
+     * PersonTable constructor
+     * 
+     * @param motherFrame   the main Frame ( Root Frame )
+     * @param dbPosie       the DatabaseHandler.
+     */
+    public PersonTable(PmsFrame motherFrame, MysqlHandler dbPosie) {
         super();
         this.dbHandler = dbPosie ;
         this.mainFrame = motherFrame ;
@@ -24,8 +36,8 @@ public class PersonTable extends JTable {
         createTable();
     }
     
-    /* Create the Table Header */
-    void createTableHeader() {
+    /** Create the Table Header */
+    public void createTableHeader() {
         Vector<String> headerTitle = new Vector<String>();
         headerTitle.add("id");
         headerTitle.add("FirstName");
@@ -36,25 +48,31 @@ public class PersonTable extends JTable {
         this.tableHeader = headerTitle ;
     }
     
-    /* 
+    /**
      * When the user search Person database table, 
      * then the table will display less record.
      * Program can use this method 
      * to display all record on table again.
+     * 
+     * @throws SQLException If the database cannot connection or query at database or table. 
      */
-    void flashTable () throws SQLException {
+    public void flashTable () throws SQLException {
         reNewTable ( this.dbHandler.selectPersonRecord() );
     }
    
-    /*
+    /**
      * Program can use this method to do searching.
      * flashTable method is a example.
+     * 
+     * @param dbRow    this is a query result from sql server. 
+     *                 MysqlHandler very format the result to Vector<Vector<String>> ,
      */    
-    void reNewTable( Vector<Vector<String>>  dbRow ) {
+    public void reNewTable( Vector<Vector<String>>  dbRow ) {
         this.personModel.setDataVector( dbRow , this.tableHeader );
     }
     
-    void createTable() {
+    /** Create Person Table. */
+    public void createTable() {
         
         this.personTbSelect = new PersonTableSelect(this.mainFrame);
         
