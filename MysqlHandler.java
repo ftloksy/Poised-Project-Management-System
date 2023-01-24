@@ -61,11 +61,11 @@ public class MysqlHandler {
         + " CompletedDate DATE,"  // When is project has completed.
 
         + " PRIMARY KEY (ProjectNumber),"
-        + " FOREIGN KEY (ArchitectPId) REFERENCES Person(id),"
-        + " FOREIGN KEY (ContractorPId) REFERENCES Person(id),"
-        + " FOREIGN KEY (CustomerPId) REFERENCES Person(id),"
-        + " FOREIGN KEY (ProjectManagerPId) REFERENCES Person(id),"
-        + " FOREIGN KEY (StructuralEngineerPId) REFERENCES Person(id))";
+        + " FOREIGN KEY (ArchitectPId) REFERENCES Person(id) ON DELETE CASCADE,"
+        + " FOREIGN KEY (ContractorPId) REFERENCES Person(id) ON DELETE CASCADE,"
+        + " FOREIGN KEY (CustomerPId) REFERENCES Person(id) ON DELETE CASCADE,"
+        + " FOREIGN KEY (ProjectManagerPId) REFERENCES Person(id) ON DELETE CASCADE,"
+        + " FOREIGN KEY (StructuralEngineerPId) REFERENCES Person(id)) ON DELETE CASCADE )";
 
     /** Create Person Table */
     private String createPersonTableSQL = "CREATE TABLE IF NOT EXISTS Person ("
@@ -260,7 +260,7 @@ public class MysqlHandler {
      * 
      * @param firstName this is person's First Name.
      * @param surName this is person's SurName.
-     * @param telephone this is person's telephone.
+     * @param telePhone this is person's telephone.
      * @param emailAddress this is person's email address.
      * @param physicalAddress this is person's physical address.
      * @throws SQLException If the database cannot connection or query at database or table.
@@ -300,7 +300,7 @@ public class MysqlHandler {
      * @param projectManagerPId The Person id ( ref Person table ) of the Project Manager for the project.
      * @param structuralEngineerPId The Person id ( ref Person table ) of the Structural Engineer for the project.
      * @param isFinalised The Project is Finalised.
-     * @param completeDate The Project's complete date.
+     * @param completedDate The Project's complete date.
      * @throws SQLException If the database cannot connection or query at database or table.
      */
     public void insertProjectRecord (
@@ -379,7 +379,7 @@ public class MysqlHandler {
      * @param projectManagerPId The Person id ( ref Person table ) of the Project Manager for the project.
      * @param structuralEngineerPId The Person id ( ref Person table ) of the Structural Engineer for the project.
      * @param isFinalised The Project is Finalised.
-     * @param completeDate The Project's complete date.
+     * @param completedDate The Project's complete date.
      * @throws SQLException If the database cannot connection or query at database or table.
      */
     public void updateProjectRecord (
@@ -390,7 +390,7 @@ public class MysqlHandler {
             String eRFNumber,
             String feeCharged,
             String paidToDate,
-            String deadline,
+            String deadLine,
             String architectPId,
             String contractorPId,
             String customerPId,
@@ -407,7 +407,7 @@ public class MysqlHandler {
             + " ERFNumber = '" + eRFNumber + "',"
             + " FeeCharged = '" + feeCharged + "',"
             + " PaidToDate = '" + paidToDate + "',"
-            + " Deadline = '" + deadline + "',"
+            + " Deadline = '" + deadLine + "',"
             + " ArchitectPId = '" + architectPId  + "', "
             + " ContractorPId = '" + contractorPId + "', "
             + " CustomerPId = '" + customerPId + "', "
@@ -455,7 +455,7 @@ public class MysqlHandler {
      * @param id Person's record id.
      * @param firstName this is person's First Name.
      * @param surName this is person's SurName.
-     * @param telephone this is person's telephone.
+     * @param telePhone this is person's telephone.
      * @param emailAddress this is person's email address.
      * @param physicalAddress this is person's physical address.
      * @throws SQLException If the database cannot connection or query at database or table.
@@ -486,7 +486,7 @@ public class MysqlHandler {
      * 
      * @param firstName this is person's First Name.
      * @param surName this is person's SurName.
-     * @param telephone this is person's telephone.
+     * @param telePhone this is person's telephone.
      * @param emailAddress this is person's email address.
      * @param physicalAddress this is person's physical address.
      * @throws SQLException If the database cannot connection or query at database or table.
@@ -526,7 +526,6 @@ public class MysqlHandler {
      * @param projectManagerPId The Person id ( ref Person table ) of the Project Manager for the project.
      * @param structuralEngineerPId The Person id ( ref Person table ) of the Structural Engineer for the project.
      * @param isFinalised The Project is Finalised.
-     * @param completeDate The Project's complete date.
      * @throws SQLException If the database cannot connection or query at database or table.
      * @return database query result and format for JTable 's Model.
      */
@@ -643,7 +642,7 @@ public class MysqlHandler {
     /**
      *  use in [Past Due Date] page.  
      * 
-     * @param completeDate The Project's complete date.
+     * @param completedDate The Project's complete date.
      * @throws SQLException If the database cannot connection or query at database or table.
      * @return database query result and format for JTable 's Model.
      */
@@ -655,7 +654,7 @@ public class MysqlHandler {
     }
     
     /**
-     * format Person Select Result to Vector<Vector<String>> and 
+     * format Person Select Result to Vector -) Vector - String and 
      * for DefaultTableModel to display information to PersonTable ( JTable ).
      * 
      * @param sqlString follow this string to query database.
@@ -682,7 +681,7 @@ public class MysqlHandler {
     }
 
     /**
-     * format Project Select Result to Vector<Vector<String>> and 
+     * format Project Select Result to Vector -) Vector - String and 
      * for DefaultTableModel to display information to ProjectTable ( JTable ).
      * 
      * @param sqlString follow this string to query database.
@@ -726,7 +725,7 @@ public class MysqlHandler {
     /** 
      * Update Project record's Finalised to '1' ( true ) and set the completeDate  
      * 
-     * @param completeDate The Project's complete date.
+     * @param completedDate The Project's complete date.
      * @param projectNo Project number.
      * @throws SQLException If the database cannot connection or query at database or table.
      */

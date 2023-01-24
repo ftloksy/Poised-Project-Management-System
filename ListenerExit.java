@@ -15,7 +15,7 @@ public class ListenerExit implements ActionListener {
     /**
      * ListenerEnter constructor
      * 
-     * @param dbPosie the Database Handler.
+     * @param dbPoise the Database Handler.
      */  
     public ListenerExit(MysqlHandler dbPoise ) {
         this.dbHandler = dbPoise ;

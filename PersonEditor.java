@@ -10,31 +10,31 @@ import javax.swing.*;
  * <table>
  * <tr>
  * <th>JTextField</th>
- * <th>-> Person Table column</th>
+ * <th>-+ Person Table column</th>
  * </tr>
  * <tr>
  * <td>idText</td>
- * <td>=> id</td>
+ * <td>=+ id</td>
  * </tr>
  * <tr>
  * <td>surNameText</td>
- * <td>=> SurName</td>
+ * <td>=+ SurName</td>
  * </tr>
  * <tr>
  * <td>firstNameText</td>
- * <td>=> FirstName</td>
+ * <td>=+ FirstName</td>
  * </tr>
  * <tr>
  * <td>telephoneText</td>
- * <td>=> Telephone</td>
+ * <td>=+ Telephone</td>
  * </tr>
  * <tr>
  * <td>emailAddressText</td>
- * <td>=> EmailAddress</td>
+ * <td>=+ EmailAddress</td>
  * </tr>
  * <tr>
  * <td>physicalAddressText</td>
- * <td>=> PhysicalAddress</td>
+ * <td>=+ PhysicalAddress</td>
  * </tr>
  * </table>
  * 

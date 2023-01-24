@@ -38,7 +38,7 @@ public class PmsFrame extends JFrame {
     /**
      * PmsFrame constructor
      * 
-     * @param dbPosie  it care the PoisePMS database query and insert and update.
+     * @param dbPoise  it care the PoisePMS database query and insert and update.
      */
     public PmsFrame(MysqlHandler dbPoise) {
         super();

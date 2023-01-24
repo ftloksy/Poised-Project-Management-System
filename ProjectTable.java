@@ -72,7 +72,7 @@ public class ProjectTable extends JTable {
      * flashTable method is a example.
      * 
      * @param dbRow this is a query result from sql server. 
-     *     MysqlHandler very format the result to Vector<Vector<String>> ,
+     *     MysqlHandler very format the result to Vector -) Vector - String ,
      */     
     public void reNewTable( Vector<Vector<String>>  dbRow ) {
         this.dbModel.setDataVector( dbRow , this.tableHeader );

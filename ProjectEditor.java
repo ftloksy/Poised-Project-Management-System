@@ -9,28 +9,28 @@ import java.sql.* ;
  * 
  * <table>
  * <tr>
- * <th>JTextField</th>       <th> -> Project Table Column</th>
+ * <th>JTextField</th>       <th> -+ Project Table Column</th>
  * </tr>
  * <tr>
- * <td>projectNoText</td>    <td> => ProjectNumber</td>
+ * <td>projectNoText</td>    <td> =+ ProjectNumber</td>
  * </tr>
  * <tr>
- * <td>projectNameText</td>  <td> => ProjectName</td>
+ * <td>projectNameText</td>  <td> =+ ProjectName</td>
  * </tr>
  * <tr>
- * <td>erfNoText</td>         <td> => ERFNumber</td>
+ * <td>erfNoText</td>         <td> =+ ERFNumber</td>
  * </tr>
  * <tr>
- * <td>feeChargedText</td>    <td> => FeeCharged</td>
+ * <td>feeChargedText</td>    <td> =+ FeeCharged</td>
  * </tr>
  * <tr>
- * <td>paidTodateText</td>    <td> => PaidToDate</td>
+ * <td>paidTodateText</td>    <td> =+ PaidToDate</td>
  * </tr>
  * <tr>
- * <td>deadlineText</td>      <td> => Deadline</td>
+ * <td>deadlineText</td>      <td> =+ Deadline</td>
  * </tr>
  * <tr>
- * <td>completedDateText</td> <td> => CompletedDate</td>
+ * <td>completedDateText</td> <td> =+ CompletedDate</td>
  * </tr>
  * </table>
  *
@@ -41,28 +41,28 @@ import java.sql.* ;
  * 
  * <table>
  * <tr>
- * <th>JComboBox</th>       <th> -> Project Table Column</th>
+ * <th>JComboBox</th>       <th> -+ Project Table Column</th>
  * </tr>
  * <tr>
- * <td>bdgType</td>         <td> => BuildingType</td>
+ * <td>bdgType</td>         <td> =+ BuildingType</td>
  * </tr>
  * <tr>
- * <td>setArchitect</td>    <td> => ArchitectPId</td>
+ * <td>setArchitect</td>    <td> =+ ArchitectPId</td>
  * </tr>
  * <tr>
- * <td>setContractor</td>   <td> => ContractorPId</td>
+ * <td>setContractor</td>   <td> =+ ContractorPId</td>
  * </tr>
  * <tr>
- * <td>setCustomer</td>     <td> => CustomerPId</td>
+ * <td>setCustomer</td>     <td> =+ CustomerPId</td>
  * </tr>
  * <tr>
- * <td>setManager</td>      <td> => ProjectManagerPId</td>
+ * <td>setManager</td>      <td> =+ ProjectManagerPId</td>
  * </tr>
  * <tr>
- * <td>setEngineer</td>     <td> => StructuralEngineerPId</td>
+ * <td>setEngineer</td>     <td> =+ StructuralEngineerPId</td>
  * </tr>
  * <tr>
- * <td>setFinalised</td>    <td> => Finalised</td>
+ * <td>setFinalised</td>    <td> =+ Finalised</td>
  * </tr>
  * </table>
  * 
@@ -80,7 +80,7 @@ import java.sql.* ;
  * 
  * @author   Frankie Chow
  * @version  2023-1-23
- * @see      MysqlHanlder
+ * @see      MysqlHandler
  */
 public class ProjectEditor extends JPanel {
 
