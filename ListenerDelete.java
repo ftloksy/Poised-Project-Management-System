@@ -62,6 +62,7 @@ public class ListenerDelete implements ActionListener {
                         this.dbHandler.deletePerson( id );
                         this.mainFrame.msgArea.setText("Delete is Success.");
                         this.personTable.flashTable();
+                        this.projectTable.flashTable();
                     } catch (SQLException pe) { 
                         /** 
                          * If in the Project table has any Customer, Project Manager, ....
@@ -91,6 +92,7 @@ public class ListenerDelete implements ActionListener {
                 try {
                     this.dbHandler.deleteProject( projectNoVal );
                     this.projectTable.flashTable();
+                    this.personTable.flashTable();
                     this.projectDbEditor.updatePersonList();
                     this.projectDbEditor.bdgType.setSelectedItem("");
                     this.mainFrame.msgArea.setText("Delete Project Record Complete.");

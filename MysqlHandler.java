@@ -41,7 +41,7 @@ public class MysqlHandler {
         + " ProjectNumber int(6) ZEROFILL NOT NULL AUTO_INCREMENT," // Project Number
         + " ProjectName varchar(50),"  // Project name.
         + " BuildingType "  // What type of building is being designed? 
-        + "ENUM('House', 'Apartment',"
+        + " ENUM('House', 'Apartment',"
         + " 'Block', 'Store') NOT NULL," // What type of building is being designed?
                                        // E.g. House, apartment block or store, etc.
         + " PhysicalAddress varchar(200),"
@@ -61,11 +61,12 @@ public class MysqlHandler {
         + " CompletedDate DATE,"  // When is project has completed.
 
         + " PRIMARY KEY (ProjectNumber),"
-        + " FOREIGN KEY (ArchitectPId) REFERENCES Person(id) ON DELETE CASCADE,"
-        + " FOREIGN KEY (ContractorPId) REFERENCES Person(id) ON DELETE CASCADE,"
-        + " FOREIGN KEY (CustomerPId) REFERENCES Person(id) ON DELETE CASCADE,"
-        + " FOREIGN KEY (ProjectManagerPId) REFERENCES Person(id) ON DELETE CASCADE,"
-        + " FOREIGN KEY (StructuralEngineerPId) REFERENCES Person(id)) ON DELETE CASCADE )";
+        + " UNIQUE (ERFNumber),"        // ERFNumber is unique.
+        + " FOREIGN KEY (ArchitectPId) REFERENCES Person(id),"
+        + " FOREIGN KEY (ContractorPId) REFERENCES Person(id),"
+        + " FOREIGN KEY (CustomerPId) REFERENCES Person(id),"
+        + " FOREIGN KEY (ProjectManagerPId) REFERENCES Person(id),"
+        + " FOREIGN KEY (StructuralEngineerPId) REFERENCES Person(id))";
 
     /** Create Person Table */
     private String createPersonTableSQL = "CREATE TABLE IF NOT EXISTS Person ("
@@ -176,6 +177,84 @@ public class MysqlHandler {
             + " END IF;"
         + " END;" ;
 
+    /**
+     * When user delete a record in Project, 
+     * Delete data about projects and people associated with them.
+     * But If the people is still ref to another project.
+     * the delete will cancel. 
+     */
+    private String createTriggerDeletePeopleAssociated = ""
++ " CREATE TRIGGER IF NOT EXISTS delete_people_associated "
++ "     AFTER DELETE "
++ "     ON Project FOR EACH ROW "
++ "     BEGIN "
++ "             SET @ExistContractor = ( SELECT 'Exist' FROM Project "
++ "                     WHERE "
++ "                             ArchitectPId = OLD.ContractorPId "
++ "                     OR      ContractorPId = OLD.ContractorPId "
++ "                     OR      CustomerPId = OLD.ContractorPId "
++ "                     OR      ProjectManagerPId = OLD.ContractorPId "
++ "                     OR      StructuralEngineerPId = OLD.ContractorPId "
++ "                     ) ; "
++ "  "
++ "             SET @ExistCustomer = ( SELECT 'Exist' FROM Project "
++ "                     WHERE "
++ "                             ArchitectPId = OLD.CustomerPId "
++ "                     OR      ContractorPId = OLD.CustomerPId "
++ "                     OR      CustomerPId = OLD.CustomerPId "
++ "                     OR      ProjectManagerPId = OLD.CustomerPId "
++ "                     OR      StructuralEngineerPId = OLD.CustomerPId "
++ "                     ) ; "
++ "  "
++ "             SET @ExistArchitect = ( SELECT 'Exist' FROM Project "
++ "                     WHERE "
++ "                             ArchitectPId = OLD.ArchitectPId "
++ "                     OR      ContractorPId = OLD.ArchitectPId "
++ "                     OR      CustomerPId = OLD.ArchitectPId "
++ "                     OR      ProjectManagerPId = OLD.ArchitectPId "
++ "                     OR      StructuralEngineerPId = OLD.ArchitectPId "
++ "                     ) ; "
++ "  "
++ "             SET @ExistProjectManager = ( SELECT 'Exist' FROM Project "
++ "                     WHERE "
++ "                             ArchitectPId = OLD.ProjectManagerPId "
++ "                     OR      ContractorPId = OLD.ProjectManagerPId "
++ "                     OR      CustomerPId = OLD.ProjectManagerPId "
++ "                     OR      ProjectManagerPId = OLD.ProjectManagerPId "
++ "                     OR      StructuralEngineerPId = OLD.ProjectManagerPId "
++ "                     ) ; "
++ "  "
++ "             SET @ExistStructuralEngineer = ( SELECT 'Exist' FROM Project "
++ "                     WHERE "
++ "                             ArchitectPId = OLD.StructuralEngineerPId "
++ "                     OR      ContractorPId = OLD.StructuralEngineerPId "
++ "                     OR      CustomerPId = OLD.StructuralEngineerPId "
++ "                     OR      ProjectManagerPId = OLD.StructuralEngineerPId "
++ "                     OR      StructuralEngineerPId = OLD.StructuralEngineerPId "
++ "                     ) ; "
++ "  "
++ "             If @ExistContractor IS NULL THEN "
++ "       DELETE FROM Person WHERE id = OLD.ContractorPId ; "
++ "             END IF; "
++ "  "
++ "             If @ExistCustomer IS NULL THEN "
++ "       DELETE FROM Person WHERE id = OLD.CustomerPId ; "
++ "             END IF; "
++ "  "
++ "             If @ExistArchitect IS NULL THEN "
++ "       DELETE FROM Person WHERE id = OLD.ArchitectPId ; "
++ "             END IF; "
++ "  "
++ "             If @ExistProjectManager IS NULL THEN "
++ "       DELETE FROM Person WHERE id = OLD.ProjectManagerPId ; "
++ "             END IF; "
++ "  "
++ "             If @ExistStructuralEngineer IS NULL THEN "
++ "       DELETE FROM Person WHERE id = OLD.StructuralEngineerPId ; "
++ "             END IF; "
++ "     END; ";
+
+
     /* Select all information from Person for display in Person Table. */
     String selectPerson = "SELECT  id, FirstName, SurName, Telephone, EmailAddress, PhysicalAddress"
         + " FROM Person";
@@ -213,12 +292,15 @@ public class MysqlHandler {
             this.statement = this.connection.createStatement();
 
             this.statement.executeUpdate(this.createPersonTableSQL);
+
             this.statement.executeUpdate(this.createProjectTableSQL);
             this.statement.executeUpdate(this.createProjectViewSQL);
 
             this.statement.executeUpdate(this.createTriggerProjectName);
             this.statement.executeUpdate(this.createTriggerPersonSurNameInsertSQL);
             this.statement.executeUpdate(this.createTriggerPersonSurNameUpdateSQL);
+            this.statement.executeUpdate(this.createTriggerDeletePeopleAssociated);
+
         } catch (SQLException e) {
             e.printStackTrace();
         }

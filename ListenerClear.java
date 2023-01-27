@@ -1,4 +1,5 @@
 import javax.swing.*;
+
 import java.awt.event.*;
 
 /**
@@ -17,6 +18,8 @@ public class ListenerClear implements ActionListener {
     JTabbedPane tabPane;
     PersonEditor personDbEditor;
     ProjectEditor projectDbEditor;
+    JTable personTable;
+    JTable projectTable;
 
     /**
      * ListenerClear constructor
@@ -37,6 +40,8 @@ public class ListenerClear implements ActionListener {
     public void actionPerformed(ActionEvent e)
     {
         this.tabPane = this.mainFrame.pmsTab.tabbedPane ;
+        this.personTable = this.mainFrame.pmsTab.personTab.dbTable;
+        this.projectTable = this.mainFrame.pmsTab.projectTab.dbTable;
 
         this.mainFrame.msgArea.setText("");
         int index = this.tabPane.getSelectedIndex();
@@ -47,6 +52,7 @@ public class ListenerClear implements ActionListener {
                 this.personDbEditor = this.mainFrame.pmsTab.personTab.dbEditor ;
                 this.personDbEditor.resetField();
                 this.mainFrame.msgArea.setText("");
+                this.personTable.getSelectionModel().clearSelection();
                 break;
             /** Clear ProjectEditor's JTextFields . */
             case 1:
@@ -54,6 +60,7 @@ public class ListenerClear implements ActionListener {
                 this.projectDbEditor.resetField();
                 this.projectDbEditor.updatePersonList();
                 this.projectDbEditor.bdgType.setSelectedItem("");
+                this.projectTable.getSelectionModel().clearSelection();
                 break;
         }
     }
