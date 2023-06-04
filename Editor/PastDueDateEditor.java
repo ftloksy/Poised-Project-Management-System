@@ -1,5 +1,8 @@
+package Editor;
 import java.awt.*;
 import javax.swing.*;
+
+import Handler.MysqlHandler;
 import java.util.Vector;
 
 /** 
@@ -18,7 +21,7 @@ public class PastDueDateEditor extends JPanel {
 
     JLabel targetDateLabel = new JLabel("Target Date", SwingConstants.RIGHT);
     /* Set the targetDateText is current day ( today ) */
-    JTextField targetDateText = new JTextField(java.time.LocalDate.now().toString(), 30);
+    public JTextField targetDateText = new JTextField(java.time.LocalDate.now().toString(), 30);
 
     /** PastDueDateEditor constructor */
     public PastDueDateEditor() {

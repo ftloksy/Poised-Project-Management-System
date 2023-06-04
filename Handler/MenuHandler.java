@@ -1,4 +1,17 @@
+package Handler;
 import javax.swing.*;
+
+import Frame.PmsFrame;
+import Listener.ListenerClear;
+import Listener.ListenerDelete;
+import Listener.ListenerEnter;
+import Listener.ListenerExit;
+import Listener.ListenerFinalised;
+import Listener.ListenerListAll;
+import Listener.ListenerNeedCompleted;
+import Listener.ListenerPastDueDate;
+import Listener.ListenerSearch;
+import Listener.ListenerUpdate;
 
 /**
  * This will create a Menu at ( Root ) Frame's top side.
@@ -16,16 +29,16 @@ import javax.swing.*;
  * @see         PmsFrame
  */
 public class MenuHandler extends JMenuBar {
-    JButton enterItem = new JButton("Enter Person");
-    JButton clearItem = new JButton("Clear Person");
-    JButton updateItem = new JButton("Update Person");
-    JButton deleteItem = new JButton("Delete Person");
-    JButton searchItem = new JButton("Search Person");
-    JButton listAllItem = new JButton("ListAll Person");
-    JButton exitItem = new JButton("Exit");
-    JButton finalisedItem = new JButton("Finalised Project");
-    JButton needCompletedItem = new JButton("unCompleted Project");
-    JButton pastDueDateItem = new JButton("Past Due Date");
+    public JButton enterItem = new JButton("Enter Person");
+    public JButton clearItem = new JButton("Clear Person");
+    public JButton updateItem = new JButton("Update Person");
+    public JButton deleteItem = new JButton("Delete Person");
+    public JButton searchItem = new JButton("Search Person");
+    public JButton listAllItem = new JButton("ListAll Person");
+    public JButton exitItem = new JButton("Exit");
+    public JButton finalisedItem = new JButton("Finalised Project");
+    public JButton needCompletedItem = new JButton("unCompleted Project");
+    public JButton pastDueDateItem = new JButton("Past Due Date");
 
     /** ListenerExist will exist program */
     public ListenerExit exitProgram ;

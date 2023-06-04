@@ -1,5 +1,16 @@
+package Tab;
 import java.awt.*;
 import javax.swing.*;
+
+import Handler.MysqlHandler;
+import Editor.FinalisedEditor;
+import Editor.PastDueDateEditor;
+import Editor.ProjectEditor;
+import Editor.SearchByProjectNameEditor;
+import Editor.SearchByProjectNumberEditor;
+import Frame.PmsFrame;
+import Listener.ProjectTabChangeListener;
+import Table.ProjectTable;
 
 /**
  * In this Class have five Class (pages ) inside.
@@ -25,18 +36,18 @@ public class ProjectTab extends JPanel {
     final static String pastDateTabTitle = "Past Due Date Record";
     final static String searchByProjectNumberTabTitle = "Search by Project Number";
     final static String searchByProjectNameTabTitle = "Search by Project Name";
-    JTabbedPane tabbedPane ;
+    public JTabbedPane tabbedPane ;
     PmsFrame mainFrame ;
     MysqlHandler dbHandler ;
-    FinalisedEditor finalisedEditor;
+    public FinalisedEditor finalisedEditor;
 
-    ProjectEditor projectEditor;
-    ProjectTable dbTable;
+    public ProjectEditor projectEditor;
+    public ProjectTable dbTable;
     JScrollPane dbTableScroll;
     ProjectTabChangeListener changeListener ;
-    PastDueDateEditor pastDueDateEditor ;
-    SearchByProjectNumberEditor searchByProjectNumberEditor ;
-    SearchByProjectNameEditor searchByProjectNameEditor;
+    public PastDueDateEditor pastDueDateEditor ;
+    public SearchByProjectNumberEditor searchByProjectNumberEditor ;
+    public SearchByProjectNameEditor searchByProjectNameEditor;
     
     /**
      * ProjectTab constructor

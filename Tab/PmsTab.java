@@ -1,5 +1,10 @@
+package Tab;
 import java.awt.*;
 import javax.swing.*;
+
+import Handler.MysqlHandler;
+import Frame.PmsFrame;
+import Listener.TabChangeListener;
 
 /**
  * In this Class have two Class inside.
@@ -15,9 +20,9 @@ public class PmsTab {
     final static String personTabTilte = "Person";
     final static String projectTabTitle = "Project";
     TabChangeListener changeListener ;
-    ProjectTab projectTab;
-    PersonTab personTab;
-    JTabbedPane tabbedPane ;
+    public ProjectTab projectTab;
+    public PersonTab personTab;
+    public JTabbedPane tabbedPane ;
     
 
     /**

@@ -1,5 +1,10 @@
+package Editor;
 import java.awt.*;
 import javax.swing.*;
+
+import Handler.MysqlHandler;
+import Frame.PmsFrame;
+
 import java.util.Vector;
 import java.sql.* ;
 
@@ -88,25 +93,25 @@ public class ProjectEditor extends JPanel {
 
     Vector<String> personList;
 
-    JTextField projectNoText = new JTextField("Project Number", 30);
+    public JTextField projectNoText = new JTextField("Project Number", 30);
     JLabel projectNoLabel = new JLabel("Project No", SwingConstants.RIGHT);
 
-    JTextField projectNameText = new JTextField("Project Name", 30);
+    public JTextField projectNameText = new JTextField("Project Name", 30);
     JLabel projectNameLabel = new JLabel("Project Name", SwingConstants.RIGHT);
 
-    JTextField physicalAddressText = new JTextField("Physical Address", 30);
+    public JTextField physicalAddressText = new JTextField("Physical Address", 30);
     JLabel physicalAddressLabel = new JLabel("Physical Address", SwingConstants.RIGHT);
 
-    JTextField erfNoText = new JTextField("ERF Number", 30);
+    public JTextField erfNoText = new JTextField("ERF Number", 30);
     JLabel erfNoLabel = new JLabel("ERF No", SwingConstants.RIGHT);
 
     JLabel feeChargedLabel = new JLabel("Fee Charged", SwingConstants.RIGHT);
-    JTextField feeChargedText = new JTextField("Fee Charged", 30);
+    public JTextField feeChargedText = new JTextField("Fee Charged", 30);
 
     JLabel paidTodateLabel = new JLabel("Paid to date", SwingConstants.RIGHT);
-    JTextField paidTodateText = new JTextField("Paid to date", 30);
+    public JTextField paidTodateText = new JTextField("Paid to date", 30);
 
-    JTextField deadlineText= new JTextField("Deadline Date", 30);
+    public JTextField deadlineText= new JTextField("Deadline Date", 30);
     JLabel deadlineLabel = new JLabel("Deadline", SwingConstants.RIGHT);
 
     JLabel bdgTypeLabel = new JLabel("Building Type", SwingConstants.RIGHT);
@@ -118,26 +123,25 @@ public class ProjectEditor extends JPanel {
     JLabel finalisedLabel = new JLabel("Finalised", SwingConstants.RIGHT);
 
     JLabel completedDateLabel = new JLabel("Completed Date", SwingConstants.RIGHT);
-    JTextField completedDateText = new JTextField("", 30);
+    public JTextField completedDateText = new JTextField("", 30);
 
-    DefaultComboBoxModel<String> bdgTypeList;
+    public DefaultComboBoxModel<String> bdgTypeList;
 
-    DefaultComboBoxModel<String> architectBoxModel;
-    DefaultComboBoxModel<String> contractorBoxModel;
-    DefaultComboBoxModel<String> customerBoxModel;
-    DefaultComboBoxModel<String> managerBoxModel;
-    DefaultComboBoxModel<String> engineerBoxModel;
+    public DefaultComboBoxModel<String> architectBoxModel;
+    public DefaultComboBoxModel<String> contractorBoxModel;
+    public DefaultComboBoxModel<String> customerBoxModel;
+    public DefaultComboBoxModel<String> managerBoxModel;
+    public DefaultComboBoxModel<String> engineerBoxModel;
 
     DefaultComboBoxModel<String> yesNoBoxModel;
 
-    JComboBox<String> bdgType;
-    JComboBox<String> setArchitect;
-    JComboBox<String> setContractor;
-    JComboBox<String> setCustomer;
-    JComboBox<String> setManager;
-    JComboBox<String> setEngineer;
-
-    JComboBox<String> setFinalised;
+    public JComboBox<String> bdgType;
+    public JComboBox<String> setArchitect;
+    public JComboBox<String> setContractor;
+    public JComboBox<String> setCustomer;
+    public JComboBox<String> setManager;
+    public JComboBox<String> setEngineer;
+    public JComboBox<String> setFinalised;
 
     MysqlHandler dbHandler;
 

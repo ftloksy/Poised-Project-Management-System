@@ -1,5 +1,11 @@
+package Table;
 import javax.swing.*;
 import javax.swing.table.*;
+
+import Handler.MysqlHandler;
+import Editor.PersonEditor;
+import Frame.PmsFrame;
+import Listener.PersonTableSelect;
 
 import java.sql.SQLException;
 import java.util.Vector ;
@@ -16,7 +22,7 @@ import java.util.Vector ;
  * @see       MysqlHandler
  */
 public class PersonTable extends JTable {
-    DefaultTableModel personModel;
+    public DefaultTableModel personModel;
     MysqlHandler dbHandler;
     Vector<String> tableHeader ;
     PersonTableSelect personTbSelect ;

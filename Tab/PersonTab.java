@@ -1,5 +1,11 @@
+package Tab;
 import java.awt.*;
 import javax.swing.*;
+
+import Handler.MysqlHandler;
+import Editor.PersonEditor;
+import Frame.PmsFrame;
+import Table.PersonTable;
 
 /**
  * This Tab has two parts,
@@ -15,8 +21,8 @@ public class PersonTab extends JPanel {
     
     PmsFrame mainFrame;
     JScrollPane dbScroll ;
-    PersonTable dbTable ;
-    PersonEditor dbEditor ;
+    public PersonTable dbTable ;
+    public PersonEditor dbEditor ;
     
     /**
      * PersonTab constructor

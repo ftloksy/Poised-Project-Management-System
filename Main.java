@@ -1,4 +1,8 @@
 /** 
+ * This is the main class of the program.
+ * It serves as the entry point for execution.
+ * The program creates an instance of the SwingRun class 
+ * and invokes it using SwingUtilities.invokeLater().
  * This is the running point. 
  * 
  * @author      Frankie Chow
@@ -6,10 +10,13 @@
  * @see         SwingRun
  */
 public class Main {
+    
     static SwingRun posieGUI = new SwingRun();
 
     /**
      * Entry Point
+     * It invokes the SwingRun instance using 
+     * SwingUtilities.invokeLater().
      * 
      * @param args runtime string.
      */

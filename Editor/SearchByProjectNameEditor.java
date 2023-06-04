@@ -1,5 +1,12 @@
+package Editor;
 import java.awt.*;
 import javax.swing.*;
+
+import Handler.MysqlHandler;
+import Frame.PmsFrame;
+import Tab.ProjectTab;
+import Table.ProjectTable;
+
 import java.util.Vector;
 
 /** 
@@ -16,7 +23,7 @@ public class SearchByProjectNameEditor extends JPanel {
     Vector<String> personList;
 
     JLabel projectNameLabel = new JLabel("Project Name", SwingConstants.RIGHT);
-    JTextField projectNameText = new JTextField("Project Name", 30);
+    public JTextField projectNameText = new JTextField("Project Name", 30);
     PmsFrame mainFrame;
     MysqlHandler dbHandler;
 

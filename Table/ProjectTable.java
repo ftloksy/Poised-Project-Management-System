@@ -1,5 +1,10 @@
+package Table;
 import javax.swing.*;
 import javax.swing.table.*;
+
+import Handler.MysqlHandler;
+import Frame.PmsFrame;
+import Listener.ProjectTableSelect;
 
 import java.sql.SQLException;
 import java.util.Vector ;
@@ -15,7 +20,7 @@ import java.util.Vector ;
  * @see      MysqlHandler
  */
 public class ProjectTable extends JTable {
-    DefaultTableModel dbModel;
+    public DefaultTableModel dbModel;
     MysqlHandler dbHandler;
     Vector<String> tableHeader ;
     ProjectTableSelect projectTbSelect ;

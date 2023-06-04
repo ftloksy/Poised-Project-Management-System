@@ -1,3 +1,4 @@
+package Editor;
 import java.awt.*;
 import javax.swing.*;
 
@@ -48,23 +49,23 @@ import javax.swing.*;
  */
 public class PersonEditor extends JPanel {
 
-    JTextField idText = new JTextField("id", 30);
+    public JTextField idText = new JTextField("id", 30);
     JLabel idLabel = new JLabel("Id", SwingConstants.RIGHT);
 
-    JTextField surNameText = new JTextField("SurName", 30);
+    public JTextField surNameText = new JTextField("SurName", 30);
     JLabel surNameLabel = new JLabel("SurName", SwingConstants.RIGHT);
 
-    JTextField firstNameText = new JTextField("FirstName", 30);
+    public JTextField firstNameText = new JTextField("FirstName", 30);
     JLabel firstNameLabel = new JLabel("FirstName", SwingConstants.RIGHT);
 
-    JLabel telephoneLabel = new JLabel("Telephone", SwingConstants.RIGHT);
-    JTextField telephoneText = new JTextField("Telephone", 30);
+    public JLabel telephoneLabel = new JLabel("Telephone", SwingConstants.RIGHT);
+    public JTextField telephoneText = new JTextField("Telephone", 30);
 
-    JLabel emailAddressLabel = new JLabel("EmailAddress", SwingConstants.RIGHT);
-    JTextField emalAddressText = new JTextField("EmailAddress", 30);
+    public JLabel emailAddressLabel = new JLabel("EmailAddress", SwingConstants.RIGHT);
+    public JTextField emalAddressText = new JTextField("EmailAddress", 30);
 
-    JLabel physicalAddressLabel = new JLabel("Address", SwingConstants.RIGHT);
-    JTextField physicalAddressText = new JTextField("Address", 30);
+    public JLabel physicalAddressLabel = new JLabel("Address", SwingConstants.RIGHT);
+    public JTextField physicalAddressText = new JTextField("Address", 30);
 
     /** PastDueDateEditor constructor */
     public PersonEditor() {

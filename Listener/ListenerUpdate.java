@@ -1,4 +1,14 @@
+package Listener;
 import javax.swing.*;
+
+import Handler.MysqlHandler;
+import Table.PersonTable;
+import Table.ProjectTable;
+import Frame.PmsFrame;
+import Editor.PersonEditor;
+import Editor.ProjectEditor;
+import Tab.ProjectTab;
+
 import java.awt.event.*;
 import java.sql.* ;
 
@@ -21,7 +31,6 @@ public class ListenerUpdate implements ActionListener {
     ProjectTable projectTable;
     ProjectEditor projectDbEditor;
     ProjectTab projectTab;
-
 
     /**
      * ListenerUpdate constructor

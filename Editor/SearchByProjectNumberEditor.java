@@ -1,5 +1,12 @@
+package Editor;
 import java.awt.*;
 import javax.swing.*;
+
+import Handler.MysqlHandler;
+import Frame.PmsFrame;
+import Tab.ProjectTab;
+import Table.ProjectTable;
+
 import java.util.Vector;
 
 /** 
@@ -16,7 +23,7 @@ public class SearchByProjectNumberEditor extends JPanel {
     Vector<String> personList;
 
     JLabel projectNoLabel = new JLabel("Project Number", SwingConstants.RIGHT);
-    JTextField projectNoText = new JTextField("", 30);
+    public JTextField projectNoText = new JTextField("", 30);
     PmsFrame mainFrame;
     MysqlHandler dbHandler;
 
