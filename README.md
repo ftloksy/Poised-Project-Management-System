@@ -55,44 +55,44 @@ To run the Poised Project Management System, follow these steps:
 Once the Poised Project Management System is running, 
 you can use the GUI interface to perform various tasks:
 
-    - Add a new project:
-       - Enter project details in the provided fields.
-       - Click the "Add" button to save the project.
+- Add a new project:
+  - Enter project details in the provided fields.
+  - Click the "Add" button to save the project.
 
-    - Update project information:
-       - Select the project you want to update from the project list.
-       - Make necessary changes to the project details.
-       - Click the "Update" button to save the changes.
+- Update project information:
+  - Select the project you want to update from the project list.
+  - Make necessary changes to the project details.
+  - Click the "Update" button to save the changes.
 
-    - Finalize a project:
-       - Select the project you want to finalize from the project list.
-       - Click the "Finalize" button to mark the project
-         as completed and add the completion date.
+- Finalize a project:
+  - Select the project you want to finalize from the project list.
+  - Click the "Finalize" button to mark the project
+    as completed and add the completion date.
 
-    - View project status and reports:
-       - Click the "Projects to Complete" button 
-         to see a list of projects that still need to be finalized.
-       - Click the "Past Due Projects" button 
-         to see a list of projects that are past the due date.
+- View project status and reports:
+  - Click the "Projects to Complete" button 
+    to see a list of projects that still need to be finalized.
+  - Click the "Past Due Projects" button 
+    to see a list of projects that are past the due date.
 
-    - Search and select a project:
-       - Enter the project number or name in the search field.
-       - Click the "Search" button to find and select the project.
+- Search and select a project:
+  - Enter the project number or name in the search field.
+  - Click the "Search" button to find and select the project.
 
 ## Contributing
 
 Contributions to the Poised Project Management System are welcome! 
 If you would like to contribute, please follow these steps:
 
-    1. Fork the project repository.
+ 1. Fork the project repository.
 
-    1. Create a new branch for your feature or bug fix.
+ 1. Create a new branch for your feature or bug fix.
 
-    1. Make your changes and ensure they are tested and working properly.
+ 1. Make your changes and ensure they are tested and working properly.
 
-    1. Commit your changes and push them to your forked repository.
+ 1. Commit your changes and push them to your forked repository.
 
-    1. Submit a pull request, explaining the changes you have made.
+ 1. Submit a pull request, explaining the changes you have made.
 
 ## License
 
